@@ -21,26 +21,54 @@ class ArticleCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                article.title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+        child: Stack(
+          children: [
+            // Image widget
+            Positioned.fill(
+              child: Image.network(
+                article.imageUrl,
+                fit: BoxFit.cover,
               ),
-              const SizedBox(height: 8),
-              Text(
-                article.excerpt,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            // Container for text overlay
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black54, // Dark overlay
+                    Colors.transparent,
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+                borderRadius: BorderRadius.circular(12),
               ),
-            ],
-          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title
+                  Text(
+                    article.title,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white, // Title color
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  // Excerpt
+                  Text(
+                    article.excerpt,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.white, // Excerpt color
+                        ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

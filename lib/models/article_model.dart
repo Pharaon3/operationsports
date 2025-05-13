@@ -3,12 +3,14 @@ class ArticleModel {
   final String title;
   final String excerpt;
   final String content;
+  final String imageUrl;
 
   ArticleModel({
     required this.id,
     required this.title,
     required this.excerpt,
     required this.content,
+    required this.imageUrl,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class ArticleModel {
       title: _parseText(json['title']['rendered']),
       excerpt: _parseText(json['excerpt']['rendered']),
       content: json['content']['rendered'] ?? '',
+      imageUrl: json['yoast_head_json']?['og_image']?[0]?['url'] ?? json['twitter_image'] ?? '',
     );
   }
 
