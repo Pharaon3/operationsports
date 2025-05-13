@@ -16,21 +16,38 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black, // Set the background color to black
-        title: const Text('Operation Sports'),
-        leading: Padding(
-          padding: EdgeInsets.all(8.0), // Optional padding for the logo
-          child: Image.asset('assets/logo.png'), // Replace with your logo path
+      backgroundColor: Color(0xFF171717),
+      title: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0), // Padding for the title
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(2.0), // Padding for logo
+                  child: Image.asset('assets/logo.png', height: 26), // Adjust height as needed
+                ),
+                const SizedBox(width: 4.0), // Space between logo and title
+                const Text(
+                  'OPERATION SPORTS',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25.0,
+                  ), // Adjust text color as needed
+                ),
+              ],
+            ),
+            IconButton(
+              icon: Image.asset('assets/menu.png', height: 40), // Adjust icon color as needed
+              onPressed: () {
+                // Define what happens when the menu button is pressed
+              },
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu), // Menu icon
-            onPressed: () {
-              // Define what happens when the menu button is pressed
-            },
-          ),
-        ],
       ),
+    ),
       body: Column(
         children: [
           Padding(
