@@ -74,49 +74,108 @@ class HomeScreen extends StatelessWidget {
 
             // Button Row
             Container(
-              // color: const Color(0xFF2C2C2C), // Dark grey background
               padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.grey[300], // Light grey text
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
+                  SizedBox(
+                    height: 45,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.grey[300],
+                        backgroundColor: Color(0xFF222222),
+                        elevation: 0,
+                        shadowColor: Color(0xFF000000),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NewsLetter()),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Image.asset('assets/newsletter.png', height: 23),
+                          ),
+                          const SizedBox(width: 4.0),
+                          const Text(
+                            'NEWSLETTER',
+                            style: TextStyle(
+                              color: Color(0xFF434343),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NewsLetter()),
-                      );
-                    },
-                    child: const Text("Newsletter"),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.grey[300],
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
+                  SizedBox(
+                    height: 45,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.grey[300],
+                        backgroundColor: Color(0xFF222222),
+                        elevation: 0,
+                        shadowColor: Color(0xFF000000),
+                      ),
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => NewsLetter()),
+                        // );
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Image.asset('assets/forums.png', height: 23),
+                          ),
+                          const SizedBox(width: 4.0),
+                          const Text(
+                            'FORUMS',
+                            style: TextStyle(
+                              color: Color(0xFF434343),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    onPressed: () {
-                      // Handle Forums button
-                    },
-                    child: const Text("Forums"),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.grey[300],
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
+                  SizedBox(
+                    height: 45,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.grey[300],
+                        backgroundColor: Color(0xFF222222),
+                        elevation: 0,
+                        shadowColor: Color(0xFF000000),
+                      ),
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => NewsLetter()),
+                        // );
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Image.asset('assets/review.png', height: 23),
+                          ),
+                          const SizedBox(width: 4.0),
+                          const Text(
+                            'REVIEW',
+                            style: TextStyle(
+                              color: Color(0xFF434343),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    onPressed: () {
-                      // Handle Review button
-                    },
-                    child: const Text("Review"),
                   ),
                 ],
               ),
