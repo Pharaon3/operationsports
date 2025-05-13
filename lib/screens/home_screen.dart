@@ -4,6 +4,7 @@ import '../providers/article_provider.dart';
 import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
+import './article_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -37,7 +38,17 @@ class HomeScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: articles.length,
               itemBuilder: (context, index) {
-                return ArticleCard(article: articles[index], onTap: () {  },);
+                return ArticleCard(
+                  article: articles[index],
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ArticleDetailScreen(articleId: articles[index].id.toString()),
+                      ),
+                    );
+                  },
+                );
               },
             );
           },

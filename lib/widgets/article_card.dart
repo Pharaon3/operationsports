@@ -20,12 +20,7 @@ class ArticleCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () {
-          print("article id: ${article.id}");
-          print("article title: ${article.title}");
-          print("article excerpt: ${article.excerpt}");
-          print("article content: ${article.content}");
-        },
+        onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
