@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/screens/newsletter.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/article_card.dart';
@@ -7,8 +6,8 @@ import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import './article_detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class NewsLetter extends StatelessWidget {
+  const NewsLetter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,20 +15,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black, // Set the background color to black
-        title: const Text('Operation Sports'),
-        leading: Padding(
-          padding: EdgeInsets.all(8.0), // Optional padding for the logo
-          child: Image.asset('assets/logo.png'), // Replace with your logo path
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu), // Menu icon
-            onPressed: () {
-              // Define what happens when the menu button is pressed
-            },
-          ),
-        ],
+        title: const Text('News Letter'),
       ),
       body: Column(
         children: [
@@ -40,12 +26,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewsLetter(),
-                      ),
-                    );
+                    // Handle Newsletter button
                   },
                   child: const Text("Newsletter"),
                 ),
