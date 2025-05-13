@@ -73,12 +73,19 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Button Row
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            Container(
+              // color: const Color(0xFF2C2C2C), // Dark grey background
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.grey[300], // Light grey text
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -88,12 +95,24 @@ class HomeScreen extends StatelessWidget {
                     child: const Text("Newsletter"),
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.grey[300],
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                    ),
                     onPressed: () {
                       // Handle Forums button
                     },
                     child: const Text("Forums"),
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.grey[300],
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
+                    ),
                     onPressed: () {
                       // Handle Review button
                     },
@@ -102,6 +121,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+
 
             Expanded(
               child: RefreshIndicator(
