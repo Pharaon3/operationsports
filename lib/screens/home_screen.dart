@@ -34,12 +34,12 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25.0,
-                  ), // Adjust text color as needed
+                  ),
                 ),
               ],
             ),
             IconButton(
-              icon: Image.asset('assets/menu.png', height: 40), // Adjust icon color as needed
+              icon: Image.asset('assets/menu.png', height: 40),
               onPressed: () {
                 // Define what happens when the menu button is pressed
               },
@@ -48,82 +48,104 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewsLetter(),
-                      ),
-                    );
-                  },
-                  child: const Text("Newsletter"),
+      body: Container(
+        color: Color(0xFF171717), // Background color
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search articles...',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle Forums button
-                  },
-                  child: const Text("Forums"), 
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle Review button
-                  },
-                  child: const Text("Review"),
-                ),
-              ],
-            ),
-          ),
-
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: () => articleProvider.fetchArticles(),
-              child: Builder(
-                builder: (context) {
-                  if (articleProvider.isLoading) {
-                    return const LoadingIndicator();
-                  }
-
-                  if (articleProvider.hasError) {
-                    return AppErrorWidget(message: articleProvider.errorMessage);
-                  }
-
-                  final articles = articleProvider.articles;
-
-                  if (articles.isEmpty) {
-                    return const Center(child: Text("No articles found."));
-                  }
-
-                  return ListView.builder(
-                    itemCount: articles.length,
-                    itemBuilder: (context, index) {
-                      return ArticleCard(
-                        article: articles[index],
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ArticleDetailScreen(
-                                articleId: articles[index].id.toString(),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
+                onChanged: (value) {
+                  // Optionally: add search logic here
+                  // articleProvider.searchArticles(value);
                 },
               ),
             ),
-          ),
-        ],
+
+            // Button Row
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NewsLetter()),
+                      );
+                    },
+                    child: const Text("Newsletter"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle Forums button
+                    },
+                    child: const Text("Forums"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Handle Review button
+                    },
+                    child: const Text("Review"),
+                  ),
+                ],
+              ),
+            ),
+
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () => articleProvider.fetchArticles(),
+                child: Builder(
+                  builder: (context) {
+                    if (articleProvider.isLoading) {
+                      return const LoadingIndicator();
+                    }
+
+                    if (articleProvider.hasError) {
+                      return AppErrorWidget(message: articleProvider.errorMessage);
+                    }
+
+                    final articles = articleProvider.articles;
+
+                    if (articles.isEmpty) {
+                      return const Center(child: Text("No articles found."));
+                    }
+
+                    return ListView.builder(
+                      itemCount: articles.length,
+                      itemBuilder: (context, index) {
+                        return ArticleCard(
+                          article: articles[index],
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ArticleDetailScreen(
+                                  articleId: articles[index].id.toString(),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
