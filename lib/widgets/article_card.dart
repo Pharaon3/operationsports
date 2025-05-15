@@ -5,16 +5,13 @@ class ArticleCard extends StatelessWidget {
   final ArticleModel article;
   final VoidCallback onTap;
 
-  const ArticleCard({
-    Key? key,
-    required this.article,
-    required this.onTap,
-  }) : super(key: key);
+  const ArticleCard({Key? key, required this.article, required this.onTap})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200, // Set static height here
+      height: 300, // Set static height here
       child: Card(
         elevation: 2,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -27,15 +24,15 @@ class ArticleCard extends StatelessWidget {
               Positioned.fill(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    article.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.network(article.imageUrl, fit: BoxFit.cover),
                 ),
               ),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -51,33 +48,51 @@ class ArticleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // Date
+                    // Article Section
                     Text(
-                      article.formattedDate,
+                      article.articleSection,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                          ),
+                        color: const Color(0xFFFF5757),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     // Title
                     Text(
                       article.title,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 24
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    // Author
-                    Text(
-                      article.author,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
+                    Row(
+                      children: [
+                        // Author
+                        Text(
+                          article.author,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                        ),
+                        const SizedBox(width: 8),
+                        // Date
+                        Text(
+                          article.formattedDate,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(
+                            color: const Color(0xFF707070),
+                            fontWeight: FontWeight.bold,
                           ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
