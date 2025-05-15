@@ -1,9 +1,13 @@
+import 'package:intl/intl.dart';
+
 class ArticleModel {
   final int id;
   final String title;
   final String excerpt;
   final String content;
   final String imageUrl;
+  final String date;
+  final String author;
 
   ArticleModel({
     required this.id,
@@ -11,6 +15,8 @@ class ArticleModel {
     required this.excerpt,
     required this.content,
     required this.imageUrl,
+    required this.date,
+    required this.author,
   });
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +26,8 @@ class ArticleModel {
       excerpt: _parseText(json['excerpt']['rendered']),
       content: json['content']['rendered'] ?? '',
       imageUrl: json['yoast_head_json']?['og_image']?[0]?['url'] ?? json['twitter_image'] ?? '',
+      date: json['date'] ?? '',
+      author: json['yoast_head_json']?['author'] ?? '',
     );
   }
 
@@ -27,4 +35,14 @@ class ArticleModel {
     if (raw == null) return '';
     return raw.replaceAll(RegExp(r'<[^>]*>'), '').replaceAll('&nbsp;', ' ').trim();
   }
+
+  String get formattedDate {
+    try {
+      final parsedDate = DateTime.parse(date);
+      return DateFormat('MMMM d, y').format(parsedDate); // e.g., May 12, 2025
+    } catch (e) {
+      return date; // fallback in case of error
+    }
+  }
+
 }

@@ -51,6 +51,16 @@ class ArticleCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    // Date
+                    Text(
+                      article.formattedDate,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.white,
+                          ),
+                    ),
+                    const SizedBox(height: 8),
                     // Title
                     Text(
                       article.title,
@@ -60,9 +70,9 @@ class ArticleCard extends StatelessWidget {
                           ),
                     ),
                     const SizedBox(height: 8),
-                    // Excerpt
+                    // Author
                     Text(
-                      article.excerpt,
+                      article.author,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
