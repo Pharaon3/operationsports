@@ -181,6 +181,17 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
+            Container(
+              alignment: Alignment.centerLeft, // Aligns content to the left
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust padding as needed
+              child: const Text(
+                'Featured Story',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                ),
+              ),
+            ),
 
             Expanded(
               child: RefreshIndicator(

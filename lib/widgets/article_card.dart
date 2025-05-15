@@ -34,6 +34,8 @@ class ArticleCard extends StatelessWidget {
                 ),
               ),
               Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
