@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:operationsports/screens/newsletter.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
+import '../widgets/app_footer.dart';
 import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
@@ -261,6 +262,8 @@ class HomeScreen extends StatelessWidget {
 
                             PaginatedArticleList(articles: articles),
 
+                            const AppFooter(),
+                            
                             const SizedBox(height: 50),
                           ],
                         );
