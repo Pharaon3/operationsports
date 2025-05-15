@@ -57,7 +57,7 @@ class ArticleCard extends StatelessWidget {
                         color: const Color(0xFFFF5757),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 2),
                     // Title
                     Text(
                       article.title,
@@ -67,7 +67,7 @@ class ArticleCard extends StatelessWidget {
                         fontSize: 24
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     Row(
                       children: [
                         // Author

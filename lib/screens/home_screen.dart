@@ -73,7 +73,6 @@ class HomeScreen extends StatelessWidget {
                     },
                   ),
                 ),
-
                 // Button Row
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
