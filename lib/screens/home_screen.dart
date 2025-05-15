@@ -5,6 +5,7 @@ import '../providers/article_provider.dart';
 import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
+import '../widgets/main_article_card.dart';
 import './article_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -139,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            ArticleCard(
+                            MainArticleCard(
                               article: articles.first,
                               onTap: () {
                                 Navigator.push(
