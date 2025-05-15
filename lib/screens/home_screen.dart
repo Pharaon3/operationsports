@@ -32,10 +32,7 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(width: 4.0),
                   const Text(
                     'OPERATION SPORTS',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 25.0),
                   ),
                 ],
               ),
@@ -76,7 +73,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 // Button Row
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 8.0,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -86,7 +86,9 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const NewsLetter()),
+                            MaterialPageRoute(
+                              builder: (context) => const NewsLetter(),
+                            ),
                           );
                         },
                       ),
@@ -119,13 +121,17 @@ class HomeScreen extends StatelessWidget {
                         }
 
                         if (articleProvider.hasError) {
-                          return AppErrorWidget(message: articleProvider.errorMessage);
+                          return AppErrorWidget(
+                            message: articleProvider.errorMessage,
+                          );
                         }
 
                         final articles = articleProvider.articles;
 
                         if (articles.isEmpty) {
-                          return const Center(child: Text("No articles found."));
+                          return const Center(
+                            child: Text("No articles found."),
+                          );
                         }
 
                         return ListView(
@@ -146,16 +152,18 @@ class HomeScreen extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ArticleDetailScreen(
-                                      articleId: articles.first.id.toString(),
-                                    ),
+                                    builder:
+                                        (context) => ArticleDetailScreen(
+                                          articleId:
+                                              articles.first.id.toString(),
+                                        ),
                                   ),
                                 );
                               },
                             ),
                             const SizedBox(height: 24),
                             const Text(
-                              'Trends',
+                              'Trending',
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -163,24 +171,38 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            ...articles.skip(1).map((article) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: ArticleCard(
-                                  article: article,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ArticleDetailScreen(
-                                          articleId: article.id.toString(),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                            SizedBox(
+                              height: 230,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children:
+                                      articles.skip(1).map((article) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: 12,
+                                          ),
+                                          child: SizedBox(
+                                            width: 280,
+                                            child: ArticleCard(
+                                              article: article,
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context,) => ArticleDetailScreen(
+                                                          articleId: article.id.toString(),
+                                                        ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
                                 ),
-                              );
-                            }).toList(),
+                              ),
+                            ),
                           ],
                         );
                       },
@@ -198,7 +220,10 @@ class HomeScreen extends StatelessWidget {
             bottom: 20,
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFF1E1E1E),
                   borderRadius: BorderRadius.circular(40),
@@ -206,17 +231,29 @@ class HomeScreen extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildBottomIconButton(Icons.person, isActive: false, onTap: () {
-                      // Profile logic
-                    }),
+                    _buildBottomIconButton(
+                      Icons.person,
+                      isActive: false,
+                      onTap: () {
+                        // Profile logic
+                      },
+                    ),
                     const SizedBox(width: 30),
-                    _buildBottomIconButton(Icons.home, isActive: true, onTap: () {
-                      // Already on home
-                    }),
+                    _buildBottomIconButton(
+                      Icons.home,
+                      isActive: true,
+                      onTap: () {
+                        // Already on home
+                      },
+                    ),
                     const SizedBox(width: 30),
-                    _buildBottomIconButton(Icons.notifications_none, isActive: false, onTap: () {
-                      // Notifications logic
-                    }),
+                    _buildBottomIconButton(
+                      Icons.notifications_none,
+                      isActive: false,
+                      onTap: () {
+                        // Notifications logic
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -251,10 +288,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(width: 4.0),
             Text(
               label,
-              style: const TextStyle(
-                color: Color(0xFF434343),
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: Color(0xFF434343), fontSize: 12),
             ),
           ],
         ),
@@ -262,8 +296,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomIconButton(IconData icon,
-      {required bool isActive, required VoidCallback onTap}) {
+  Widget _buildBottomIconButton(
+    IconData icon, {
+    required bool isActive,
+    required VoidCallback onTap,
+  }) {
     return GestureDetector(
       onTap: onTap,
       child: Icon(
