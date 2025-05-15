@@ -3,6 +3,7 @@ import 'package:operationsports/screens/newsletter.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/article_card.dart';
+import '../widgets/article_list.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/main_article_card.dart';
@@ -177,86 +178,115 @@ class HomeScreen extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children:
-                                      articles.skip(1).map((article) {
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                            right: 12,
-                                          ),
-                                          child: SizedBox(
-                                            width: 280,
-                                            child: ArticleCard(
-                                              article: article,
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (
-                                                          context,
-                                                        ) => ArticleDetailScreen(
-                                                          articleId:
-                                                              article.id
-                                                                  .toString(),
-                                                        ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
+                                      articles
+                                          .skip(1)
+                                          .where(
+                                            (article) =>
+                                                article.imageUrl.isNotEmpty,
+                                          )
+                                          .map((article) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                right: 12,
+                                              ),
+                                              child: SizedBox(
+                                                width: 280,
+                                                child: ArticleCard(
+                                                  article: article,
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder:
+                                                            (
+                                                              context,
+                                                            ) => ArticleDetailScreen(
+                                                              articleId:
+                                                                  article.id
+                                                                      .toString(),
+                                                            ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          })
+                                          .toList(),
                                 ),
                               ),
                             ),
+
+                            // Button Row
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 8.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Text(
+                                      "Latest Posts",
+                                      style: const TextStyle(
+                                        color: Color(0xFFFF5757),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Text(
+                                    "Most Popular",
+                                    style: const TextStyle(
+                                      color: Color(0xFF434343),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Text(
+                                    "All",
+                                    style: const TextStyle(
+                                      color: Color(0xFF434343),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            ...articles
+                                .where((article) => article.imageUrl.isNotEmpty)
+                                .map((article) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 12),
+                                    child: ArticleList(
+                                      article: article,
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) =>
+                                                    ArticleDetailScreen(
+                                                      articleId:
+                                                          article.id.toString(),
+                                                    ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }),
                           ],
                         );
                       },
                     ),
                   ),
                 ),
-
-                // Button Row
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 8.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text(
-                          "Lates Posts",
-                          style: const TextStyle(
-                            color: Color(0xFFFF5757),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        "Most Popular",
-                        style: const TextStyle(
-                          color: Color(0xFF434343),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        "All",
-                        style: const TextStyle(
-                          color: Color(0xFF434343),
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                
               ],
             ),
           ),
