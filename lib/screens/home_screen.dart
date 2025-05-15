@@ -190,8 +190,13 @@ class HomeScreen extends StatelessWidget {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context,) => ArticleDetailScreen(
-                                                          articleId: article.id.toString(),
+                                                    builder:
+                                                        (
+                                                          context,
+                                                        ) => ArticleDetailScreen(
+                                                          articleId:
+                                                              article.id
+                                                                  .toString(),
                                                         ),
                                                   ),
                                                 );
@@ -209,6 +214,49 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                // Button Row
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 8.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Lates Posts",
+                          style: const TextStyle(
+                            color: Color(0xFFFF5757),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        "Most Popular",
+                        style: const TextStyle(
+                          color: Color(0xFF434343),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        "All",
+                        style: const TextStyle(
+                          color: Color(0xFF434343),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                
               ],
             ),
           ),
