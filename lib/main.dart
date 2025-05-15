@@ -13,7 +13,7 @@ void main() {
 }
 
 class OperationSportsApp extends StatelessWidget {
-  const OperationSportsApp({Key? key}) : super(key: key);
+  const OperationSportsApp({super.key});
 
   @override
   Widget build(BuildContext context) {

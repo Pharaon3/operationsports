@@ -24,7 +24,7 @@ class AppFooter extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 24,
                   letterSpacing: 1.2,
                 ),
               ),

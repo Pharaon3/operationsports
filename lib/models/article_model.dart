@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:html/parser.dart' show parse;
 
 class ArticleModel {
   final int id;
@@ -24,10 +25,13 @@ class ArticleModel {
   factory ArticleModel.fromJson(Map<String, dynamic> json) {
     return ArticleModel(
       id: json['id'],
-      title: _parseText(json['title']['rendered']),
+      title: convertHtmlEntities(_parseText(json['title']['rendered'])),
       excerpt: _parseText(json['excerpt']['rendered']),
       content: json['content']['rendered'] ?? '',
-      imageUrl: json['yoast_head_json']?['og_image']?[0]?['url'] ?? json['twitter_image'] ?? '',
+      imageUrl:
+          json['yoast_head_json']?['og_image']?[0]?['url'] ??
+          json['twitter_image'] ??
+          '',
       date: json['date'] ?? '',
       author: json['yoast_head_json']?['author'] ?? '',
       graph: json['yoast_head_json']?['schema']?['@graph'] ?? [],
@@ -58,7 +62,16 @@ class ArticleModel {
 
   static String _parseText(String? raw) {
     if (raw == null) return '';
-    return raw.replaceAll(RegExp(r'<[^>]*>'), '').replaceAll('&nbsp;', ' ').trim();
+    return raw
+        .replaceAll(RegExp(r'<[^>]*>'), '')
+        .replaceAll('&nbsp;', ' ')
+        .trim();
+  }
+
+  static String convertHtmlEntities(String input) {
+    // Parse the input string to convert HTML entities
+    var document = parse(input);
+    return document.body?.text ?? '';
   }
 
   String get formattedDate {
@@ -69,5 +82,4 @@ class ArticleModel {
       return date; // fallback in case of error
     }
   }
-
 }

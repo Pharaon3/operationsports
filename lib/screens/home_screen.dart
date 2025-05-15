@@ -149,7 +149,7 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
                             MainArticleCard(
-                              article: articles.first,
+                              article: articles.where((article) => article.imageUrl.isNotEmpty).first,
                               onTap: () {
                                 Navigator.push(
                                   context,
