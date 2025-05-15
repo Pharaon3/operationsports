@@ -6,96 +6,46 @@ class ArticleCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const ArticleCard({Key? key, required this.article, required this.onTap})
-    : super(key: key);
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300, // Set static height here
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
       child: Card(
+        color: const Color(0x337F7F7F), // Set card background to #7F7F7F
         elevation: 2,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: InkWell(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          onTap: onTap,
-          child: Stack(
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(article.imageUrl, fit: BoxFit.cover),
+              // Hero image with padding and rounded corners
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Image.network(
+                    article.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
-                ),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color.fromARGB(255, 0, 0, 0),
-                      Colors.transparent,
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // Article Section
-                    Text(
-                      article.articleSection,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFFF5757),
-                      ),
+              const SizedBox(height: 12),
+              // Title
+              Text(
+                article.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, // Ensure text contrasts well
                     ),
-                    const SizedBox(height: 2),
-                    // Title
-                    Text(
-                      article.title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 24
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        // Author
-                        Text(
-                          article.author,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
-                        ),
-                        const SizedBox(width: 8),
-                        // Date
-                        Text(
-                          article.formattedDate,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(
-                            color: const Color(0xFF707070),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
