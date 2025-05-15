@@ -16,222 +16,244 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-      backgroundColor: Color(0xFF171717),
-      title: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0), // Padding for the title
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(2.0), // Padding for logo
-                  child: Image.asset('assets/logo.png', height: 26), // Adjust height as needed
-                ),
-                const SizedBox(width: 4.0), // Space between logo and title
-                const Text(
-                  'OPERATION SPORTS',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0,
-                  ),
-                ),
-              ],
-            ),
-            IconButton(
-              icon: Image.asset('assets/menu.png', height: 40),
-              onPressed: () {
-                // Define what happens when the menu button is pressed
-              },
-            ),
-          ],
-        ),
-      ),
-    ),
-      body: Container(
-        color: Color(0xFF171717), // Background color
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search articles...',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                ),
-                onChanged: (value) {
-                  // Optionally: add search logic here
-                  // articleProvider.searchArticles(value);
-                },
-              ),
-            ),
-
-            // Button Row
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        backgroundColor: const Color(0xFF171717),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  SizedBox(
-                    height: 45,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.grey[300],
-                        backgroundColor: Color(0xFF222222),
-                        elevation: 0,
-                        shadowColor: Color(0xFF000000),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => NewsLetter()),
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Image.asset('assets/newsletter.png', height: 23),
-                          ),
-                          const SizedBox(width: 4.0),
-                          const Text(
-                            'NEWSLETTER',
-                            style: TextStyle(
-                              color: Color(0xFF434343),
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Image.asset('assets/logo.png', height: 26),
                   ),
-                  SizedBox(
-                    height: 45,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.grey[300],
-                        backgroundColor: Color(0xFF222222),
-                        elevation: 0,
-                        shadowColor: Color(0xFF000000),
-                      ),
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => NewsLetter()),
-                        // );
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Image.asset('assets/forums.png', height: 23),
-                          ),
-                          const SizedBox(width: 4.0),
-                          const Text(
-                            'FORUMS',
-                            style: TextStyle(
-                              color: Color(0xFF434343),
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 45,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.grey[300],
-                        backgroundColor: Color(0xFF222222),
-                        elevation: 0,
-                        shadowColor: Color(0xFF000000),
-                      ),
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => NewsLetter()),
-                        // );
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Image.asset('assets/review.png', height: 23),
-                          ),
-                          const SizedBox(width: 4.0),
-                          const Text(
-                            'REVIEW',
-                            style: TextStyle(
-                              color: Color(0xFF434343),
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
+                  const SizedBox(width: 4.0),
+                  const Text(
+                    'OPERATION SPORTS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
                     ),
                   ),
                 ],
               ),
-            ),
+              IconButton(
+                icon: Image.asset('assets/menu.png', height: 40),
+                onPressed: () {
+                  // Menu action
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: Stack(
+        children: [
+          // Main content
+          Container(
+            color: const Color(0xFF171717),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search articles...',
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                    onChanged: (value) {
+                      // Optional search logic
+                    },
+                  ),
+                ),
 
-            Container(
-              alignment: Alignment.centerLeft, // Aligns content to the left
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Adjust padding as needed
-              child: const Text(
-                'Featured Story',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 25.0,
+                // Button Row
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildTopButton(
+                        iconPath: 'assets/newsletter.png',
+                        label: 'NEWSLETTER',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const NewsLetter()),
+                          );
+                        },
+                      ),
+                      _buildTopButton(
+                        iconPath: 'assets/forums.png',
+                        label: 'FORUMS',
+                        onPressed: () {
+                          // Forums action
+                        },
+                      ),
+                      _buildTopButton(
+                        iconPath: 'assets/review.png',
+                        label: 'REVIEW',
+                        onPressed: () {
+                          // Review action
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Article List
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => articleProvider.fetchArticles(),
+                    child: Builder(
+                      builder: (context) {
+                        if (articleProvider.isLoading) {
+                          return const LoadingIndicator();
+                        }
+
+                        if (articleProvider.hasError) {
+                          return AppErrorWidget(message: articleProvider.errorMessage);
+                        }
+
+                        final articles = articleProvider.articles;
+
+                        if (articles.isEmpty) {
+                          return const Center(child: Text("No articles found."));
+                        }
+
+                        return ListView(
+                          padding: const EdgeInsets.all(16),
+                          children: [
+                            const Text(
+                              'Featured Story',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            ArticleCard(
+                              article: articles.first,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ArticleDetailScreen(
+                                      articleId: articles.first.id.toString(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 24),
+                            const Text(
+                              'Trends',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            ...articles.skip(1).map((article) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: ArticleCard(
+                                  article: article,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ArticleDetailScreen(
+                                          articleId: article.id.toString(),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Floating Button Bar
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF1E1E1E),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildBottomIconButton(Icons.person, isActive: false, onTap: () {
+                      // Profile logic
+                    }),
+                    const SizedBox(width: 30),
+                    _buildBottomIconButton(Icons.home, isActive: true, onTap: () {
+                      // Already on home
+                    }),
+                    const SizedBox(width: 30),
+                    _buildBottomIconButton(Icons.notifications_none, isActive: false, onTap: () {
+                      // Notifications logic
+                    }),
+                  ],
                 ),
               ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
 
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () => articleProvider.fetchArticles(),
-                child: Builder(
-                  builder: (context) {
-                    if (articleProvider.isLoading) {
-                      return const LoadingIndicator();
-                    }
-
-                    if (articleProvider.hasError) {
-                      return AppErrorWidget(message: articleProvider.errorMessage);
-                    }
-
-                    final articles = articleProvider.articles;
-
-                    if (articles.isEmpty) {
-                      return const Center(child: Text("No articles found."));
-                    }
-
-                    return ListView.builder(
-                      itemCount: articles.length,
-                      itemBuilder: (context, index) {
-                        return ArticleCard(
-                          article: articles[index],
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ArticleDetailScreen(
-                                  articleId: articles[index].id.toString(),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
+  Widget _buildTopButton({
+    required String iconPath,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
+    return SizedBox(
+      height: 45,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.grey[300],
+          backgroundColor: const Color(0xFF222222),
+          elevation: 0,
+          shadowColor: const Color(0xFF000000),
+        ),
+        onPressed: onPressed,
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Image.asset(iconPath, height: 23),
+            ),
+            const SizedBox(width: 4.0),
+            Text(
+              label,
+              style: const TextStyle(
+                color: Color(0xFF434343),
+                fontSize: 12,
               ),
             ),
           ],
@@ -240,4 +262,15 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildBottomIconButton(IconData icon,
+      {required bool isActive, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(
+        icon,
+        size: 28,
+        color: isActive ? Colors.redAccent : Colors.grey,
+      ),
+    );
+  }
 }
