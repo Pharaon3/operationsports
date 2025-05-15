@@ -3,10 +3,10 @@ import 'package:operationsports/screens/newsletter.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/article_card.dart';
-import '../widgets/article_list.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/main_article_card.dart';
+import '../widgets/paginated_article.dart';
 import './article_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -258,29 +258,10 @@ class HomeScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            ...articles
-                                .where((article) => article.imageUrl.isNotEmpty)
-                                .map((article) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: ArticleList(
-                                      article: article,
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder:
-                                                (context) =>
-                                                    ArticleDetailScreen(
-                                                      articleId:
-                                                          article.id.toString(),
-                                                    ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                }),
+
+                            PaginatedArticleList(articles: articles),
+
+                            const SizedBox(height: 50),
                           ],
                         );
                       },
