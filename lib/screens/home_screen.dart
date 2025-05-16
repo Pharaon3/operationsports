@@ -204,7 +204,7 @@ class HomeScreen extends StatelessWidget {
                                                             ) => ArticleDetailScreen(
                                                               articleId:
                                                                   article.id
-                                                                      .toString(),
+                                                                      .toString()
                                                             ),
                                                       ),
                                                     );

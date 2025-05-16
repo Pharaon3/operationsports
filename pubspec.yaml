@@ -66,6 +66,7 @@ flutter:
     - assets/review.png
     - assets/white gamurs.png
     - assets/red back.png
+    - assets/red up.png
     - assets/comment.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

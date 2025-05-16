@@ -3,6 +3,8 @@ import 'package:flutter_html/flutter_html.dart';
 import '../models/article_model.dart';
 import '../services/article_service.dart';
 import '../widgets/app_footer.dart';
+import '../widgets/article_card.dart';
+import '../widgets/comment.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 
@@ -29,31 +31,6 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF1E1E1E),
-      // appBar: AppBar(
-      //   backgroundColor: const Color(0xFF171717),
-      //   title: Padding(
-      //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         Row(
-      //           children: [
-      //             const Text(
-      //               'Article',
-      //               style: TextStyle(color: Colors.white, fontSize: 25.0),
-      //             ),
-      //           ],
-      //         ),
-      //         IconButton(
-      //           icon: Image.asset('assets/menu.png', height: 40),
-      //           onPressed: () {
-      //             // Menu action
-      //           },
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       body: FutureBuilder<ArticleModel>(
         future: _articleFuture,
         builder: (context, snapshot) {
@@ -193,6 +170,31 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ],
                   ),
                 ),
+
+                const CommentsPage(),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 48.0, top: 35.0, bottom: 15.0),
+                  child: const Text(
+                    'Related',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFF5757),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 230,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: []),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
                 const AppFooter(),
               ],
             ),
