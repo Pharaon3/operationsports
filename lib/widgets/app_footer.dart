@@ -7,7 +7,7 @@ class AppFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: const Color(0xFF171717),
       padding: const EdgeInsets.symmetric(vertical: 32),
       child: Column(
         children: [
