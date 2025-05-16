@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:operationsports/providers/article_provider.dart';
+import 'package:provider/provider.dart';
 import '../models/article_model.dart';
 import '../services/article_service.dart';
 import '../widgets/app_footer.dart';
@@ -12,7 +14,7 @@ class ArticleDetailScreen extends StatefulWidget {
   final String articleId;
 
   const ArticleDetailScreen({Key? key, required this.articleId})
-    : super(key: key);
+      : super(key: key);
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
@@ -25,10 +27,17 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   void initState() {
     super.initState();
     _articleFuture = ArticleService.fetchArticleById(widget.articleId);
+
+    // Fetch articles without listening to changes to avoid context issues
+    Future.microtask(() {
+      Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final articles = Provider.of<ArticleProvider>(context).articles;
+
     return Scaffold(
       backgroundColor: Color(0xFF1E1E1E),
       body: FutureBuilder<ArticleModel>(
@@ -142,7 +151,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                           "img": Style(
                             width: Width(
                               MediaQuery.of(context).size.width,
-                            ), // Fit image to screen width
+                            ),
                           ),
                         },
                         extensions: [
@@ -152,11 +161,10 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                               final src = context.attributes['src'] ?? '';
                               final buildContext = context.buildContext;
 
-                              // Provide a fallback width if buildContext is null
                               final screenWidth =
                                   buildContext != null
                                       ? MediaQuery.of(buildContext).size.width
-                                      : 300.0; // Fallback width
+                                      : 300.0;
 
                               return Image.network(
                                 src,
@@ -174,7 +182,11 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 const CommentsPage(),
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 48.0, top: 35.0, bottom: 15.0),
+                  padding: const EdgeInsets.only(
+                    left: 48.0,
+                    top: 35.0,
+                    bottom: 15.0,
+                  ),
                   child: const Text(
                     'Related',
                     style: TextStyle(
@@ -184,13 +196,35 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ),
                   ),
                 ),
-
-                const SizedBox(height: 12),
                 SizedBox(
                   height: 230,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Row(children: []),
+                    child: Row(
+                      children: articles
+                          .where((article) => article.imageUrl.isNotEmpty)
+                          .map((article) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: SizedBox(
+                            width: 280,
+                            child: ArticleCard(
+                              article: article,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ArticleDetailScreen(
+                                      articleId: article.id.toString(),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
