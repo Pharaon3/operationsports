@@ -16,7 +16,7 @@ class AppFooter extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Image.asset('assets/logo.png', height: 26),
+                child: Image.asset('assets/logo.png', height: 24),
               ),
               const SizedBox(width: 4.0),
               const Text(
@@ -34,7 +34,7 @@ class AppFooter extends StatelessWidget {
           const SizedBox(height: 8),
           const Text(
             "The premier sports gamer destination",
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(color: Color(0xFF707070)),
           ),
           const SizedBox(height: 16),
 
@@ -42,11 +42,23 @@ class AppFooter extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Icon(FontAwesomeIcons.facebook, color: Colors.white70, size: 20),
+              Icon(
+                FontAwesomeIcons.facebook,
+                color: Color(0xFF434343),
+                size: 20,
+              ),
               SizedBox(width: 24),
-              Icon(FontAwesomeIcons.youtube, color: Colors.white70, size: 20),
+              Icon(
+                FontAwesomeIcons.youtube,
+                color: Color(0xFF434343),
+                size: 20,
+              ),
               SizedBox(width: 24),
-              Icon(FontAwesomeIcons.twitter, color: Colors.white70, size: 20),
+              Icon(
+                FontAwesomeIcons.twitter,
+                color: Color(0xFF434343),
+                size: 20,
+              ),
             ],
           ),
 
@@ -58,11 +70,11 @@ class AppFooter extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Column(
               children: const [
-                Text("ABOUT US", style: TextStyle(color: Colors.grey)),
+                Text("ABOUT US", style: TextStyle(color: Color(0xFF707070))),
                 SizedBox(height: 8),
-                Text("TERMS", style: TextStyle(color: Colors.grey)),
+                Text("TERMS", style: TextStyle(color: Color(0xFF707070))),
                 SizedBox(height: 8),
-                Text("PRIVACY", style: TextStyle(color: Colors.grey)),
+                Text("PRIVACY", style: TextStyle(color: Color(0xFF707070))),
               ],
             ),
           ),
@@ -75,7 +87,7 @@ class AppFooter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.all(2.0),
+                padding: const EdgeInsets.only(top: 38, bottom: 70),
                 child: Image.asset('assets/white gamurs.png', height: 26),
               ),
             ],
