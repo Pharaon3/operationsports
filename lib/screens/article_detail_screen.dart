@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import '../models/article_model.dart';
 import '../services/article_service.dart';
+import '../widgets/app_footer.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 
@@ -70,7 +71,39 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(article.imageUrl),
+                Stack(
+                  children: [
+                    Image.network(
+                      article.imageUrl,
+                      width: double.infinity,
+                      height: 344,
+                      fit: BoxFit.cover,
+                    ),
+                    // Back Button
+                    Positioned(
+                      top: 38,
+                      left: 26,
+                      child: IconButton(
+                        icon: Image.asset('assets/red back.png', height: 38),
+                        onPressed: () => Navigator.of(context).pop(),
+                        tooltip: 'Back',
+                      ),
+                    ),
+                    // Comment Button
+                    Positioned(
+                      top: 268,
+                      left: 24,
+                      child: IconButton(
+                        icon: Image.asset('assets/comment.png', height: 57),
+                        onPressed: () {
+                          // Handle comment action here
+                        },
+                        tooltip: 'Leave a comment',
+                      ),
+                    ),
+                  ],
+                ),
+
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -79,7 +112,10 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           article.articleSection,
-                          style: const TextStyle(color: Color(0xFFFF5757)),
+                          style: const TextStyle(
+                            color: Color(0xFFFF5757),
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -116,6 +152,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                             ).textTheme.bodyMedium?.copyWith(
                               color: const Color(0xFF707070),
                               fontWeight: FontWeight.bold,
+                              fontSize: 12,
                             ),
                           ),
                         ],
@@ -156,6 +193,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ],
                   ),
                 ),
+                const AppFooter(),
               ],
             ),
           );
