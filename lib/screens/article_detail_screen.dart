@@ -8,7 +8,8 @@ import '../widgets/error_widget.dart';
 class ArticleDetailScreen extends StatefulWidget {
   final String articleId;
 
-  const ArticleDetailScreen({Key? key, required this.articleId}) : super(key: key);
+  const ArticleDetailScreen({Key? key, required this.articleId})
+    : super(key: key);
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
@@ -26,7 +27,32 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Article')),
+      backgroundColor: Color(0xFF1E1E1E),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xFF171717),
+      //   title: Padding(
+      //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //       children: [
+      //         Row(
+      //           children: [
+      //             const Text(
+      //               'Article',
+      //               style: TextStyle(color: Colors.white, fontSize: 25.0),
+      //             ),
+      //           ],
+      //         ),
+      //         IconButton(
+      //           icon: Image.asset('assets/menu.png', height: 40),
+      //           onPressed: () {
+      //             // Menu action
+      //           },
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
       body: FutureBuilder<ArticleModel>(
         future: _articleFuture,
         builder: (context, snapshot) {
@@ -41,16 +67,95 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
           final article = snapshot.data!;
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  article.title,
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                Image.network(article.imageUrl),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          article.articleSection,
+                          style: const TextStyle(color: Color(0xFFFF5757)),
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      // Title
+                      Text(
+                        article.title,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 24,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        children: [
+                          // Author
+                          Text(
+                            article.author,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
+                          const SizedBox(width: 8),
+                          // Date
+                          Text(
+                            article.formattedDate,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.copyWith(
+                              color: const Color(0xFF707070),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Html(
+                        data: article.content,
+                        style: {
+                          "*": Style(color: Colors.white),
+                          "img": Style(
+                            width: Width(
+                              MediaQuery.of(context).size.width,
+                            ), // Fit image to screen width
+                          ),
+                        },
+                        extensions: [
+                          TagExtension(
+                            tagsToExtend: {"img"},
+                            builder: (context) {
+                              final src = context.attributes['src'] ?? '';
+                              final buildContext = context.buildContext;
+
+                              // Provide a fallback width if buildContext is null
+                              final screenWidth =
+                                  buildContext != null
+                                      ? MediaQuery.of(buildContext).size.width
+                                      : 300.0; // Fallback width
+
+                              return Image.network(
+                                src,
+                                width: screenWidth,
+                                fit: BoxFit.contain,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 16),
-                Html(data: article.content),
               ],
             ),
           );

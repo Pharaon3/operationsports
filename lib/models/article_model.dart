@@ -77,7 +77,7 @@ class ArticleModel {
   String get formattedDate {
     try {
       final parsedDate = DateTime.parse(date);
-      return DateFormat('MMMM d, y').format(parsedDate); // e.g., May 12, 2025
+      return DateFormat('MMMM d, y').format(parsedDate).toUpperCase(); // e.g., May 12, 2025
     } catch (e) {
       return date; // fallback in case of error
     }
