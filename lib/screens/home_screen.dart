@@ -11,7 +11,7 @@ import '../widgets/paginated_article.dart';
 import './article_detail_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,13 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
                             MainArticleCard(
-                              article: articles.where((article) => article.imageUrl.isNotEmpty).first,
+                              article:
+                                  articles
+                                      .where(
+                                        (article) =>
+                                            article.imageUrl.isNotEmpty,
+                                      )
+                                      .first,
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -167,7 +173,7 @@ class HomeScreen extends StatelessWidget {
                                                             ) => ArticleDetailScreen(
                                                               articleId:
                                                                   article.id
-                                                                      .toString()
+                                                                      .toString(),
                                                             ),
                                                       ),
                                                     );
@@ -226,7 +232,7 @@ class HomeScreen extends StatelessWidget {
                             PaginatedArticleList(articles: articles),
 
                             const AppFooter(),
-                            
+
                           ],
                         );
                       },
@@ -237,100 +243,8 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
 
-          // Floating Button Bar
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 20,
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1E1E1E),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildBottomIconButton(
-                      Icons.person,
-                      isActive: false,
-                      onTap: () {
-                        // Profile logic
-                      },
-                    ),
-                    const SizedBox(width: 30),
-                    _buildBottomIconButton(
-                      Icons.home,
-                      isActive: true,
-                      onTap: () {
-                        // Already on home
-                      },
-                    ),
-                    const SizedBox(width: 30),
-                    _buildBottomIconButton(
-                      Icons.notifications_none,
-                      isActive: false,
-                      onTap: () {
-                        // Notifications logic
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // BottomIconButton(),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTopButton({
-    required String iconPath,
-    required String label,
-    required VoidCallback onPressed,
-  }) {
-    return SizedBox(
-      height: 45,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.grey[300],
-          backgroundColor: const Color(0xFF222222),
-          elevation: 0,
-          shadowColor: const Color(0xFF000000),
-        ),
-        onPressed: onPressed,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Image.asset(iconPath, height: 23),
-            ),
-            const SizedBox(width: 4.0),
-            Text(
-              label,
-              style: const TextStyle(color: Color(0xFF434343), fontSize: 12),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomIconButton(
-    IconData icon, {
-    required bool isActive,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(
-        icon,
-        size: 28,
-        color: isActive ? Colors.redAccent : Colors.grey,
       ),
     );
   }

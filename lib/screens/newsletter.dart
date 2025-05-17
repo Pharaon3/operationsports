@@ -9,7 +9,7 @@ import '../widgets/newslettersection.dart';
 import '../widgets/paginated_article.dart';
 
 class NewsLetter extends StatelessWidget {
-  const NewsLetter({Key? key}) : super(key: key);
+  const NewsLetter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +86,65 @@ class NewsLetter extends StatelessWidget {
                 const MenuButton(selectedMenu: 1),
 
                 const NewsletterSection(),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 10.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Archive',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ), // More rounded
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search Posts...',
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Colors.black54,
+                            ),
+                            hintStyle: const TextStyle(color: Colors.black54),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide.none,
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 14,
+                            ),
+                          ),
+                          style: const TextStyle(color: Colors.black87),
+                          onChanged: (value) {
+                            // Handle search
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 PaginatedArticleList(articles: articles),
 

@@ -16,12 +16,7 @@ class NewsletterSection extends StatelessWidget {
                 'assets/newsletter background.png', // Replace with your image asset
                 width: double.infinity,
                 fit: BoxFit.cover,
-                height: 400,
-              ),
-              Container(
-                width: double.infinity,
-                height: 400,
-                color: Colors.black.withOpacity(0.2),
+                height: 442,
               ),
               Positioned(
                 child: Column(
@@ -41,7 +36,7 @@ class NewsletterSection extends StatelessWidget {
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.0),
                       child: Text(
-                        'Join 32,000+ fans for weekly news, guides, and insights on your favorite sports games, delivered straight to your inbox every Friday.',
+                        'Join 32,000+ fans for weekly news,\nguides, and insights on your favorite sports\ngames, delivered straight to your inbox\nevery Friday.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -64,7 +59,7 @@ class NewsletterSection extends StatelessWidget {
                               height: 48,
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(5),
                               ),
                               padding: const EdgeInsets.symmetric(horizontal: 12),
                               child: const TextField(
