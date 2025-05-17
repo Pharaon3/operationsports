@@ -4,6 +4,7 @@ import '../providers/article_provider.dart';
 import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
+import '../widgets/menu_button.dart';
 import './article_detail_screen.dart';
 
 class NewsLetter extends StatelessWidget {
@@ -14,37 +15,60 @@ class NewsLetter extends StatelessWidget {
     final articleProvider = Provider.of<ArticleProvider>(context);
 
     return Scaffold(
+      backgroundColor: const Color(0xFF171717),
       appBar: AppBar(
-        title: const Text('News Letter'),
+        backgroundColor: const Color(0xFF171717),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Image.asset('assets/logo.png', height: 26),
+                  ),
+                  const SizedBox(width: 4.0),
+                  const Text(
+                    'OPERATION SPORTS',
+                    style: TextStyle(color: Colors.white, fontSize: 25.0),
+                  ),
+                ],
+              ),
+              IconButton(
+                icon: Image.asset('assets/menu.png', height: 40),
+                onPressed: () {
+                  // Menu action
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle Newsletter button
-                  },
-                  child: const Text("Newsletter"),
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search articles...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide.none,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle Forums button
-                  },
-                  child: const Text("Forums"), 
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle Review button
-                  },
-                  child: const Text("Review"),
-                ),
-              ],
+                filled: true,
+                fillColor: Colors.grey[200],
+              ),
+              onChanged: (value) {
+                // Optional search logic
+              },
             ),
           ),
+
+          // Button Row
+          const MenuButton(),
 
           Expanded(
             child: RefreshIndicator(
@@ -56,7 +80,9 @@ class NewsLetter extends StatelessWidget {
                   }
 
                   if (articleProvider.hasError) {
-                    return AppErrorWidget(message: articleProvider.errorMessage);
+                    return AppErrorWidget(
+                      message: articleProvider.errorMessage,
+                    );
                   }
 
                   final articles = articleProvider.articles;
@@ -74,9 +100,10 @@ class NewsLetter extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ArticleDetailScreen(
-                                articleId: articles[index].id.toString(),
-                              ),
+                              builder:
+                                  (context) => ArticleDetailScreen(
+                                    articleId: articles[index].id.toString(),
+                                  ),
                             ),
                           );
                         },

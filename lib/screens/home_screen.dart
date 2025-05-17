@@ -7,6 +7,7 @@ import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/main_article_card.dart';
+import '../widgets/menu_button.dart';
 import '../widgets/paginated_article.dart';
 import './article_detail_screen.dart';
 
@@ -74,44 +75,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 // Button Row
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 8.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildTopButton(
-                        iconPath: 'assets/newsletter.png',
-                        label: 'NEWSLETTER',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const NewsLetter(),
-                            ),
-                          );
-                        },
-                      ),
-                      _buildTopButton(
-                        iconPath: 'assets/forums.png',
-                        label: 'FORUMS',
-                        onPressed: () {
-                          // Forums action
-                        },
-                      ),
-                      _buildTopButton(
-                        iconPath: 'assets/review.png',
-                        label: 'REVIEW',
-                        onPressed: () {
-                          // Review action
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
+                const MenuButton(),
                 // Article List
                 Expanded(
                   child: RefreshIndicator(

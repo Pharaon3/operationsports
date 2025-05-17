@@ -69,7 +69,7 @@ class CommentsPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFF2F2F2),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
