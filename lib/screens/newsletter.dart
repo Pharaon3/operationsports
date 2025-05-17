@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
-import '../widgets/article_card.dart';
+import '../widgets/app_footer.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/menu_button.dart';
 import '../widgets/newslettersection.dart';
-import './article_detail_screen.dart';
+import '../widgets/paginated_article.dart';
 
 class NewsLetter extends StatelessWidget {
   const NewsLetter({Key? key}) : super(key: key);
@@ -87,30 +87,9 @@ class NewsLetter extends StatelessWidget {
 
                 const NewsletterSection(),
 
-                if (articles.isEmpty)
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: Text("No articles found."),
-                    ),
-                  )
-                else
-                  ...articles.map(
-                    (article) => ArticleCard(
-                      article: article,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => ArticleDetailScreen(
-                                  articleId: article.id.toString(),
-                                ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                PaginatedArticleList(articles: articles),
+
+                const AppFooter(),
               ],
             );
           },
