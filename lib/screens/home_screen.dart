@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/screens/newsletter.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/app_footer.dart';

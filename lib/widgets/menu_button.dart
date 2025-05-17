@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../screens/newsletter.dart';
 
 class MenuButton extends StatelessWidget {
-  const MenuButton({super.key});
+  final int selectedMenu;
+  const MenuButton({super.key, this.selectedMenu = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +16,20 @@ class MenuButton extends StatelessWidget {
           _buildTopButton(
             iconPath: 'assets/newsletter.png',
             label: 'NEWSLETTER',
+            isActive: selectedMenu == 1,
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const NewsLetter()),
-              );
+              if (selectedMenu != 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewsLetter()),
+                );
+              }
             },
           ),
           _buildTopButton(
             iconPath: 'assets/forums.png',
             label: 'FORUMS',
+            isActive: selectedMenu == 2,
             onPressed: () {
               // Forums action
             },
@@ -32,6 +37,7 @@ class MenuButton extends StatelessWidget {
           _buildTopButton(
             iconPath: 'assets/review.png',
             label: 'REVIEW',
+            isActive: selectedMenu == 3,
             onPressed: () {
               // Review action
             },
@@ -45,6 +51,7 @@ class MenuButton extends StatelessWidget {
     required String iconPath,
     required String label,
     required VoidCallback onPressed,
+    required bool isActive,
   }) {
     return SizedBox(
       height: 45,
@@ -65,7 +72,10 @@ class MenuButton extends StatelessWidget {
             const SizedBox(width: 4.0),
             Text(
               label,
-              style: const TextStyle(color: Color(0xFF434343), fontSize: 12),
+              style: TextStyle(
+                color: isActive ? Color(0xFFFF5757) : Color(0xFF434343),
+                fontSize: 12,
+              ),
             ),
           ],
         ),
