@@ -33,13 +33,16 @@ class _ForumMenuState extends State<ForumMenu> {
               color: Colors.redAccent,
               borderRadius: BorderRadius.circular(12),
             ),
-            margin: const EdgeInsets.symmetric(vertical: 13),
+            margin: const EdgeInsets.symmetric(vertical: 12),
             child: ListTile(
+              dense: true,
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 30),
               title: Text(
                 widget.title,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
               trailing: Icon(
