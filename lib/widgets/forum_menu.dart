@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/screens/forum_list.dart';
 
 class ForumMenu extends StatefulWidget {
   final String title;
   final List<String> subItems;
 
-  const ForumMenu({
-    super.key,
-    required this.title,
-    required this.subItems,
-  });
+  const ForumMenu({super.key, required this.title, required this.subItems});
 
   @override
   State<ForumMenu> createState() => _ForumMenuState();
@@ -56,39 +53,45 @@ class _ForumMenuState extends State<ForumMenu> {
         // Sub-items
         if (isExpanded)
           Column(
-            children: widget.subItems.map((item) {
-              return Container(
-                margin: const EdgeInsets.symmetric(vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.grey[850],
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 5,
-                      offset: const Offset(2, 2),
+            children:
+                widget.subItems.map((item) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[850],
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          blurRadius: 5,
+                          offset: const Offset(2, 2),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  title: Text(
-                    item,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
+                      title: Text(
+                        item,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.redAccent,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForumList()),
+                        );
+                      },
                     ),
-                  ),
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.redAccent,
-                  ),
-                  onTap: () {
-                    // Handle submenu tap
-                  },
-                ),
-              );
-            }).toList(),
+                  );
+                }).toList(),
           ),
       ],
     );
