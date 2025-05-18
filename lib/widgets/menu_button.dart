@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/forum_screen.dart';
 import '../screens/newsletter.dart';
 
 class MenuButton extends StatelessWidget {
@@ -31,7 +32,12 @@ class MenuButton extends StatelessWidget {
             label: 'FORUMS',
             isActive: selectedMenu == 2,
             onPressed: () {
-              // Forums action
+              if (selectedMenu != 2) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ForumScreen()),
+                );
+              }
             },
           ),
           _buildTopButton(
