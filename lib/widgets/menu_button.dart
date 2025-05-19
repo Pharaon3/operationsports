@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/screens/review_screen.dart';
 
 import '../screens/forum_screen.dart';
 import '../screens/newsletter.dart';
@@ -45,7 +46,12 @@ class MenuButton extends StatelessWidget {
             label: 'REVIEW',
             isActive: selectedMenu == 3,
             onPressed: () {
-              // Review action
+              if (selectedMenu != 3) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ReviewScreen()),
+                );
+              }
             },
           ),
         ],
