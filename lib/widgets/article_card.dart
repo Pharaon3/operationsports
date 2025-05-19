@@ -5,8 +5,7 @@ class ArticleCard extends StatelessWidget {
   final ArticleModel article;
   final VoidCallback onTap;
 
-  const ArticleCard({Key? key, required this.article, required this.onTap})
-      : super(key: key);
+  const ArticleCard({super.key, required this.article, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class ArticleCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Card(
-        color: const Color(0x337F7F7F), // Set card background to #7F7F7F
+        color: const Color(0x337F7F7F),
         elevation: 2,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         shape: RoundedRectangleBorder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/screens/forum_detail_screen.dart';
 
 class ForumSubMenu extends StatefulWidget {
   final String title;
@@ -64,117 +65,125 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
           Column(
             children:
                 widget.subItems.map((item) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF2C2C2C),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        // Main Info
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.account_circle,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ForumDetail()),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2C2C2C),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          // Main Info
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item,
+                                  style: TextStyle(
                                     color: Colors.white,
-                                    size: 32,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
                                   ),
-                                  SizedBox(width: 8),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Arcade Sports Games Need a Revival",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 13,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          "by Steve_OS\n04-08-2025, 03:25 PM",
-                                          style: TextStyle(
-                                            color: Colors.white54,
-                                            fontSize: 11,
-                                          ),
-                                        ),
-                                      ],
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.account_circle,
+                                      color: Colors.white,
+                                      size: 32,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              const Divider(
-                                color: Colors.white30,
-                                thickness: 1,
-                              ),
-                              const SizedBox(height: 6),
-                              // Star Rating
-                              Row(
-                                children: const [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.redAccent,
-                                    size: 20,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.redAccent,
-                                    size: 20,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.redAccent,
-                                    size: 20,
-                                  ),
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.redAccent,
-                                    size: 20,
-                                  ),
-                                  Icon(
-                                    Icons.star_border,
-                                    color: Colors.redAccent,
-                                    size: 20,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Arcade Sports Games Need a Revival",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 13,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            "by Steve_OS\n04-08-2025, 03:25 PM",
+                                            style: TextStyle(
+                                              color: Colors.white54,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                const Divider(
+                                  color: Colors.white30,
+                                  thickness: 1,
+                                ),
+                                const SizedBox(height: 6),
+                                // Star Rating
+                                Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                    Icon(
+                                      Icons.star_border,
+                                      color: Colors.redAccent,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
 
-                        // Right arrow button
-                        Container(
-                          height: 100,
-                          width: 40,
-                          margin: const EdgeInsets.only(left: 8),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF1E1E1E),
-                            borderRadius: BorderRadius.circular(12),
+                          // Right arrow button
+                          Container(
+                            height: 100,
+                            width: 40,
+                            margin: const EdgeInsets.only(left: 8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF1E1E1E),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.redAccent,
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.arrow_forward,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),
