@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/widgets/default_appbar.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/app_footer.dart';
@@ -19,33 +20,7 @@ class NewsLetter extends StatelessWidget {
       backgroundColor: const Color(0xFF171717),
       appBar: AppBar(
         backgroundColor: const Color(0xFF171717),
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Image.asset('assets/logo.png', height: 26),
-                  ),
-                  const SizedBox(width: 4.0),
-                  const Text(
-                    'OPERATION SPORTS',
-                    style: TextStyle(color: Colors.white, fontSize: 25.0),
-                  ),
-                ],
-              ),
-              IconButton(
-                icon: Image.asset('assets/menu.png', height: 40),
-                onPressed: () {
-                  // Menu action
-                },
-              ),
-            ],
-          ),
-        ),
+        title: DefaultAppbar(),
       ),
       body: RefreshIndicator(
         onRefresh: () => articleProvider.fetchArticles(),

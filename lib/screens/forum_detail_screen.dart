@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/screens/new_topic.dart';
+import 'package:operationsports/widgets/default_appbar.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
-import 'package:operationsports/widgets/topic_grid.dart';
 import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/default_button.dart';
-import 'package:operationsports/widgets/forum_submenu.dart';
 import 'package:operationsports/widgets/menu_button.dart';
 
 class ForumDetail extends StatelessWidget {
@@ -16,33 +15,7 @@ class ForumDetail extends StatelessWidget {
       backgroundColor: const Color(0xFF171717),
       appBar: AppBar(
         backgroundColor: const Color(0xFF171717),
-        title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Image.asset('assets/logo.png', height: 26),
-                  ),
-                  const SizedBox(width: 4.0),
-                  const Text(
-                    'OPERATION SPORTS',
-                    style: TextStyle(color: Colors.white, fontSize: 25.0),
-                  ),
-                ],
-              ),
-              IconButton(
-                icon: Image.asset('assets/menu.png', height: 40),
-                onPressed: () {
-                  // Menu action
-                },
-              ),
-            ],
-          ),
-        ),
+        title: DefaultAppbar(),
       ),
       body: RefreshIndicator(
         onRefresh: () async => {},
