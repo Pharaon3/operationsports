@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/screens/new_topic.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
 import 'package:operationsports/widgets/topic_grid.dart';
 import 'package:operationsports/widgets/app_footer.dart';
@@ -104,7 +105,14 @@ class ForumList extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: DefaultButton(
-                    onTap: () => {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CreateTopicPage(),
+                        ),
+                      );
+                    },
                     buttonLabel: "New Topic    +",
                   ),
                 ),
