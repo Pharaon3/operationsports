@@ -109,6 +109,27 @@ class ForumList extends StatelessWidget {
                   ),
                 ),
 
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      ForumSubMenu(
+                        title: '',
+                        subItems: [
+                          '2k never getting the NFL sim license!!',
+                          'Operation Sports Content and Other News',
+                          '2k never getting the NFL sim license!!',
+                          'Operation Sports Content and Other News',
+                          '2k never getting the NFL sim license!!',
+                          'Operation Sports Content and Other News',
+                          '2k never getting the NFL sim license!!',
+                          'Operation Sports Content and Other News',
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
                 const AppFooter(),
               ],
             );
