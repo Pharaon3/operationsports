@@ -13,7 +13,7 @@ class ForumCard extends StatelessWidget {
     super.key,
     required this.forumName,
     required this.postText,
-    required this.imageUrl,
+    this.imageUrl = "",
     required this.date,
     this.stars = 4,
     this.joinDate = 'Jul 2002',
@@ -121,10 +121,11 @@ class ForumCard extends StatelessWidget {
                   style: const TextStyle(color: Colors.white, fontSize: 14),
                 ),
                 const SizedBox(height: 12),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(imageUrl),
-                ),
+                if (imageUrl != "")
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(imageUrl),
+                  ),
                 const SizedBox(height: 12),
 
                 // Action buttons
