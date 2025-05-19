@@ -18,45 +18,46 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
     return Column(
       children: [
         // Header
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              isExpanded = !isExpanded;
-            });
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            margin: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+        if (widget.title != "")
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isExpanded = !isExpanded;
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.redAccent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              margin: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black26,
+                  Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.black26,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(
+                      isExpanded ? Icons.remove : Icons.add,
+                      color: Colors.white,
+                    ),
                   ),
-                  padding: const EdgeInsets.all(4),
-                  child: Icon(
-                    isExpanded ? Icons.remove : Icons.add,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
 
         // Sub-items
         if (isExpanded)

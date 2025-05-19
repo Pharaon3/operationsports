@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
-import '../widgets/app_footer.dart';
-import '../widgets/forum_menu.dart';
-import '../widgets/forum_submenu.dart';
-import '../widgets/menu_button.dart';
+import 'package:operationsports/widgets/topic_grid.dart';
+import 'package:operationsports/widgets/app_footer.dart';
+import 'package:operationsports/widgets/default_button.dart';
+import 'package:operationsports/widgets/forum_submenu.dart';
+import 'package:operationsports/widgets/menu_button.dart';
 
 class ForumList extends StatelessWidget {
   const ForumList({super.key});
@@ -92,6 +93,19 @@ class ForumList extends StatelessWidget {
                         ],
                       ),
                     ],
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: TopicGrid(),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: DefaultButton(
+                    onTap: () => {},
+                    buttonLabel: "New Topic    +",
                   ),
                 ),
 
