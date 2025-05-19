@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/screens/new_topic.dart';
 import 'package:operationsports/widgets/default_appbar.dart';
+import 'package:operationsports/widgets/forum_card.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
 import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/default_button.dart';
@@ -51,6 +52,14 @@ class ForumDetail extends StatelessWidget {
                 ),
 
                 Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    '2k never getting the NFL sim license!!',
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                ),
+
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: DefaultButton(
                     onTap: () {
@@ -63,6 +72,15 @@ class ForumDetail extends StatelessWidget {
                     },
                     buttonLabel: "Post Reply    +",
                   ),
+                ),
+
+                ForumCard(
+                  forumName: 'All Pro Football 2K',
+                  postText:
+                      'The NFL makes me sick and 2k is delusional like a guy that thinks he can win the girl (NFL) heart every five years\n\nAt this point I made up my mind to stop my hope alive',
+                  imageUrl:
+                      'https://images.unsplash.com/photo-1566577739112-5180d4bf9390',
+                  date: '12-03-2024, 01:46 AM',
                 ),
 
                 const AppFooter(),
