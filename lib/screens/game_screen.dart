@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/widgets/app_footer.dart';
-import 'package:operationsports/widgets/default_appbar.dart';
 import 'package:operationsports/widgets/game_list.dart';
+import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:operationsports/widgets/topic_grid.dart';
 import '../widgets/menu_button.dart';
 
@@ -10,12 +10,8 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF171717),
-        title: DefaultAppbar(),
-      ),
-      body: Stack(
+    return MainScaffold(
+      child: Stack(
         children: [
           // Main content
           Container(

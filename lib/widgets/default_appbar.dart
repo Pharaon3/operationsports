@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DefaultAppbar extends StatelessWidget {
-  const DefaultAppbar({super.key});
+  final VoidCallback onMenuPressed;
+
+  const DefaultAppbar({super.key, required this.onMenuPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,7 @@ class DefaultAppbar extends StatelessWidget {
           ),
           IconButton(
             icon: Image.asset('assets/menu.png', height: 40),
-            onPressed: () {
-              // Menu action
-            },
+            onPressed: onMenuPressed,
           ),
         ],
       ),

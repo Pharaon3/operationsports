@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/screens/new_topic.dart';
-import 'package:operationsports/widgets/default_appbar.dart';
+import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
 import 'package:operationsports/widgets/topic_grid.dart';
 import 'package:operationsports/widgets/app_footer.dart';
@@ -13,13 +13,8 @@ class ForumList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF171717),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF171717),
-        title: DefaultAppbar(),
-      ),
-      body: RefreshIndicator(
+    return MainScaffold(
+      child: RefreshIndicator(
         onRefresh: () async => {},
         child: Builder(
           builder: (context) {

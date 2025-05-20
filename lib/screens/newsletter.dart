@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/widgets/default_appbar.dart';
+import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/app_footer.dart';
@@ -16,13 +16,8 @@ class NewsLetter extends StatelessWidget {
   Widget build(BuildContext context) {
     final articleProvider = Provider.of<ArticleProvider>(context);
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF171717),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF171717),
-        title: DefaultAppbar(),
-      ),
-      body: RefreshIndicator(
+    return MainScaffold(
+      child: RefreshIndicator(
         onRefresh: () => articleProvider.fetchArticles(),
         child: Builder(
           builder: (context) {
