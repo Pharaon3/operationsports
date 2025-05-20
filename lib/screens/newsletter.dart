@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
-import '../widgets/menu_button.dart';
 import '../widgets/newslettersection.dart';
 import '../widgets/paginated_article.dart';
 
@@ -32,41 +32,8 @@ class NewsLetter extends StatelessWidget {
             final articles = articleProvider.articles;
 
             return ListView(
-              padding: const EdgeInsets.only(bottom: 20.0),
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 34,
-                    vertical: 20,
-                  ),
-                  child: SizedBox(
-                    height: 36,
-                    child: TextField(
-                      style: const TextStyle(fontSize: 14),
-                      decoration: InputDecoration(
-                        hintText: 'Search articles...',
-                        hintStyle: const TextStyle(fontSize: 14),
-                        prefixIcon: const Icon(Icons.search, size: 18),
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                      ),
-                      onChanged: (value) {
-                        // Optional search logic
-                      },
-                    ),
-                  ),
-                ),
-
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 34, vertical: 12),
-                  child: MenuButton(selectedMenu: 1),
-                ),
+                const Header(selectedMenu: 1,),
 
                 const NewsletterSection(),
 
@@ -138,6 +105,8 @@ class NewsLetter extends StatelessWidget {
                 ),
 
                 PaginatedArticleList(articles: articles),
+
+                SizedBox(height: 32),
 
                 const AppFooter(),
               ],

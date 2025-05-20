@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
@@ -7,7 +8,6 @@ import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/main_article_card.dart';
-import '../widgets/menu_button.dart';
 import '../widgets/paginated_article.dart';
 import './article_detail_screen.dart';
 
@@ -26,41 +26,7 @@ class HomeScreen extends StatelessWidget {
             color: const Color(0xFF171717),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 34,
-                    vertical: 20,
-                  ),
-                  child: SizedBox(
-                    height: 36,
-                    child: TextField(
-                      style: const TextStyle(fontSize: 14),
-                      decoration: InputDecoration(
-                        hintText: 'Search articles...',
-                        hintStyle: const TextStyle(fontSize: 14),
-                        prefixIcon: const Icon(Icons.search, size: 18),
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                      ),
-                      onChanged: (value) {
-                        // Optional search logic
-                      },
-                    ),
-                  ),
-                ),
-
-                // Button Row
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 34, vertical: 12),
-                  child: MenuButton(),
-                ),
-
+                const Header(),
                 // Article List
                 Expanded(
                   child: RefreshIndicator(

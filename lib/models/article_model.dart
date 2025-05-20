@@ -39,25 +39,21 @@ class ArticleModel {
   }
 
   String get websiteName {
-    if (graph != null) {
-      for (var item in graph) {
-        if (item['@type'] == 'WebSite') {
-          return item['name'] ?? '';
-        }
+    for (var item in graph) {
+      if (item['@type'] == 'WebSite') {
+        return item['name'] ?? '';
       }
     }
-    return '';
+      return '';
   }
 
   String get articleSection {
-    if (graph != null) {
-      for (var item in graph) {
-        if (item['@type'] == 'NewsArticle') {
-          return item['articleSection']?[0] ?? '';
-        }
+    for (var item in graph) {
+      if (item['@type'] == 'NewsArticle') {
+        return item['articleSection']?[0] ?? '';
       }
     }
-    return '';
+      return '';
   }
 
   static String _parseText(String? raw) {

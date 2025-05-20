@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:provider/provider.dart';
 import '../providers/article_provider.dart';
@@ -7,7 +8,6 @@ import '../widgets/article_card.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 import '../widgets/main_article_card.dart';
-import '../widgets/menu_button.dart';
 import '../widgets/paginated_article.dart';
 import 'package:operationsports/screens/article_detail_screen.dart';
 
@@ -26,29 +26,9 @@ class ReviewScreen extends StatelessWidget {
             color: const Color(0xFF171717),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search articles...',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                    ),
-                    onChanged: (value) {
-                      // Optional search logic
-                    },
-                  ),
-                ),
-                // Button Row
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: MenuButton(selectedMenu: 3),
-                ),
+                
+                const Header(selectedMenu: 3,),
+                
                 // Article List
                 Expanded(
                   child: RefreshIndicator(
