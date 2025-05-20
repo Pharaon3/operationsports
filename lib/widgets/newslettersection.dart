@@ -38,10 +38,7 @@ class NewsletterSection extends StatelessWidget {
                       child: Text(
                         'Join 32,000+ fans for weekly news,\nguides, and insights on your favorite sports\ngames, delivered straight to your inbox\nevery Friday.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white70,
-                        ),
+                        style: TextStyle(fontSize: 15, color: Colors.white70),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -52,48 +49,71 @@ class NewsletterSection extends StatelessWidget {
                     const SizedBox(height: 28),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 48,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: const TextField(
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Enter Your E-mail',
-                                  hintStyle: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 14,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.25),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 50,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(8),
+                                    bottomLeft: Radius.circular(8),
+                                  ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Enter Your E-mail',
+                                    hintStyle: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 12),
-                          Container(
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.white),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              'Subscribe',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                            Container(
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Color(
+                                  0xFF1A1D23,
+                                ), // Dark navy/black shade
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              margin: const EdgeInsets.all(2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              alignment: Alignment.center,
+                              child: const Text(
+                                'Subscribe',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
