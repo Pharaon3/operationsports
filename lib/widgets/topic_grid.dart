@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class TopicGrid extends StatelessWidget {
-  const TopicGrid({super.key});
+  final List<String> menuItems;
+  const TopicGrid({super.key, required this.menuItems});
 
   @override
   Widget build(BuildContext context) {
-    final List<String> menuItems = [
-      'Topics',
-      'Latest Activity',
-      'My Subscriptions',
-    ];
+    // final List<String> menuItems = [
+    //   'Topics',
+    //   'Latest Activity',
+    //   'My Subscriptions',
+    // ];
 
     final Set<String> highlightedItems = {'Topics'};
 

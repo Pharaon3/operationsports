@@ -49,7 +49,10 @@ class ReviewScreen extends StatelessWidget {
                   ),
                 ),
                 // Button Row
-                const MenuButton(selectedMenu: 3),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: MenuButton(selectedMenu: 3),
+                ),
                 // Article List
                 Expanded(
                   child: RefreshIndicator(

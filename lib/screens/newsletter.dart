@@ -58,7 +58,10 @@ class NewsLetter extends StatelessWidget {
                   ),
                 ),
 
-                const MenuButton(selectedMenu: 1),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: MenuButton(selectedMenu: 1),
+                ),
 
                 const NewsletterSection(),
 

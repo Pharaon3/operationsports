@@ -42,7 +42,10 @@ class ForumScreen extends StatelessWidget {
                   ),
                 ),
 
-                const MenuButton(selectedMenu: 2),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: MenuButton(selectedMenu: 2),
+                ),
 
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),

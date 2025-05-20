@@ -74,7 +74,13 @@ class ForumList extends StatelessWidget {
 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: TopicGrid(),
+                  child: TopicGrid(
+                    menuItems: [
+                      'Topics',
+                      'Latest Activity',
+                      'My Subscriptions',
+                    ],
+                  ),
                 ),
 
                 Padding(
