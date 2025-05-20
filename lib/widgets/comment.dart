@@ -6,10 +6,10 @@ class CommentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(top: 36, left: 54, right: 36, bottom: 28),
       decoration: BoxDecoration(
         color: const Color(0xFFD9D9D9), // light gray background
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(color: const Color(0xFF53A2FF), width: 1.5),
       ),
       child: Column(
@@ -35,7 +35,7 @@ class CommentsPage extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
 
           // Comment 1
           commentTile(
@@ -67,9 +67,12 @@ class CommentsPage extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
-                    color: Color(0xFFF2F2F2),
+                    color: const Color(0xFFF2F2F2),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
@@ -79,16 +82,45 @@ class CommentsPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const TextField(
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Your comment here...",
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF707070),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          maxLines: 3,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Your comment here...",
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF707070),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      // const SizedBox(width: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.link),
+                            onPressed: () {},
+                            color: Colors.redAccent,
+                            iconSize: 18,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.camera_alt),
+                            onPressed: () {},
+                            color: Colors.redAccent,
+                            iconSize: 18,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -104,52 +136,60 @@ class CommentsPage extends StatelessWidget {
     required String date,
     required String comment,
   }) {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            const Icon(
-              Icons.account_circle_outlined,
-              size: 36,
-              color: Colors.black54,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              username,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Color(0xFF434343),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              date,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color(0xFFFF5757),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+        const Icon(
+          Icons.account_circle_outlined,
+          size: 30,
+          color: Colors.black54,
         ),
-        const SizedBox(height: 10),
-        Text(
-          comment,
-          style: const TextStyle(
-            color: Color(0xFF434343),
-            fontSize: 16,
-            height: 1.5,
-          ),
-        ),
-        const SizedBox(height: 6),
-        const Text(
-          'answer...',
-          style: TextStyle(
-            color: Color(0xFFFF5757),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
+        const SizedBox(width: 10),
+        // Wrap the column with Expanded to allow text wrapping
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    username,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xFF434343),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    date,
+                    style: const TextStyle(
+                      fontSize: 9,
+                      color: Color(0xFFFF5757),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                comment,
+                style: const TextStyle(
+                  color: Color(0xFF434343),
+                  fontSize: 12,
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'answer...',
+                style: TextStyle(
+                  color: Color(0xFFFF5757),
+                  fontSize: 9,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
           ),
         ),
       ],

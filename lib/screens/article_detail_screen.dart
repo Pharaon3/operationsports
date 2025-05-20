@@ -202,8 +202,8 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 48.0,
-                    top: 35.0,
-                    bottom: 15.0,
+                    top: 65.0,
+                    bottom: 17.0,
                   ),
                   child: const Text(
                     'Related',
@@ -214,6 +214,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ),
                   ),
                 ),
+                
                 SizedBox(
                   height: 230,
                   child: SingleChildScrollView(
@@ -250,7 +251,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 100),
 
                 const AppFooter(),
               ],
