@@ -31,12 +31,16 @@ class AppFooter extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           const Text(
             "The premier sports gamer destination",
-            style: TextStyle(color: Color(0xFF707070)),
+            style: TextStyle(
+              color: Color(0xFF707070),
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+            ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 22),
 
           // Social Media Icons
           Row(
@@ -63,32 +67,58 @@ class AppFooter extends StatelessWidget {
           ),
 
           const SizedBox(height: 24),
-          const Divider(color: Colors.white),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(color: Colors.white),
+          ),
 
           // Links
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Column(
               children: const [
-                Text("ABOUT US", style: TextStyle(color: Color(0xFF707070))),
+                Text(
+                  "ABOUT US",
+                  style: TextStyle(
+                    color: Color(0xFF707070),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 SizedBox(height: 8),
-                Text("TERMS", style: TextStyle(color: Color(0xFF707070))),
+                Text(
+                  "TERMS",
+                  style: TextStyle(
+                    color: Color(0xFF707070),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 SizedBox(height: 8),
-                Text("PRIVACY", style: TextStyle(color: Color(0xFF707070))),
+                Text(
+                  "PRIVACY",
+                  style: TextStyle(
+                    color: Color(0xFF707070),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ],
             ),
           ),
 
-          const Divider(color: Colors.white),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(color: Colors.white),
+          ),
 
-          const SizedBox(height: 16),
           // Gamurs Logo
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 38, bottom: 70),
-                child: Image.asset('assets/white gamurs.png', height: 26),
+                child: Image.asset('assets/white gamurs.png', height: 30),
               ),
             ],
           ),

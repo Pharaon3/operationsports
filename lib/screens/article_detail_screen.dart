@@ -13,8 +13,7 @@ import '../widgets/error_widget.dart';
 class ArticleDetailScreen extends StatefulWidget {
   final String articleId;
 
-  const ArticleDetailScreen({Key? key, required this.articleId})
-      : super(key: key);
+  const ArticleDetailScreen({super.key, required this.articleId});
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();

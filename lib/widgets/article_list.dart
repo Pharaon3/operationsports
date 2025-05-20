@@ -5,32 +5,34 @@ class ArticleList extends StatelessWidget {
   final ArticleModel article;
   final VoidCallback onTap;
 
-  const ArticleList({Key? key, required this.article, required this.onTap}) : super(key: key);
+  const ArticleList({super.key, required this.article, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        // color: const Color(0xFF171717),
+        // elevation: 0,
         color: const Color(0xFF1B1B1B),
         elevation: 2,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        // margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
             children: [
               // Image with border radius
               ClipRRect(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
                 child: Image.network(
                   article.imageUrl,
-                  height: 120,
-                  width: 160,
+                  height: 92,
+                  width: 147,
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 11),
               // Textual content
               Expanded(
                 child: Column(
@@ -40,37 +42,42 @@ class ArticleList extends StatelessWidget {
                     Text(
                       article.articleSection,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: const Color(0xFFFF5757),
-                            fontWeight: FontWeight.w500,
-                          ),
+                        color: const Color(0xFFFF5757),
+                        fontWeight: FontWeight.w300,
+                        fontSize: 10,
+                      ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     // Title
                     Text(
                       article.title,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     // Author and Date
                     Row(
                       children: [
                         Text(
                           article.author,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.white70,
-                              ),
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: Colors.white70, fontSize: 8),
                         ),
                         const SizedBox(width: 12),
                         Text(
                           article.formattedDate,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: const Color(0xFFBBBBBB),
-                              ),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodySmall?.copyWith(
+                            color: const Color(0xFFBBBBBB),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 8,
+                          ),
                         ),
                       ],
                     ),

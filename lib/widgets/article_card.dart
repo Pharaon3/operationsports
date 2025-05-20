@@ -15,26 +15,23 @@ class ArticleCard extends StatelessWidget {
       child: Card(
         color: const Color(0x337F7F7F),
         elevation: 2,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        // margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Hero image with padding and rounded corners
+              
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Image.network(
-                    article.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
+                child: SizedBox(
+                  width: 250,
+                  height: 140,
+                  child: Image.network(article.imageUrl, fit: BoxFit.cover),
                 ),
               ),
+
               const SizedBox(height: 12),
               // Title
               Text(
@@ -42,9 +39,10 @@ class ArticleCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white, // Ensure text contrasts well
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),

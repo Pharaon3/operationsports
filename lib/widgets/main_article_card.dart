@@ -5,32 +5,32 @@ class MainArticleCard extends StatelessWidget {
   final ArticleModel article;
   final VoidCallback onTap;
 
-  const MainArticleCard({Key? key, required this.article, required this.onTap})
-    : super(key: key);
+  const MainArticleCard({
+    super.key,
+    required this.article,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300, // Set static height here
+      height: 256, // Set static height here
       child: Card(
         elevation: 2,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         child: InkWell(
-          borderRadius: BorderRadius.circular(12),
           onTap: onTap,
           child: Stack(
             children: [
               Positioned.fill(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
                   child: Image.network(article.imageUrl, fit: BoxFit.cover),
                 ),
               ),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
+                  horizontal: 28.0,
                   vertical: 8.0,
                 ),
                 decoration: BoxDecoration(
@@ -55,8 +55,10 @@ class MainArticleCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: const Color(0xFFFF5757),
+                        fontSize: 10,
                       ),
                     ),
+
                     const SizedBox(height: 2),
                     // Title
                     Text(
@@ -64,7 +66,7 @@ class MainArticleCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 24
+                        fontSize: 22,
                       ),
                     ),
                     const SizedBox(height: 6),
@@ -75,9 +77,8 @@ class MainArticleCard extends StatelessWidget {
                           article.author,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: Colors.white, fontSize: 10),
                         ),
                         const SizedBox(width: 8),
                         // Date
@@ -90,6 +91,7 @@ class MainArticleCard extends StatelessWidget {
                           ).textTheme.bodyMedium?.copyWith(
                             color: const Color(0xFF707070),
                             fontWeight: FontWeight.bold,
+                            fontSize: 10,
                           ),
                         ),
                       ],
