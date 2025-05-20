@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:operationsports/providers/article_provider.dart';
+import 'package:operationsports/widgets/video_player.dart';
 import 'package:provider/provider.dart';
 import '../models/article_model.dart';
 import '../services/article_service.dart';
@@ -103,7 +104,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 2),
+                      const SizedBox(height: 5),
                       // Title
                       Text(
                         article.title,
@@ -112,10 +113,10 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                         ).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 22,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           // Author
@@ -124,7 +125,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white),
+                                ?.copyWith(color: Colors.white, fontSize: 12),
                           ),
                           const SizedBox(width: 8),
                           // Date
@@ -172,6 +173,24 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                               );
                             },
                           ),
+                          TagExtension(
+                            tagsToExtend: {"iframe"},
+                            builder: (context) {
+                              final attrs = context.attributes;
+                              if (attrs["data-test-id"] == "beehiiv-embed") {
+                                final src ='https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12.0,
+                                  ),
+                                  child: VideoWidget(url: src),
+                                );
+                              }
+
+                              // If not the specific iframe, fallback to default or ignore
+                              return const SizedBox.shrink();
+                            },
+                          ),
                         ],
                       ),
                     ],
@@ -200,29 +219,34 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: articles
-                          .where((article) => article.imageUrl.isNotEmpty)
-                          .map((article) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: SizedBox(
-                            width: 280,
-                            child: ArticleCard(
-                              article: article,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ArticleDetailScreen(
-                                      articleId: article.id.toString(),
+                      children:
+                          articles
+                              .where((article) => article.imageUrl.isNotEmpty)
+                              .map((article) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: SizedBox(
+                                    width: 280,
+                                    child: ArticleCard(
+                                      article: article,
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) =>
+                                                    ArticleDetailScreen(
+                                                      articleId:
+                                                          article.id.toString(),
+                                                    ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 );
-                              },
-                            ),
-                          ),
-                        );
-                      }).toList(),
+                              })
+                              .toList(),
                     ),
                   ),
                 ),
