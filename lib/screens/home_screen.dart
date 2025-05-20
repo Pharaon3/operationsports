@@ -49,7 +49,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 // Button Row
-                const MenuButton(),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: MenuButton(),
+                ),
                 // Article List
                 Expanded(
                   child: RefreshIndicator(

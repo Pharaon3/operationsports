@@ -10,6 +10,40 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> menuItems = [
+      "NEWSLETTER",
+      "FORUMS",
+      "REVIEW",
+      "GAMES",
+    ];
+    final List<String> menuIcons = [];
+    return SizedBox(
+      height: 45, // Reduced button height
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: menuItems.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
+        itemBuilder: (context, index) {
+          final item = menuItems[index];
+          final isHighlighted = index + 1 == selectedMenu;
+
+          return _buildTopButton(
+            iconPath: 'assets/${item.toLowerCase()}.png',
+            label: item,
+            isActive: isHighlighted,
+            onPressed: () {
+              if (isHighlighted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NewsLetter()),
+                );
+              }
+            },
+          );
+        },
+      ),
+    );
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Row(
