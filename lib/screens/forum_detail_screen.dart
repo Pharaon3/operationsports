@@ -20,11 +20,25 @@ class ForumDetail extends StatelessWidget {
           builder: (context) {
             return ListView(
               children: [
-                const Header(selectedMenu: 2,),
+                const Header(selectedMenu: 2),
 
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: MenuGrid(),
+                Column(
+                  children: [
+                    MenuGrid(
+                      menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
+                      highlightedItems: {'FORUMS'},
+                    ),
+                    MenuGrid(
+                      menuItems: [
+                        'Today\'s posts',
+                        'Member list',
+                        'Calendar',
+                        'News',
+                        'Reviews',
+                      ],
+                      highlightedItems: {'Today\'s posts'},
+                    ),
+                  ],
                 ),
 
                 Padding(

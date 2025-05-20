@@ -11,12 +11,7 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> menuItems = [
-      "NEWSLETTER",
-      "FORUMS",
-      "REVIEW",
-      "GAMES",
-    ];
+    final List<String> menuItems = ["NEWSLETTER", "FORUMS", "REVIEW", "GAMES"];
 
     final List<Widget Function(BuildContext)> menuBuilder = [
       (context) => const NewsLetter(),
@@ -66,6 +61,7 @@ class MenuButton extends StatelessWidget {
           foregroundColor: Colors.grey[300],
           backgroundColor: const Color(0xFF222222),
           elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
         onPressed: onPressed,
         child: Row(
@@ -78,7 +74,10 @@ class MenuButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                color: isActive ? const Color(0xFFFF5757) : const Color(0xFF434343),
+                color:
+                    isActive
+                        ? const Color(0xFFFF5757)
+                        : const Color(0xFF434343),
                 fontSize: 12,
               ),
             ),
