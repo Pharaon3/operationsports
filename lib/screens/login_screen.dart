@@ -26,10 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      await Provider.of<AuthProvider>(context, listen: false).login(
-        _usernameController.text,
-        _passwordController.text,
-      );
+      await Provider.of<AuthProvider>(
+        context,
+        listen: false,
+      ).login(_usernameController.text, _passwordController.text);
       Navigator.of(context).pushReplacementNamed('/home');
     } catch (e) {
       setState(() => _error = e.toString());
@@ -41,47 +41,198 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
-      body: _isLoading
-          ? const LoadingIndicator()
-          : Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    if (_error != null)
-                      Text(_error!, style: const TextStyle(color: Colors.red)),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _usernameController,
-                      decoration: const InputDecoration(labelText: 'Username'),
-                      validator: (value) =>
-                          value == null || value.isEmpty ? 'Required' : null,
+      backgroundColor: const Color(0xFF171717),
+      body: SafeArea(
+        child:
+            _isLoading
+                ? const LoadingIndicator()
+                : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      validator: (value) =>
-                          value == null || value.isEmpty ? 'Required' : null,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 32),
+                        Center(
+                          child: Image.asset('assets/logo.png', height: 190),
+                        ),
+                        const SizedBox(height: 32),
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: const Color(0x40000000),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const Center(
+                                child: Text(
+                                  'Welcome',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              const Center(
+                                child: Text(
+                                  'Please enter your information',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFFFF5757),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: const Text('Sign in'),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.grey[800],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    onPressed:
+                                        () => Navigator.of(
+                                          context,
+                                        ).pushNamed('/signup'),
+                                    child: const Text('Sign up'),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      controller: _usernameController,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                          Icons.email,
+                                          color: Colors.white70,
+                                        ),
+                                        hintText: 'E-mail',
+                                        hintStyle: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey[850],
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+                                      ),
+                                      validator:
+                                          (value) =>
+                                              value == null || value.isEmpty
+                                                  ? 'Required'
+                                                  : null,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    TextFormField(
+                                      controller: _passwordController,
+                                      obscureText: true,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                          Icons.lock,
+                                          color: Colors.white70,
+                                        ),
+                                        hintText: 'Password',
+                                        hintStyle: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey[850],
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                        ),
+                                      ),
+                                      validator:
+                                          (value) =>
+                                              value == null || value.isEmpty
+                                                  ? 'Required'
+                                                  : null,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: const Color(
+                                            0xFFFF5757,
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 14,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                        onPressed: () => _login(context),
+                                        child: const Text('Continue'),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    const Divider(color: Colors.white24),
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.facebook,
+                                          color: Colors.white70,
+                                        ),
+                                        SizedBox(width: 24),
+                                        Icon(
+                                          Icons.g_mobiledata,
+                                          color: Colors.white70,
+                                        ),
+                                        SizedBox(width: 24),
+                                        Icon(
+                                          Icons.facebook,
+                                          color: Colors.white70,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () => _login(context),
-                      child: const Text('Login'),
-                    ),
-                    const SizedBox(height: 12),
-                    TextButton(
-                      onPressed: () =>
-                          Navigator.of(context).pushNamed('/signup'),
-                      child: const Text('Don\'t have an account? Sign up'),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+      ),
     );
   }
 }
