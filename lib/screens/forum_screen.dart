@@ -37,7 +37,7 @@ class ForumScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                
+
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Column(

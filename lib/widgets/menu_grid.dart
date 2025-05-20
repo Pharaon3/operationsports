@@ -12,7 +12,7 @@ class MenuGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, bottom: 10),
+      padding: EdgeInsets.only(left: 16, right: 16, bottom: 20),
       child: SizedBox(
         height: 45,
         child: ListView.separated(
