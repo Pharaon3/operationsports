@@ -40,7 +40,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
     final articles = Provider.of<ArticleProvider>(context).articles;
 
     return Scaffold(
-      backgroundColor: Color(0xFF171717),
+      backgroundColor: AppColors.primaryColor,
       body: FutureBuilder<ArticleModel>(
         future: _articleFuture,
         builder: (context, snapshot) {

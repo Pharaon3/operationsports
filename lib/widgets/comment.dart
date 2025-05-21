@@ -25,7 +25,7 @@ class CommentsPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF434343),
+                  color: AppColors.secondaryColor,
                 ),
               ),
               IconButton(
@@ -158,7 +158,7 @@ class CommentsPage extends StatelessWidget {
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: Color(0xFF434343),
+                      color: AppColors.secondaryColor,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -176,7 +176,7 @@ class CommentsPage extends StatelessWidget {
               Text(
                 comment,
                 style: const TextStyle(
-                  color: Color(0xFF434343),
+                  color: AppColors.secondaryColor,
                   fontSize: 12,
                   height: 1.5,
                 ),

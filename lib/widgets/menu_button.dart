@@ -78,7 +78,7 @@ class MenuButton extends StatelessWidget {
                 color:
                     isActive
                         ? AppColors.accentColor
-                        : const Color(0xFF434343),
+                        : AppColors.secondaryColor,
                 fontSize: 12,
               ),
             ),

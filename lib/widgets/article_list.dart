@@ -13,7 +13,7 @@ class ArticleList extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        // color: const Color(0xFF171717),
+        // color: AppColors.primaryColor,
         // elevation: 0,
         color: const Color(0xFF1B1B1B),
         elevation: 2,

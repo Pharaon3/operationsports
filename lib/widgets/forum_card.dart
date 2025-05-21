@@ -105,7 +105,7 @@ class ForumCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: const Color(0xFF434343),
+              color: AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(

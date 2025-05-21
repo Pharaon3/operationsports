@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           // Main content
           Container(
-            color: const Color(0xFF171717),
+            color: AppColors.primaryColor,
             child: Column(
               children: [
                 const Header(),
@@ -190,7 +190,7 @@ class HomeScreen extends StatelessWidget {
                                   Text(
                                     "Most Popular",
                                     style: const TextStyle(
-                                      color: Color(0xFF434343),
+                                      color: AppColors.secondaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -199,7 +199,7 @@ class HomeScreen extends StatelessWidget {
                                   Text(
                                     "All",
                                     style: const TextStyle(
-                                      color: Color(0xFF434343),
+                                      color: AppColors.secondaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),

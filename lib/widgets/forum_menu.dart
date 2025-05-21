@@ -76,7 +76,7 @@ class _ForumMenuState extends State<ForumMenu> {
                             height: 60,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             decoration: const BoxDecoration(
-                              color: Color(0xFF434343),
+                              color: AppColors.secondaryColor,
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 bottomLeft: Radius.circular(10),

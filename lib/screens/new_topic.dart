@@ -7,7 +7,7 @@ class CreateTopicPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF171717),
+      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:operationsports/core/constants.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -7,7 +8,7 @@ class AppFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFF171717),
+      color: AppColors.primaryColor,
       padding: const EdgeInsets.symmetric(vertical: 32),
       child: Column(
         children: [
@@ -48,19 +49,19 @@ class AppFooter extends StatelessWidget {
             children: const [
               Icon(
                 FontAwesomeIcons.facebook,
-                color: Color(0xFF434343),
+                color: AppColors.secondaryColor,
                 size: 20,
               ),
               SizedBox(width: 24),
               Icon(
                 FontAwesomeIcons.youtube,
-                color: Color(0xFF434343),
+                color: AppColors.secondaryColor,
                 size: 20,
               ),
               SizedBox(width: 24),
               Icon(
                 FontAwesomeIcons.twitter,
-                color: Color(0xFF434343),
+                color: AppColors.secondaryColor,
                 size: 20,
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'right_side_drawer.dart';
 import 'default_appbar.dart';
 
@@ -58,9 +59,9 @@ class _MainScaffoldState extends State<MainScaffold>
           _closeDrawer(); // swipe left to right to close
       },
       child: Scaffold(
-        backgroundColor: const Color(0xFF171717),
+        backgroundColor: AppColors.primaryColor,
         appBar: AppBar(
-          backgroundColor: const Color(0xFF171717),
+          backgroundColor: AppColors.primaryColor,
           title: DefaultAppbar(onMenuPressed: _toggleDrawer),
         ),
         body: Stack(

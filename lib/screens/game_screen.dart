@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/game_list.dart';
 import 'package:operationsports/widgets/header.dart';
@@ -15,7 +16,7 @@ class GameScreen extends StatelessWidget {
         children: [
           // Main content
           Container(
-            color: const Color(0xFF171717),
+            color: AppColors.primaryColor,
             child: ListView(
               children: [
                 const Header(selectedMenu: 4,),

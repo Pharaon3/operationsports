@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/widgets/menu_button.dart';
 
 class Header extends StatelessWidget {
@@ -8,7 +9,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xFF171717),
+      color: AppColors.primaryColor,
       padding: const EdgeInsets.symmetric(vertical: 30),
       child: Column(
         children: [
