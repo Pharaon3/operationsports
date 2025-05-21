@@ -6,7 +6,6 @@ import 'routes/app_routes.dart';
 import 'providers/auth_provider.dart';
 import 'providers/article_provider.dart';
 import 'providers/navigation_provider.dart';
-import './core/constants.dart';
 
 void main() {
   runApp(const OperationSportsApp());
