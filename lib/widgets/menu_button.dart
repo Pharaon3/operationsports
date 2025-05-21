@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/screens/game_screen.dart';
 import 'package:operationsports/screens/review_screen.dart';
 import '../screens/forum_screen.dart';
@@ -76,7 +77,7 @@ class MenuButton extends StatelessWidget {
               style: TextStyle(
                 color:
                     isActive
-                        ? const Color(0xFFFF5757)
+                        ? AppColors.accentColor
                         : const Color(0xFF434343),
                 fontSize: 12,
               ),

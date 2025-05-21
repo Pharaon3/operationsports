@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class CommentsPage extends StatelessWidget {
   const CommentsPage({super.key});
@@ -105,7 +106,7 @@ class CommentsPage extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.link),
                             onPressed: () {},
-                            color: Colors.redAccent,
+                            color: AppColors.accentColor,
                             iconSize: 18,
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
@@ -113,7 +114,7 @@ class CommentsPage extends StatelessWidget {
                           IconButton(
                             icon: const Icon(Icons.camera_alt),
                             onPressed: () {},
-                            color: Colors.redAccent,
+                            color: AppColors.accentColor,
                             iconSize: 18,
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
@@ -165,7 +166,7 @@ class CommentsPage extends StatelessWidget {
                     date,
                     style: const TextStyle(
                       fontSize: 9,
-                      color: Color(0xFFFF5757),
+                      color: AppColors.accentColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -184,7 +185,7 @@ class CommentsPage extends StatelessWidget {
               const Text(
                 'answer...',
                 style: TextStyle(
-                  color: Color(0xFFFF5757),
+                  color: AppColors.accentColor,
                   fontSize: 9,
                   fontWeight: FontWeight.w400,
                 ),

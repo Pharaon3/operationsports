@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class GameListWidget extends StatelessWidget {
   final List<String> gameTitles;
@@ -20,7 +21,7 @@ class GameListWidget extends StatelessWidget {
             children: [
               const Icon(
                 Icons.chevron_right,
-                color: Color(0xFFFF5757),
+                color: AppColors.accentColor,
                 size: 20,
               ),
               const SizedBox(width: 4),

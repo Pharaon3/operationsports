@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import '../models/article_model.dart';
 
 class ArticleList extends StatelessWidget {
@@ -42,7 +43,7 @@ class ArticleList extends StatelessWidget {
                     Text(
                       article.articleSection,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFFF5757),
+                        color: AppColors.accentColor,
                         fontWeight: FontWeight.w300,
                         fontSize: 10,
                       ),

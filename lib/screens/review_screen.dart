@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:provider/provider.dart';
@@ -145,7 +146,7 @@ class ReviewScreen extends StatelessWidget {
                                     child: Text(
                                       "Latest Posts",
                                       style: const TextStyle(
-                                        color: Color(0xFFFF5757),
+                                        color: AppColors.accentColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),

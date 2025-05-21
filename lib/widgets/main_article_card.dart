@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import '../models/article_model.dart';
 
 class MainArticleCard extends StatelessWidget {
@@ -54,7 +55,7 @@ class MainArticleCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: const Color(0xFFFF5757),
+                        color: AppColors.accentColor,
                         fontSize: 10,
                       ),
                     ),

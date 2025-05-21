@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:operationsports/core/constants.dart';
 import '../widgets/loading_indicator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -128,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             decoration: BoxDecoration(
                                               color:
                                                   _isSignIn
-                                                      ? const Color(0xFFFF5757)
+                                                      ? AppColors.accentColor
                                                       : Colors.transparent,
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -159,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             decoration: BoxDecoration(
                                               color:
                                                   !_isSignIn
-                                                      ? const Color(0xFFFF5757)
+                                                      ? AppColors.accentColor
                                                       : Colors.transparent,
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -340,9 +341,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: ElevatedButton(
                                       onPressed: () => _login(context),
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color(
-                                          0xFFFF5757,
-                                        ),
+                                        backgroundColor: AppColors.accentColor,
                                         padding: const EdgeInsets.symmetric(
                                           vertical: 14,
                                         ),

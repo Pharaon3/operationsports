@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class CreateTopicPage extends StatelessWidget {
   const CreateTopicPage({super.key});
@@ -89,11 +90,11 @@ class CreateTopicPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.link, color: Colors.redAccent),
+                    icon: const Icon(Icons.link, color: AppColors.accentColor),
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: const Icon(Icons.camera_alt, color: Colors.redAccent),
+                    icon: const Icon(Icons.camera_alt, color: AppColors.accentColor),
                     onPressed: () {},
                   ),
                 ],
@@ -108,7 +109,7 @@ class CreateTopicPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 18),
                     decoration: BoxDecoration(
-                      color: Colors.redAccent,
+                      color: AppColors.accentColor,
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: const [
                         BoxShadow(
@@ -180,7 +181,7 @@ class CreateTopicPage extends StatelessWidget {
                   horizontal: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.redAccent,
+                  color: AppColors.accentColor,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
@@ -229,7 +230,7 @@ class CreateTopicPage extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.redAccent,
+                      backgroundColor: AppColors.accentColor,
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () {},

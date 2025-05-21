@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/screens/forum_list.dart';
 
 class ForumMenu extends StatefulWidget {
@@ -27,7 +28,7 @@ class _ForumMenuState extends State<ForumMenu> {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: const Color(0xFFFF5757),
+              color: AppColors.accentColor,
               borderRadius: BorderRadius.circular(10),
             ),
             margin: const EdgeInsets.symmetric(vertical: 7),
@@ -69,14 +70,11 @@ class _ForumMenuState extends State<ForumMenu> {
                     ),
                     child: Row(
                       children: [
-                        
                         Expanded(
                           flex: 4,
                           child: Container(
                             height: 60,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             decoration: const BoxDecoration(
                               color: Color(0xFF434343),
                               borderRadius: BorderRadius.only(
@@ -107,11 +105,19 @@ class _ForumMenuState extends State<ForumMenu> {
                               topRight: Radius.circular(10),
                               bottomRight: Radius.circular(10),
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0x40000000),
+                                blurRadius: 4,
+                                spreadRadius: 6,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
                           ),
                           child: IconButton(
                             icon: const Icon(
                               Icons.arrow_forward_ios,
-                              color: Colors.redAccent,
+                              color: AppColors.accentColor,
                               size: 20,
                             ),
                             onPressed: () {
@@ -124,7 +130,6 @@ class _ForumMenuState extends State<ForumMenu> {
                             },
                           ),
                         ),
-                        
                       ],
                     ),
                   );

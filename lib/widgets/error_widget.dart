@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class AppErrorWidget extends StatelessWidget {
   final String message;
@@ -18,7 +19,7 @@ class AppErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.accentColor),
             const SizedBox(height: 16),
             Text(
               message,

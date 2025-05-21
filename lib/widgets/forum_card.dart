@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class ForumCard extends StatelessWidget {
   final String forumName;
@@ -66,7 +67,7 @@ class ForumCard extends StatelessWidget {
                                   Icons.star,
                                   color:
                                       index < stars
-                                          ? Colors.redAccent
+                                          ? AppColors.accentColor
                                           : Colors.grey.shade600,
                                   size: 16,
                                 ),

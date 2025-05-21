@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class BottomIconButton extends StatelessWidget {
   const BottomIconButton({super.key});
@@ -59,7 +60,7 @@ class BottomIconButton extends StatelessWidget {
       child: Icon(
         icon,
         size: 28,
-        color: isActive ? Colors.redAccent : Colors.grey,
+        color: isActive ? AppColors.accentColor : Colors.grey,
       ),
     );
   }

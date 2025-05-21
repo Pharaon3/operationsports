@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class DefaultButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -16,7 +17,7 @@ class DefaultButton extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.redAccent,
+              color: AppColors.accentColor,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(

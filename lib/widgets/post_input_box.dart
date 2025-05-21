@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class PostInputBox extends StatelessWidget {
   final TextEditingController controller;
@@ -55,7 +56,7 @@ class PostInputBox extends StatelessWidget {
       onTap: onPressed,
       borderRadius: BorderRadius.circular(30),
       child: CircleAvatar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.accentColor,
         child: Icon(icon, color: Colors.white),
       ),
     );

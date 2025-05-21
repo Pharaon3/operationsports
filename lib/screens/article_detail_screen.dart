@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/providers/article_provider.dart';
 import 'package:operationsports/widgets/video_player.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                         child: Text(
                           article.articleSection,
                           style: const TextStyle(
-                            color: Color(0xFFFF5757),
+                            color: AppColors.accentColor,
                             fontSize: 16,
                           ),
                         ),
@@ -210,7 +211,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFFF5757),
+                      color: AppColors.accentColor,
                     ),
                   ),
                 ),
