@@ -1,46 +1,94 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
-class TopicGrid extends StatelessWidget {
+class TopicGrid extends StatefulWidget {
   final List<String> menuItems;
-  const TopicGrid({super.key, required this.menuItems});
+  final List<String> selectedItems;
+
+  const TopicGrid({
+    super.key,
+    required this.menuItems,
+    required this.selectedItems,
+  });
 
   @override
+  _TopicGridState createState() => _TopicGridState();
+}
+
+class _TopicGridState extends State<TopicGrid> {
+  @override
   Widget build(BuildContext context) {
-    // final List<String> menuItems = [
-    //   'Topics',
-    //   'Latest Activity',
-    //   'My Subscriptions',
-    // ];
-
-    final Set<String> highlightedItems = {'Topics'};
-
     return SizedBox(
-      height: 45, // Reduced button height
+      height: 45,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: menuItems.length,
+        itemCount: widget.menuItems.length,
         separatorBuilder: (context, index) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
-          final item = menuItems[index];
-          final isHighlighted = highlightedItems.contains(item);
+          final item = widget.menuItems[index];
+          final isHighlighted = widget.selectedItems.contains(item);
 
-          return ElevatedButton(
-            onPressed: () {
-              // TODO: Add onPressed behavior
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0x00000000),
-              foregroundColor: isHighlighted ? Colors.red : Colors.white54,
-              elevation: 0,
-              minimumSize: const Size(100, 40),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              textStyle: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
+          if (isHighlighted) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (!isHighlighted) {
+                    widget.selectedItems.add(item);
+                  } else {
+                    widget.selectedItems.remove(item);
+                  }
+                  print(
+                    "Text tapped! Current selection: ${widget.selectedItems}",
+                  );
+                });
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    item,
+                    style: TextStyle(
+                      color: AppColors.accentColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Container(
+                    width: 44,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: AppColors.accentColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            child: Text(item),
-          );
+            );
+          } else {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (!isHighlighted) {
+                    widget.selectedItems.add(item);
+                  } else {
+                    widget.selectedItems.remove(item);
+                  }
+                  print(
+                    "Text tapped! Current selection: ${widget.selectedItems}",
+                  );
+                });
+              },
+              child: Text(
+                item,
+                style: TextStyle(
+                  color: AppColors.secondaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            );
+          }
         },
       ),
     );

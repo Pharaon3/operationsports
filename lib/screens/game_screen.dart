@@ -19,10 +19,34 @@ class GameScreen extends StatelessWidget {
             color: AppColors.primaryColor,
             child: ListView(
               children: [
-                const Header(selectedMenu: 4,),
+                const Header(selectedMenu: 4),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 34),
+                  child: Text(
+                    'Games',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 34, vertical: 12),
+                  child: Text(
+                    'Categories',
+                    style: TextStyle(
+                      color: AppColors.accentColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
                   child: TopicGrid(
                     menuItems: [
                       'Cars',
@@ -34,11 +58,14 @@ class GameScreen extends StatelessWidget {
                       'Rugby',
                       'Tennis',
                     ],
+                    selectedItems: [
+                      'Cars',
+                    ]
                   ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(vertical:16.0, horizontal: 55),
                   child: GameListWidget(
                     gameTitles: const [
                       "Horizon Chase 2",

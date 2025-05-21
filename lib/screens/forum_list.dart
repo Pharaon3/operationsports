@@ -69,6 +69,9 @@ class ForumList extends StatelessWidget {
                       'Latest Activity',
                       'My Subscriptions',
                     ],
+                    selectedItems: [
+                      'Topics'
+                    ],
                   ),
                 ),
 
