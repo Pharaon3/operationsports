@@ -27,9 +27,8 @@ class ReviewScreen extends StatelessWidget {
             color: AppColors.primaryColor,
             child: Column(
               children: [
-                
-                const Header(selectedMenu: 3,),
-                
+                const Header(selectedMenu: 3),
+
                 // Article List
                 Expanded(
                   child: RefreshIndicator(
@@ -78,17 +77,23 @@ class ReviewScreen extends StatelessWidget {
                               },
                             ),
                             const SizedBox(height: 24),
-                            const Text(
-                              'Trending',
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+
+                            Container(
+                              padding: EdgeInsets.only(left: 34),
+                              child: Text(
+                                'Trending',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 12),
-                            SizedBox(
+                            const SizedBox(height: 18),
+
+                            Container(
                               height: 230,
+                              color: const Color(0xFF232323),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
@@ -101,9 +106,7 @@ class ReviewScreen extends StatelessWidget {
                                           )
                                           .map((article) {
                                             return Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 12,
-                                              ),
+                                              padding: const EdgeInsets.all(0),
                                               child: SizedBox(
                                                 width: 280,
                                                 child: ArticleCard(
@@ -136,23 +139,39 @@ class ReviewScreen extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0,
-                                vertical: 8.0,
+                                vertical: 24.0,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(left: 20),
-                                    child: Text(
-                                      "Latest Posts",
-                                      style: const TextStyle(
-                                        color: AppColors.accentColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          "Latest Posts",
+                                          style: TextStyle(
+                                            color: AppColors.accentColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Container(
+                                          width: 90,
+                                          height: 5,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.accentColor,
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(width: 20),
+                                  SizedBox(width: 24),
                                   Text(
                                     "Most Popular",
                                     style: const TextStyle(
@@ -161,7 +180,7 @@ class ReviewScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(width: 20),
+                                  SizedBox(width: 24),
                                   Text(
                                     "All",
                                     style: const TextStyle(
@@ -173,8 +192,16 @@ class ReviewScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-
-                            PaginatedArticleList(articles: articles),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: PaginatedArticleList(
+                                articles: [
+                                  ...articles,
+                                  ...articles,
+                                  ...articles,
+                                ],
+                              ),
+                            ),
 
                             const AppFooter(),
                           ],
