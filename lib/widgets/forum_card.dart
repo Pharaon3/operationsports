@@ -28,7 +28,7 @@ class ForumCard extends StatelessWidget {
       // padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xFF707070),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,13 +63,26 @@ class ForumCard extends StatelessWidget {
                             Row(
                               children: List.generate(
                                 5,
-                                (index) => Icon(
-                                  Icons.star,
-                                  color:
-                                      index < stars
-                                          ? AppColors.accentColor
-                                          : Colors.grey.shade600,
-                                  size: 16,
+                                (index) => Container(
+                                  margin: EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0x20000000),
+                                        blurRadius: 4,
+                                        spreadRadius: 0,
+                                        offset: Offset(0, 2.51),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Icon(
+                                    Icons.star,
+                                    color:
+                                        index < stars
+                                            ? AppColors.accentColor
+                                            : AppColors.lightGrey,
+                                    size: 16,
+                                  ),
                                 ),
                               ),
                             ),
@@ -83,15 +96,15 @@ class ForumCard extends StatelessWidget {
                         Text(
                           "Join Date: $joinDate",
                           style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
+                            color: Colors.white,
+                            fontSize: 9,
                           ),
                         ),
                         Text(
                           "Posts: $postCount",
                           style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 12,
+                            color: Colors.white,
+                            fontSize: 9,
                           ),
                         ),
                       ],
@@ -103,28 +116,28 @@ class ForumCard extends StatelessWidget {
           ),
           // POST CONTENT CARD
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 22),
             decoration: BoxDecoration(
               color: AppColors.secondaryColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   date,
-                  style: const TextStyle(color: Colors.grey, fontSize: 11),
+                  style: const TextStyle(color: Colors.grey, fontSize: 7),
                 ),
 
                 const SizedBox(height: 12),
                 Text(
                   postText,
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
                 const SizedBox(height: 12),
                 if (imageUrl != "")
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(16),
                     child: Image.network(imageUrl),
                   ),
                 const SizedBox(height: 12),
@@ -141,12 +154,13 @@ class ForumCard extends StatelessWidget {
                       size: 24,
                     ),
                     SizedBox(width: 16),
-                    Icon(Icons.share, color: Colors.white, size: 24),
+                    Icon(Icons.bookmark_border_outlined, color: Colors.white, size: 24),
                   ],
                 ),
               ],
             ),
           ),
+          
         ],
       ),
     );

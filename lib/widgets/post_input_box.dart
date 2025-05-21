@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/widgets/round_button.dart';
 
 class PostInputBox extends StatelessWidget {
   final TextEditingController controller;
@@ -27,7 +27,7 @@ class PostInputBox extends StatelessWidget {
             padding: const EdgeInsets.only(right: 80),
             child: TextField(
               controller: controller,
-              maxLines: null,
+              maxLines: 4,
               decoration: const InputDecoration(
                 hintText: "Write...",
                 border: InputBorder.none,
@@ -40,9 +40,9 @@ class PostInputBox extends StatelessWidget {
             right: 0,
             child: Row(
               children: [
-                _roundButton(Icons.link, onLinkPressed),
+                RoundButton(icon: Icons.link, onPressed: onLinkPressed),
                 const SizedBox(width: 8),
-                _roundButton(Icons.camera_alt, onImagePressed),
+                RoundButton(icon: Icons.camera_alt, onPressed: onImagePressed),
               ],
             ),
           ),
@@ -51,14 +51,4 @@ class PostInputBox extends StatelessWidget {
     );
   }
 
-  Widget _roundButton(IconData icon, VoidCallback onPressed) {
-    return InkWell(
-      onTap: onPressed,
-      borderRadius: BorderRadius.circular(30),
-      child: CircleAvatar(
-        backgroundColor: AppColors.accentColor,
-        child: Icon(icon, color: Colors.white),
-      ),
-    );
-  }
 }

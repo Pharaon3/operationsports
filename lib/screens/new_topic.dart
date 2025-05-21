@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/widgets/round_button.dart';
 
 class CreateTopicPage extends StatelessWidget {
   const CreateTopicPage({super.key});
@@ -89,14 +90,9 @@ class CreateTopicPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.link, color: AppColors.accentColor),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.camera_alt, color: AppColors.accentColor),
-                    onPressed: () {},
-                  ),
+                  RoundButton(icon: Icons.link, onPressed: () => {}),
+                  const SizedBox(width: 8),
+                  RoundButton(icon: Icons.camera_alt, onPressed: () => {}),
                 ],
               ),
 
@@ -107,7 +103,9 @@ class CreateTopicPage extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 18),
+                      vertical: 10,
+                      horizontal: 18,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.accentColor,
                       borderRadius: BorderRadius.circular(10),
@@ -154,22 +152,32 @@ class CreateTopicPage extends StatelessWidget {
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
-                children: [
-                  'nba', 'nba2k', 'basketball', 'draft', 'nfl', 'online',
-                  'xbox360', 'franchise', 'roster', 'sliders', 'dynasty'
-                ].map((tag) {
-                  return Chip(
-                    label: Text(tag),
-                    backgroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.deepPurpleAccent),
-                    labelStyle: const TextStyle(
-                      color: Colors.deepPurple,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    elevation: 2,
-                    shadowColor: Colors.black26,
-                  );
-                }).toList(),
+                children:
+                    [
+                      'nba',
+                      'nba2k',
+                      'basketball',
+                      'draft',
+                      'nfl',
+                      'online',
+                      'xbox360',
+                      'franchise',
+                      'roster',
+                      'sliders',
+                      'dynasty',
+                    ].map((tag) {
+                      return Chip(
+                        label: Text(tag),
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.deepPurpleAccent),
+                        labelStyle: const TextStyle(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        elevation: 2,
+                        shadowColor: Colors.black26,
+                      );
+                    }).toList(),
               ),
 
               const SizedBox(height: 30),

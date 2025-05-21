@@ -45,9 +45,11 @@ class ForumDetail extends StatelessWidget {
                   padding: EdgeInsets.all(16),
                   child: Text(
                     '2k never getting the NFL sim license!!',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
                   ),
                 ),
+
+                SizedBox(height: 12),
 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
@@ -64,12 +66,28 @@ class ForumDetail extends StatelessWidget {
                   ),
                 ),
 
+                SizedBox(height: 25),
+
                 ForumCard(
                   forumName: 'All Pro Football 2K',
                   postText:
                       'The NFL makes me sick and 2k is delusional like a guy that thinks he can win the girl (NFL) heart every five years\n\nAt this point I made up my mind to stop my hope alive',
                   imageUrl:
                       'https://images.unsplash.com/photo-1566577739112-5180d4bf9390',
+                  date: '12-03-2024, 01:46 AM',
+                ),
+
+                ForumCard(
+                  forumName: 'All Pro Football 2K',
+                  postText:
+                      'The NFL makes me sick and 2k is delusional like a guy that thinks he can win the girl (NFL) heart every five years\n\nAt this point I made up my mind to stop my hope alive',
+                  date: '12-03-2024, 01:46 AM',
+                ),
+
+                ForumCard(
+                  forumName: 'All Pro Football 2K',
+                  postText:
+                      'The NFL makes me sick and 2k is delusional like a guy that thinks he can win the girl (NFL) heart every five years\n\nAt this point I made up my mind to stop my hope alive',
                   date: '12-03-2024, 01:46 AM',
                 ),
 

@@ -5,17 +5,22 @@ class DefaultButton extends StatelessWidget {
   final VoidCallback onTap;
   final String buttonLabel;
 
-  const DefaultButton({super.key, required this.onTap, required this.buttonLabel});
+  const DefaultButton({
+    super.key,
+    required this.onTap,
+    required this.buttonLabel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Row(
-        mainAxisSize: MainAxisSize.min, // Takes least width necessary
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            height: 43,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             decoration: BoxDecoration(
               color: AppColors.accentColor,
               borderRadius: BorderRadius.circular(12),
