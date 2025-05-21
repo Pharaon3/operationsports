@@ -154,13 +154,16 @@ class ForumCard extends StatelessWidget {
                       size: 24,
                     ),
                     SizedBox(width: 16),
-                    Icon(Icons.bookmark_border_outlined, color: Colors.white, size: 24),
+                    Icon(
+                      Icons.bookmark_border_outlined,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-          
         ],
       ),
     );
