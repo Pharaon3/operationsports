@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/widgets/round_button.dart';
 
 class CommentsPage extends StatelessWidget {
   const CommentsPage({super.key});
@@ -99,25 +100,15 @@ class CommentsPage extends StatelessWidget {
                           ),
                         ),
                       ),
+
                       // const SizedBox(width: 8),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.link),
-                            onPressed: () {},
-                            color: AppColors.accentColor,
-                            iconSize: 18,
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.camera_alt),
-                            onPressed: () {},
-                            color: AppColors.accentColor,
-                            iconSize: 18,
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
+                          RoundButton(icon: Icons.link, onPressed: () => {}),
+                          const SizedBox(width: 8),
+                          RoundButton(
+                            icon: Icons.camera_alt,
+                            onPressed: () => {},
                           ),
                         ],
                       ),

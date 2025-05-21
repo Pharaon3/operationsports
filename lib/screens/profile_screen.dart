@@ -31,17 +31,13 @@ class ProfilePage extends StatelessWidget {
               Center(
                 child: Column(
                   children: const [
-                    CircleAvatar(
-                      radius: 48,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.person, size: 60, color: Colors.black),
-                    ),
+                    Icon(Icons.account_circle_outlined, size: 138, color: Colors.white),
                     SizedBox(height: 16),
                     Text(
                       'Jake Smith',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 34,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -52,7 +48,6 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Settings options
-              const Divider(color: Colors.grey),
               _buildOption('Notifications'),
               _buildOption('Edit profile'),
               _buildOption('Options'),
@@ -70,7 +65,8 @@ class ProfilePage extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text(text, style: const TextStyle(color: Colors.white70)),
+          minTileHeight: 30,
+          title: Text(text, style: const TextStyle(color: Colors.white70, fontSize: 12)),
           onTap: () {
             // Handle option tap if needed
           },

@@ -22,7 +22,7 @@ class CreateTopicPage extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
           ),
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(35),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -75,25 +75,31 @@ class CreateTopicPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const TextField(
-                  maxLines: null,
-                  expands: true,
-                  keyboardType: TextInputType.multiline,
-                  decoration: InputDecoration.collapsed(
-                    hintText: "Write Your Post...",
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        maxLines: null,
+                        expands: true,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration.collapsed(
+                          hintText: "Write Your Post...",
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
 
-              // Attachment Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  RoundButton(icon: Icons.link, onPressed: () => {}),
-                  const SizedBox(width: 8),
-                  RoundButton(icon: Icons.camera_alt, onPressed: () => {}),
-                ],
+                    // Attachment Buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RoundButton(icon: Icons.link, onPressed: () {}),
+                        const SizedBox(width: 8),
+                        RoundButton(icon: Icons.camera_alt, onPressed: () {}),
+                      ],
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -102,8 +108,9 @@ class CreateTopicPage extends StatelessWidget {
               Row(
                 children: [
                   Container(
+                    height: 40,
                     padding: const EdgeInsets.symmetric(
-                      vertical: 10,
+                      vertical: 8,
                       horizontal: 18,
                     ),
                     decoration: BoxDecoration(
@@ -122,20 +129,40 @@ class CreateTopicPage extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
+                        fontSize: 19,
                       ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Add tags...',
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
+                    child: Container(
+                      height: 40, // Set the height to 40 pixels
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(
+                              0.1,
+                            ), // Shadow color
+                            spreadRadius: 2, // Spread radius
+                            blurRadius: 4, // Blur radius
+                            offset: Offset(0, 2), // Offset of the shadow
+                          ),
+                        ],
+                      ),
+                      child: TextField(
+                        style: TextStyle(fontSize: 16),
+                        decoration: InputDecoration(
+                          hintText: 'Add tags...',
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
                         ),
+                        maxLines: 1,
                       ),
                     ),
                   ),
@@ -146,12 +173,12 @@ class CreateTopicPage extends StatelessWidget {
               // Tag Suggestions
               const Text(
                 'You can also choose from the popular tag list:',
-                style: TextStyle(color: Colors.black87),
+                style: TextStyle(color: Color(0xFF707070), fontSize: 13),
               ),
               const SizedBox(height: 10),
               Wrap(
-                spacing: 10,
-                runSpacing: 10,
+                spacing: 5,
+                runSpacing: 2,
                 children:
                     [
                       'nba',
@@ -167,15 +194,19 @@ class CreateTopicPage extends StatelessWidget {
                       'dynasty',
                     ].map((tag) {
                       return Chip(
-                        label: Text(tag),
-                        backgroundColor: Colors.white,
-                        side: const BorderSide(color: Colors.deepPurpleAccent),
+                        label: Text(tag, style: TextStyle(fontSize: 13)),
+                        backgroundColor: const Color(0xFFF6F6F6),
                         labelStyle: const TextStyle(
                           color: Colors.deepPurple,
                           fontWeight: FontWeight.w500,
                         ),
-                        elevation: 2,
-                        shadowColor: Colors.black26,
+                        elevation: 6,
+                        shadowColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          side: BorderSide(color: Color(0xFFF6F6F6), width: 1),
+                        ),
+                        padding: EdgeInsets.all(1),
                       );
                     }).toList(),
               ),
@@ -218,32 +249,13 @@ class CreateTopicPage extends StatelessWidget {
 
               // Bottom Buttons
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.grey[200],
-                    ),
-                    onPressed: () {},
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.grey[200],
-                    ),
-                    onPressed: () {},
-                    child: const Text('Preview'),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.accentColor,
-                      foregroundColor: Colors.white,
-                    ),
-                    onPressed: () {},
-                    child: const Text('Post'),
-                  ),
+                  _buildFlatButton("Cancel", onPressed: () {}),
+                  const SizedBox(width: 8),
+                  _buildFlatButton("Preview", onPressed: () {}),
+                  const SizedBox(width: 8),
+                  _buildFilledButton("Post", onPressed: () {}),
                 ],
               ),
             ],
@@ -252,4 +264,63 @@ class CreateTopicPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildFlatButton(String label, {required VoidCallback onPressed}) {
+  return Container(
+    width: 59.26,
+    height: 24.33,
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(6.86),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          offset: const Offset(-1.25, 2.5),
+          blurRadius: 2.5,
+          spreadRadius: -0.62,
+        ),
+      ],
+    ),
+    child: TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.red,
+        padding: EdgeInsets.zero,
+        textStyle: const TextStyle(fontSize: 12),
+      ),
+      onPressed: onPressed,
+      child: Text(label),
+    ),
+  );
+}
+
+Widget _buildFilledButton(String label, {required VoidCallback onPressed}) {
+  return Container(
+    width: 59.26,
+    height: 24.33,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(6.86),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25),
+          offset: const Offset(-1.25, 2.5),
+          blurRadius: 2.5,
+          spreadRadius: -0.62,
+        ),
+      ],
+    ),
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6.86),
+        ),
+        textStyle: const TextStyle(fontSize: 12),
+      ),
+      onPressed: onPressed,
+      child: Text(label),
+    ),
+  );
 }
