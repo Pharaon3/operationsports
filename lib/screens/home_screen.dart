@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                             const SizedBox(height: 18),
 
                             Container(
-                              height: 230,
+                              height: 240,
                               color: const Color(0xFF232323),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
@@ -123,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                                             return Padding(
                                               padding: const EdgeInsets.all(0),
                                               child: SizedBox(
-                                                width: 280,
+                                                width: 298,
                                                 child: ArticleCard(
                                                   article: article,
                                                   onTap: () {
@@ -154,7 +154,7 @@ class HomeScreen extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0,
-                                vertical: 24.0,
+                                vertical: 28.0,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,

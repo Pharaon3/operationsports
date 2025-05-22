@@ -10,7 +10,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.primaryColor,
-      padding: const EdgeInsets.symmetric(vertical: 30),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Column(
         children: [
           Padding(

@@ -23,13 +23,14 @@ class ArticleDetailScreen extends StatefulWidget {
 
 class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   late Future<ArticleModel> _articleFuture;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _commentKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     _articleFuture = ArticleService.fetchArticleById(widget.articleId);
 
-    // Fetch articles without listening to changes to avoid context issues
     Future.microtask(() {
       Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
     });
@@ -55,6 +56,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
           final article = snapshot.data!;
 
           return SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -83,8 +85,13 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                       child: IconButton(
                         icon: Image.asset('assets/comment.png', height: 57),
                         onPressed: () {
-                          // Handle comment action here
+                          Scrollable.ensureVisible(
+                            _commentKey.currentContext!,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
                         },
+
                         tooltip: 'Leave a comment',
                       ),
                     ),
@@ -92,7 +99,10 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 34,
+                  ),
                   child: Column(
                     children: [
                       Align(
@@ -144,61 +154,66 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
-                      Html(
-                        data: article.content,
-                        style: {
-                          "*": Style(color: Colors.white),
-                          "img": Style(
-                            width: Width(
-                              MediaQuery.of(context).size.width,
-                            ),
-                          ),
+                      // const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 25,
+                  ),
+                  child: Html(
+                    data: article.content,
+                    style: {
+                      "*": Style(color: Colors.white),
+                      "img": Style(
+                        width: Width(MediaQuery.of(context).size.width),
+                      ),
+                    },
+                    extensions: [
+                      TagExtension(
+                        tagsToExtend: {"img"},
+                        builder: (context) {
+                          final src = context.attributes['src'] ?? '';
+                          final buildContext = context.buildContext;
+
+                          final screenWidth =
+                              buildContext != null
+                                  ? MediaQuery.of(buildContext).size.width
+                                  : 300.0;
+
+                          return Image.network(
+                            src,
+                            width: screenWidth,
+                            fit: BoxFit.contain,
+                          );
                         },
-                        extensions: [
-                          TagExtension(
-                            tagsToExtend: {"img"},
-                            builder: (context) {
-                              final src = context.attributes['src'] ?? '';
-                              final buildContext = context.buildContext;
+                      ),
+                      TagExtension(
+                        tagsToExtend: {"iframe"},
+                        builder: (context) {
+                          final attrs = context.attributes;
+                          if (attrs["data-test-id"] == "beehiiv-embed") {
+                            final src =
+                                'https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12.0,
+                              ),
+                              child: VideoWidget(url: src),
+                            );
+                          }
 
-                              final screenWidth =
-                                  buildContext != null
-                                      ? MediaQuery.of(buildContext).size.width
-                                      : 300.0;
-
-                              return Image.network(
-                                src,
-                                width: screenWidth,
-                                fit: BoxFit.contain,
-                              );
-                            },
-                          ),
-                          TagExtension(
-                            tagsToExtend: {"iframe"},
-                            builder: (context) {
-                              final attrs = context.attributes;
-                              if (attrs["data-test-id"] == "beehiiv-embed") {
-                                final src ='https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0,
-                                  ),
-                                  child: VideoWidget(url: src),
-                                );
-                              }
-
-                              // If not the specific iframe, fallback to default or ignore
-                              return const SizedBox.shrink();
-                            },
-                          ),
-                        ],
+                          // If not the specific iframe, fallback to default or ignore
+                          return const SizedBox.shrink();
+                        },
                       ),
                     ],
                   ),
                 ),
 
-                const CommentsPage(),
+                CommentsPage(key: _commentKey),
 
                 Padding(
                   padding: const EdgeInsets.only(
@@ -215,7 +230,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ),
                   ),
                 ),
-                
+
                 SizedBox(
                   height: 230,
                   child: SingleChildScrollView(
@@ -252,6 +267,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 100),
 
                 const AppFooter(),
