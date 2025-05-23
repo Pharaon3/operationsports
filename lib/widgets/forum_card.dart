@@ -116,7 +116,7 @@ class ForumCard extends StatelessWidget {
           ),
           // POST CONTENT CARD
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 22),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
             decoration: BoxDecoration(
               color: AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(10),
@@ -124,42 +124,64 @@ class ForumCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  date,
-                  style: const TextStyle(color: Colors.grey, fontSize: 7),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 22),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        date,
+                        style: const TextStyle(color: Colors.grey, fontSize: 7),
+                      ),
+
+                      const SizedBox(height: 12),
+                      Text(
+                        postText,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
 
                 const SizedBox(height: 12),
-                Text(
-                  postText,
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-                const SizedBox(height: 12),
                 if (imageUrl != "")
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.network(imageUrl),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 7),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(imageUrl),
+                    ),
                   ),
                 const SizedBox(height: 12),
 
                 // Action buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Icon(Icons.favorite_border, color: Colors.white, size: 24),
-                    SizedBox(width: 16),
-                    Icon(
-                      Icons.chat_bubble_outline,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                    SizedBox(width: 16),
-                    Icon(
-                      Icons.bookmark_border_outlined,
-                      color: Colors.white,
-                      size: 24,
-                    ),
-                  ],
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      SizedBox(width: 16),
+                      Icon(
+                        Icons.chat_bubble_outline,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      SizedBox(width: 16),
+                      Icon(
+                        Icons.bookmark_border_outlined,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
