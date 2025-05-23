@@ -32,7 +32,7 @@ class MenuButton extends StatelessWidget {
           final isHighlighted = index + 1 == selectedMenu;
 
           return _buildTopButton(
-            iconPath: 'assets/${item.toLowerCase()}.png',
+            iconPath: isHighlighted ? 'assets/${item.toLowerCase()}-selected.png' : 'assets/${item.toLowerCase()}.png',
             label: item,
             isActive: isHighlighted,
             onPressed: () {

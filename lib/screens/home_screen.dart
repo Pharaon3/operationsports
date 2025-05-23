@@ -107,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                             const SizedBox(height: 18),
 
                             Container(
-                              height: 240,
+                              // height: 230,
                               color: const Color(0xFF232323),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,

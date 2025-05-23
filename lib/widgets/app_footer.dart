@@ -1,9 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:operationsports/core/constants.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
+
+  void _openURL(String url) async {
+    Uri uri = Uri.parse(url);
+
+    if (Platform.isWindows) {
+      // Use `Process.start` on Windows instead of `launchUrl`
+      await Process.start('explorer.exe', [url]);
+    } else {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.inAppWebView);
+      } else {
+        print("❌ Could not open: $url");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,23 +64,33 @@ class AppFooter extends StatelessWidget {
           // Social Media Icons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(
-                FontAwesomeIcons.facebook,
-                color: AppColors.secondaryColor,
-                size: 20,
+            children: [
+              GestureDetector(
+                onTap: () => _openURL('https://facebook.com/'),
+                child: Icon(
+                  FontAwesomeIcons.facebook,
+                  color: AppColors.secondaryColor,
+                  size: 20,
+                ),
+              ),
+
+              SizedBox(width: 24),
+              GestureDetector(
+                onTap: () => _openURL('https://youtube.com/'),
+                child: Icon(
+                  FontAwesomeIcons.youtube,
+                  color: AppColors.secondaryColor,
+                  size: 20,
+                ),
               ),
               SizedBox(width: 24),
-              Icon(
-                FontAwesomeIcons.youtube,
-                color: AppColors.secondaryColor,
-                size: 20,
-              ),
-              SizedBox(width: 24),
-              Icon(
-                FontAwesomeIcons.twitter,
-                color: AppColors.secondaryColor,
-                size: 20,
+              GestureDetector(
+                onTap: () => _openURL('https://x.com/'),
+                child: Icon(
+                  FontAwesomeIcons.twitter,
+                  color: AppColors.secondaryColor,
+                  size: 20,
+                ),
               ),
             ],
           ),
@@ -77,31 +105,48 @@ class AppFooter extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Column(
-              children: const [
-                Text(
-                  "ABOUT US",
-                  style: TextStyle(
-                    color: Color(0xFF707070),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
+              children: [
+                GestureDetector(
+                  onTap:
+                      () => _openURL('https://www.operationsports.com/about/'),
+                  child: const Text(
+                    "ABOUT US",
+                    style: TextStyle(
+                      color: Color(0xFF707070),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  "TERMS",
-                  style: TextStyle(
-                    color: Color(0xFF707070),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap:
+                      () => _openURL('https://www.operationsports.com/terms/'),
+                  child: const Text(
+                    "TERMS",
+                    style: TextStyle(
+                      color: Color(0xFF707070),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  "PRIVACY",
-                  style: TextStyle(
-                    color: Color(0xFF707070),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap:
+                      () => _openURL(
+                        'https://www.operationsports.com/privacy-policy/',
+                      ),
+                  child: const Text(
+                    "PRIVACY",
+                    style: TextStyle(
+                      color: Color(0xFF707070),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
               ],

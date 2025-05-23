@@ -43,7 +43,7 @@ class MainArticleCard extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(0),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

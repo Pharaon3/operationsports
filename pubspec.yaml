@@ -41,6 +41,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   html: ^0.15.6
   video_player: ^2.9.5
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -64,10 +65,14 @@ flutter:
     - assets/menu.png
     - assets/newsletter.png
     - assets/games.png
-    - assets/newsletter background.png
-    - assets/newsletter logo.png
     - assets/forums.png
     - assets/review.png
+    - assets/newsletter-selected.png
+    - assets/games-selected.png
+    - assets/forums-selected.png
+    - assets/review-selected.png
+    - assets/newsletter background.png
+    - assets/newsletter logo.png
     - assets/white gamurs.png
     - assets/red back.png
     - assets/red up.png

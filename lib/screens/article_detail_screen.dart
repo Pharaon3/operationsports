@@ -99,10 +99,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 34,
-                  ),
+                  padding: const EdgeInsets.only(top: 16, left: 34, right: 34),
                   child: Column(
                     children: [
                       Align(
@@ -160,7 +157,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 16,
+                    vertical: 0,
                     horizontal: 25,
                   ),
                   child: Html(
