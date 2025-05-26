@@ -210,11 +210,7 @@ class HomeScreen extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               child: PaginatedArticleList(
-                                articles: [
-                                  ...articles,
-                                  ...articles,
-                                  ...articles,
-                                ],
+                                articles: articles,
                               ),
                             ),
 

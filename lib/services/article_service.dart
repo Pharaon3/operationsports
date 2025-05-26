@@ -7,7 +7,7 @@ class ArticleService {
 
   /// Fetch list of recent posts
   static Future<List<ArticleModel>> fetchArticles() async {
-    final url = Uri.parse('$baseUrl/posts?_embed');
+    final url = Uri.parse('$baseUrl/posts?per_page=100');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
