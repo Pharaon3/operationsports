@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/models/newsletter_model.dart';
+import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/services/newsletter_service.dart';
 
 class NewsProvider with ChangeNotifier {
-  List<NewsletterModel> _newsletters = [];
+  List<ArticleModel> _newsletters = [];
   bool _isLoading = false;
   bool _hasError = false;
   String _errorMessage = '';
 
-  List<NewsletterModel> get newsletters => _newsletters;
+  List<ArticleModel> get newsletters => _newsletters;
   bool get isLoading => _isLoading;
   bool get hasError => _hasError;
   String get errorMessage => _errorMessage;
