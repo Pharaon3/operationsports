@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/providers/news_provider.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:provider/provider.dart';
-import '../providers/article_provider.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
@@ -14,22 +14,22 @@ class NewsLetter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final articleProvider = Provider.of<ArticleProvider>(context);
+    final newsProvider = Provider.of<NewsProvider>(context);
 
     return MainScaffold(
       child: RefreshIndicator(
-        onRefresh: () => articleProvider.fetchArticles(),
+        onRefresh: () => newsProvider.fetchNewsLetter(),
         child: Builder(
           builder: (context) {
-            if (articleProvider.isLoading) {
+            if (newsProvider.isLoading) {
               return const LoadingIndicator();
             }
 
-            if (articleProvider.hasError) {
-              return AppErrorWidget(message: articleProvider.errorMessage);
+            if (newsProvider.hasError) {
+              return AppErrorWidget(message: newsProvider.errorMessage);
             }
 
-            final articles = articleProvider.articles;
+            final newsletters = newsProvider.newsletters;
 
             return ListView(
               children: [
@@ -104,7 +104,7 @@ class NewsLetter extends StatelessWidget {
                   ),
                 ),
 
-                PaginatedArticleList(articles: articles),
+                PaginatedArticleList(articles: newsletters),
 
                 SizedBox(height: 32),
 

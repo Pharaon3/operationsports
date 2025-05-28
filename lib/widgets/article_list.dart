@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
-import '../models/article_model.dart';
+import 'package:operationsports/models/displayable_content.dart';
 
 class ArticleList extends StatelessWidget {
-  final ArticleModel article;
+  final DisplayableContent article;
   final VoidCallback onTap;
 
   const ArticleList({super.key, required this.article, required this.onTap});

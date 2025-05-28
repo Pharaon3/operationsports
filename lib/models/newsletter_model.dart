@@ -2,8 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:operationsports/models/displayable_content.dart';
 
-class ArticleModel  implements DisplayableContent{
-
+class NewsletterModel  implements DisplayableContent{
   @override
   final int id;
   @override
@@ -21,7 +20,7 @@ class ArticleModel  implements DisplayableContent{
   @override
   final List graph;
 
-  ArticleModel({
+  NewsletterModel({
     required this.id,
     required this.title,
     required this.excerpt,
@@ -32,8 +31,9 @@ class ArticleModel  implements DisplayableContent{
     required this.graph,
   });
 
-  factory ArticleModel.fromJson(Map<String, dynamic> json) {
-    return ArticleModel(
+  factory NewsletterModel.fromJson(Map<String, dynamic> json) {
+    print("json: $json");
+    return NewsletterModel(
       id: json['id'],
       title: convertHtmlEntities(_parseText(json['title']['rendered'])),
       excerpt: _parseText(json['excerpt']['rendered']),
@@ -57,11 +57,10 @@ class ArticleModel  implements DisplayableContent{
       return '';
   }
 
-  @override
-  String get articleSection {
+  String get newsletterSection {
     for (var item in graph) {
-      if (item['@type'] == 'NewsArticle') {
-        return item['articleSection']?[0] ?? '';
+      if (item['@type'] == 'NewsNewsletter') {
+        return item['newsletterSection']?[0] ?? '';
       }
     }
       return '';
@@ -89,4 +88,8 @@ class ArticleModel  implements DisplayableContent{
       return date; // fallback in case of error
     }
   }
+  
+  @override
+  // TODO: implement articleSection
+  String get articleSection => throw UnimplementedError();
 }

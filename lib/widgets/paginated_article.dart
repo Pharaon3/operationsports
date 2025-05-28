@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/models/displayable_content.dart';
 
-import '../models/article_model.dart';
 import '../screens/article_detail_screen.dart';
 import 'article_list.dart';
 
 class PaginatedArticleList extends StatefulWidget {
-  final List<ArticleModel> articles;
+  final List<DisplayableContent> articles;
 
   const PaginatedArticleList({super.key, required this.articles});
 
@@ -19,7 +19,7 @@ class _PaginatedArticleListState extends State<PaginatedArticleList> {
 
   int get totalPages => (widget.articles.length / itemsPerPage).ceil();
 
-  List<ArticleModel> get currentArticles {
+  List<DisplayableContent> get currentArticles {
     final startIndex = (currentPage - 1) * itemsPerPage;
     final endIndex = (startIndex + itemsPerPage).clamp(
       0,

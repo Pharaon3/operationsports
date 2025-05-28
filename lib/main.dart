@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/providers/category_provider.dart';
+import 'package:operationsports/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme.dart';
@@ -11,7 +13,7 @@ void main() {
   runApp(const OperationSportsApp());
 }
 
-class OperationSportsApp extends StatelessWidget {
+class OperationSportsApp extends StatelessWidget { 
   const OperationSportsApp({super.key});
 
   @override
@@ -20,6 +22,8 @@ class OperationSportsApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ArticleProvider()),
+        ChangeNotifierProvider(create: (_) => NewsProvider()),
+        ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
       ],
       child: MaterialApp.router(
