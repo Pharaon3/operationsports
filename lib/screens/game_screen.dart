@@ -111,7 +111,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 55),
-            child: GameListWidget(gameTitles: gameList),
+            child: GameListWidget(categories: categories),
           ),
           const SizedBox(height: 16),
           _buildPaginationControls(),

@@ -40,6 +40,7 @@ class ArticleModel  implements DisplayableContent{
       content: json['content']['rendered'] ?? '',
       imageUrl:
           json['yoast_head_json']?['og_image']?[0]?['url'] ??
+          json['yoast_head_json']?['twitter_image'] ??
           json['twitter_image'] ??
           '',
       date: json['date'] ?? '',

@@ -11,52 +11,116 @@ import '../widgets/main_article_card.dart';
 import '../widgets/paginated_article.dart';
 import './article_detail_screen.dart';
 
-class ArticleMenuTemplate extends StatelessWidget {
+class ArticleMenuTemplate extends StatefulWidget {
   final Function fetchArticles;
   final bool isLoading;
   final bool hasError;
   final String errorMessage;
   final List<ArticleModel> articles;
+  final List<ArticleModel> featuredArticles;
   final int selectedMenu;
 
   const ArticleMenuTemplate({
-    super.key,
+    Key? key,
     required this.fetchArticles,
     required this.isLoading,
     required this.hasError,
     required this.errorMessage,
     required this.articles,
     required this.selectedMenu,
-  });
+    required this.featuredArticles,
+  }) : super(key: key);
+
+  @override
+  State<ArticleMenuTemplate> createState() => _ArticleMenuTemplateState();
+}
+
+class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
+  String selectedCategory = 'Latest Posts';
+
+  List<ArticleModel> get selectedArticles {
+    switch (selectedCategory) {
+      case 'Latest Posts':
+        List<ArticleModel> sortedArticles = List.from(widget.articles);
+        sortedArticles.sort((a, b) => b.date.compareTo(a.date));
+        return sortedArticles;
+      case 'Most Popular':
+        // You may change this logic if you have a separate popular list.
+        return widget.articles;
+      case 'All':
+        List<ArticleModel> sortedArticles = List.from(widget.articles);
+        sortedArticles.sort((a, b) => b.id.compareTo(a.id));
+        return sortedArticles;
+      default:
+        return widget.articles;
+    }
+  }
+
+  Widget _buildCategoryButton(String category) {
+    final bool isSelected = selectedCategory == category;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCategory = category;
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              category,
+              style: TextStyle(
+                color:
+                    isSelected
+                        ? AppColors.accentColor
+                        : AppColors.secondaryColor,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+            if (isSelected)
+              Container(
+                width: 90,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: AppColors.accentColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
       child: Stack(
         children: [
-          // Main content
           Container(
             color: AppColors.primaryColor,
             child: Column(
               children: [
-                Header(selectedMenu: selectedMenu),
-                // Article List
+                Header(selectedMenu: widget.selectedMenu),
                 Expanded(
                   child: RefreshIndicator(
-                    onRefresh: () async => fetchArticles,
+                    onRefresh: () async => widget.fetchArticles(),
                     child: Builder(
                       builder: (context) {
-                        if (isLoading) {
+                        if (widget.isLoading) {
                           return const LoadingIndicator();
                         }
 
-                        if (hasError) {
-                          return AppErrorWidget(
-                            message: errorMessage,
-                          );
+                        if (widget.hasError) {
+                          return AppErrorWidget(message: widget.errorMessage);
                         }
 
-                        if (articles.isEmpty) {
+                        if (widget.articles.isEmpty) {
                           return const Center(
                             child: Text("No articles found."),
                           );
@@ -64,30 +128,26 @@ class ArticleMenuTemplate extends StatelessWidget {
 
                         return ListView(
                           children: [
-                            Container(
-                              padding: EdgeInsets.only(
+                            // Featured
+                            Padding(
+                              padding: const EdgeInsets.only(
                                 left: 34,
                                 right: 34,
                                 top: 20,
                               ),
                               child: Text(
                                 'Featured Story',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
                               ),
                             ),
-
                             MainArticleCard(
-                              article:
-                                  articles
-                                      .where(
-                                        (article) =>
-                                            article.imageUrl.isNotEmpty,
-                                      )
-                                      .first,
+                              article: widget.featuredArticles.firstWhere(
+                                (article) => article.imageUrl.isNotEmpty,
+                              ),
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -95,7 +155,8 @@ class ArticleMenuTemplate extends StatelessWidget {
                                     builder:
                                         (context) => ArticleDetailScreen(
                                           articleId:
-                                              articles.first.id.toString(),
+                                              widget.articles.first.id
+                                                  .toString(),
                                         ),
                                   ),
                                 );
@@ -103,11 +164,12 @@ class ArticleMenuTemplate extends StatelessWidget {
                             ),
                             const SizedBox(height: 18),
 
-                            Container(
-                              padding: EdgeInsets.only(left: 34),
+                            // Trending
+                            Padding(
+                              padding: const EdgeInsets.only(left: 34),
                               child: Text(
                                 'Trending',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -117,14 +179,12 @@ class ArticleMenuTemplate extends StatelessWidget {
                             const SizedBox(height: 18),
 
                             Container(
-                              // height: 230,
                               color: const Color(0xFF232323),
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children:
-                                      articles
-                                          .skip(1)
+                                      widget.articles
                                           .where(
                                             (article) =>
                                                 article.imageUrl.isNotEmpty,
@@ -142,7 +202,7 @@ class ArticleMenuTemplate extends StatelessWidget {
                                                       MaterialPageRoute(
                                                         builder:
                                                             (
-                                                              context,
+                                                              _,
                                                             ) => ArticleDetailScreen(
                                                               articleId:
                                                                   article.id
@@ -160,7 +220,7 @@ class ArticleMenuTemplate extends StatelessWidget {
                               ),
                             ),
 
-                            // Button Row
+                            // Category Buttons
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0,
@@ -169,57 +229,23 @@ class ArticleMenuTemplate extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Text(
-                                          "Latest Posts",
-                                          style: TextStyle(
-                                            color: AppColors.accentColor,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Container(
-                                          width: 90,
-                                          height: 5,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.accentColor,
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 24),
-                                  Text(
-                                    "Most Popular",
-                                    style: const TextStyle(
-                                      color: AppColors.secondaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(width: 24),
-                                  Text(
-                                    "All",
-                                    style: const TextStyle(
-                                      color: AppColors.secondaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  _buildCategoryButton('Latest Posts'),
+                                  const SizedBox(width: 24),
+                                  _buildCategoryButton('Most Popular'),
+                                  const SizedBox(width: 24),
+                                  _buildCategoryButton('All'),
                                 ],
                               ),
                             ),
+
+                            // Paginated List
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: PaginatedArticleList(articles: articles),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              child: PaginatedArticleList(
+                                articles: selectedArticles,
+                              ),
                             ),
 
                             const AppFooter(),

@@ -17,6 +17,7 @@ class ReviewScreen extends StatelessWidget {
       errorMessage: articleProvider.errorMessage,
       articles: articleProvider.articles,
       selectedMenu: 3,
+      featuredArticles: articleProvider.articles,
     );
   }
 }

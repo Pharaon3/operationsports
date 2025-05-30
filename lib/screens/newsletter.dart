@@ -10,7 +10,6 @@ class NewsLetter extends StatelessWidget {
   Widget build(BuildContext context) {
     final newsProvider = Provider.of<NewsProvider>(context);
 
-
     return ArticleMenuTemplate(
       fetchArticles: newsProvider.fetchNewsLetter,
       isLoading: newsProvider.isLoading,
@@ -18,6 +17,7 @@ class NewsLetter extends StatelessWidget {
       errorMessage: newsProvider.errorMessage,
       articles: newsProvider.newsletters,
       selectedMenu: 1,
+      featuredArticles: newsProvider.newsletters,
     );
   }
 }
