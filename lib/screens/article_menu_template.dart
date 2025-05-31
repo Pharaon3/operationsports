@@ -157,7 +157,7 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
                                     builder:
                                         (context) => ArticleDetailScreen(
                                           articleId:
-                                              widget.articles.first.id
+                                              widget.featuredArticles.first.id
                                                   .toString(),
                                         ),
                                   ),

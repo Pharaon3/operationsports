@@ -35,8 +35,12 @@ class _GameListState extends State<GameList> {
           return Center(child: Text('Error: ${provider.errorMessage}'));
         }
 
-        final List<ArticleModel> articles = provider.articles;
+        final List<ArticleModel> allArticles = provider.articles;
 
+        List<ArticleModel> trendArticles =
+            allArticles.length >= 4 ? allArticles.sublist(1, 4) : allArticles;
+        List<ArticleModel> articles =
+            allArticles.length >= 5 ? allArticles.sublist(4) : allArticles;
         return ArticleMenuTemplate(
           fetchArticles: () async {
             await provider.fetchCategoryPost(widget.categoryId);
@@ -45,8 +49,8 @@ class _GameListState extends State<GameList> {
           hasError: provider.hasError,
           errorMessage: provider.errorMessage,
           articles: articles,
-          featuredArticles: articles,
-          trendArticles: articles,
+          featuredArticles: allArticles,
+          trendArticles: trendArticles,
           selectedMenu: 4,
         );
       },
