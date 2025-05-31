@@ -4,42 +4,49 @@ import 'package:operationsports/providers/category_provider.dart';
 import 'package:operationsports/screens/article_menu_template.dart';
 import 'package:provider/provider.dart';
 
-class GameList extends StatelessWidget {
+class GameList extends StatefulWidget {
   final int categoryId;
   const GameList({super.key, required this.categoryId});
 
   @override
-  Widget build(BuildContext context) {
-    final articleProvider = Provider.of<CategoryProvider>(
-      context,
-      listen: false,
-    );
+  State<GameList> createState() => _GameListState();
+}
 
-    return FutureBuilder<List<ArticleModel>>(
-      future: articleProvider.getCategoryPost(categoryId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+class _GameListState extends State<GameList> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch data after build context is available
+    Future.microtask(() {
+      final provider = Provider.of<CategoryProvider>(context, listen: false);
+      provider.fetchCategoryPost(widget.categoryId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CategoryProvider>(
+      builder: (context, provider, _) {
+        if (provider.isLoading) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+        if (provider.hasError) {
+          return Center(child: Text('Error: ${provider.errorMessage}'));
         }
 
-        final articles = snapshot.data ?? [];
+        final List<ArticleModel> articles = provider.articles;
 
-        return Consumer<CategoryProvider>(
-          builder: (context, provider, _) {
-            return ArticleMenuTemplate(
-              fetchArticles: provider.fetchCategories,
-              isLoading: provider.isLoading,
-              hasError: provider.hasError,
-              errorMessage: provider.errorMessage,
-              articles: articles,
-              featuredArticles: articles,
-              selectedMenu: 4,
-            );
+        return ArticleMenuTemplate(
+          fetchArticles: () async {
+            await provider.fetchCategoryPost(widget.categoryId);
           },
+          isLoading: provider.isLoading,
+          hasError: provider.hasError,
+          errorMessage: provider.errorMessage,
+          articles: articles,
+          featuredArticles: articles,
+          selectedMenu: 4,
         );
       },
     );

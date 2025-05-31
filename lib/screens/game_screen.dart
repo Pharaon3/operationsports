@@ -80,8 +80,7 @@ class _GameScreenState extends State<GameScreen> {
       return const Center(child: Text("No categories found."));
     }
 
-    List<String> gameList =
-        categories.map((category) => category.title).toList();
+    categories.map((category) => category.title).toList();
 
     return MainScaffold(
       child: ListView(
