@@ -18,10 +18,11 @@ class ArticleMenuTemplate extends StatefulWidget {
   final String errorMessage;
   final List<ArticleModel> articles;
   final List<ArticleModel> featuredArticles;
+  final List<ArticleModel> trendArticles;
   final int selectedMenu;
 
   const ArticleMenuTemplate({
-    Key? key,
+    super.key,
     required this.fetchArticles,
     required this.isLoading,
     required this.hasError,
@@ -29,7 +30,8 @@ class ArticleMenuTemplate extends StatefulWidget {
     required this.articles,
     required this.selectedMenu,
     required this.featuredArticles,
-  }) : super(key: key);
+    required this.trendArticles,
+  });
 
   @override
   State<ArticleMenuTemplate> createState() => _ArticleMenuTemplateState();
@@ -49,7 +51,7 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
         return widget.articles;
       case 'All':
         List<ArticleModel> sortedArticles = List.from(widget.articles);
-        sortedArticles.sort((a, b) => b.id.compareTo(a.id));
+        sortedArticles.sort((a, b) => a.title.compareTo(b.title));
         return sortedArticles;
       default:
         return widget.articles;
@@ -184,7 +186,7 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children:
-                                      widget.articles
+                                      widget.trendArticles
                                           .where(
                                             (article) =>
                                                 article.imageUrl.isNotEmpty,

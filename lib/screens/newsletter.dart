@@ -16,8 +16,9 @@ class NewsLetter extends StatelessWidget {
       hasError: newsProvider.hasError,
       errorMessage: newsProvider.errorMessage,
       articles: newsProvider.newsletters,
-      selectedMenu: 1,
       featuredArticles: newsProvider.newsletters,
+      trendArticles: newsProvider.newsletters,
+      selectedMenu: 1,
     );
   }
 }

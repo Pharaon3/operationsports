@@ -46,6 +46,7 @@ class _GameListState extends State<GameList> {
           errorMessage: provider.errorMessage,
           articles: articles,
           featuredArticles: articles,
+          trendArticles: articles,
           selectedMenu: 4,
         );
       },

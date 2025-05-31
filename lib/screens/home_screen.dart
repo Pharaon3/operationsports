@@ -16,8 +16,9 @@ class HomeScreen extends StatelessWidget {
       hasError: articleProvider.hasError,
       errorMessage: articleProvider.errorMessage,
       articles: articleProvider.articles,
-      selectedMenu: 0,
       featuredArticles: articleProvider.featuredArticles,
+      trendArticles: articleProvider.articles,
+      selectedMenu: 0,
     );
   }
 }

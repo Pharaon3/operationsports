@@ -18,7 +18,7 @@ class CategoryProvider with ChangeNotifier {
 
   CategoryProvider() {
     fetchCategories();
-    fetchCategoryPost(1);
+    fetchCategoryPost(4849);
   }
 
   Future<List<ArticleModel>> getCategoryPost(int categoryId) async {

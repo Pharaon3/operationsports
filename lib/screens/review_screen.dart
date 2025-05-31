@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/models/article_model.dart';
+import 'package:operationsports/providers/category_provider.dart';
 import 'package:operationsports/screens/article_menu_template.dart';
 import 'package:provider/provider.dart';
-import '../providers/article_provider.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final articleProvider = Provider.of<ArticleProvider>(context);
-
+    final articleProvider = Provider.of<CategoryProvider>(context);
+    List<ArticleModel> trendArticles =
+        articleProvider.articles.length >= 4
+            ? articleProvider.articles.sublist(1, 4)
+            : [];
+    List<ArticleModel> articles =
+        articleProvider.articles.length >= 5
+            ? articleProvider.articles.sublist(4)
+            : [];
     return ArticleMenuTemplate(
-      fetchArticles: articleProvider.fetchArticles,
+      fetchArticles: () async {
+        await articleProvider.fetchCategoryPost(4849);
+      },
       isLoading: articleProvider.isLoading,
       hasError: articleProvider.hasError,
       errorMessage: articleProvider.errorMessage,
-      articles: articleProvider.articles,
-      selectedMenu: 3,
+      articles: articles,
       featuredArticles: articleProvider.articles,
+      trendArticles: trendArticles,
+      selectedMenu: 3,
     );
   }
 }
