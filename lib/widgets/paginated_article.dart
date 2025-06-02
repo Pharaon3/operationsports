@@ -49,8 +49,10 @@ class _PaginatedArticleListState extends State<PaginatedArticleList> {
                 context,
                 MaterialPageRoute(
                   builder:
-                      (context) =>
-                          ArticleDetailScreen(articleId: article.id.toString()),
+                      (context) => ArticleDetailScreen(
+                        articleId: article.id.toString(),
+                        articles: [],
+                      ),
                 ),
               );
             },

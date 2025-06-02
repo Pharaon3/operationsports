@@ -11,22 +11,13 @@ class AppRoutes {
   static final GoRouter router = GoRouter(
     initialLocation: '/login',
     routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
-      ),
+      GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: '/signup',
         builder: (context, state) => const SignupScreen(),
       ),
-      GoRoute(
-        path: '/menu',
-        builder: (context, state) => const MenuScreen(),
-      ),
+      GoRoute(path: '/menu', builder: (context, state) => const MenuScreen()),
       GoRoute(
         path: '/profile',
         builder: (context, state) => const ProfilePage(),
@@ -35,7 +26,7 @@ class AppRoutes {
         path: '/articleDetail',
         builder: (context, state) {
           final article = state.extra as String;
-          return ArticleDetailScreen(articleId: article);
+          return ArticleDetailScreen(articleId: article, articles: []);
         },
       ),
     ],

@@ -14,8 +14,9 @@ import '../widgets/error_widget.dart';
 
 class ArticleDetailScreen extends StatefulWidget {
   final String articleId;
+  final List<ArticleModel> articles;
 
-  const ArticleDetailScreen({super.key, required this.articleId});
+  const ArticleDetailScreen({super.key, required this.articleId, required this.articles});
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
@@ -38,7 +39,6 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final articles = Provider.of<ArticleProvider>(context).articles;
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
@@ -210,7 +210,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   ),
                 ),
 
-                CommentsPage(key: _commentKey),
+                // CommentsPage(key: _commentKey),
 
                 Padding(
                   padding: const EdgeInsets.only(
@@ -234,7 +234,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children:
-                          articles
+                          widget.articles
                               .where((article) => article.imageUrl.isNotEmpty)
                               .map((article) {
                                 return Padding(
@@ -252,6 +252,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                                     ArticleDetailScreen(
                                                       articleId:
                                                           article.id.toString(),
+                                                      articles: widget.articles,
                                                     ),
                                           ),
                                         );

@@ -159,6 +159,7 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
                                           articleId:
                                               widget.featuredArticles.first.id
                                                   .toString(),
+                                          articles:widget.articles,
                                         ),
                                   ),
                                 );
@@ -209,6 +210,7 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
                                                               articleId:
                                                                   article.id
                                                                       .toString(),
+                                                              articles: widget.articles,
                                                             ),
                                                       ),
                                                     );
