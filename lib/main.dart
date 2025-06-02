@@ -3,13 +3,15 @@ import 'package:operationsports/providers/category_provider.dart';
 import 'package:operationsports/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'core/theme.dart';
 import 'routes/app_routes.dart';
 import 'providers/auth_provider.dart';
 import 'providers/article_provider.dart';
 import 'providers/navigation_provider.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const OperationSportsApp());
 }
 

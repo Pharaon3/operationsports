@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/models/displayable_content.dart';
-
 import '../screens/article_detail_screen.dart';
 import 'article_list.dart';
+import '../core/constants.dart';
 
 class PaginatedArticleList extends StatefulWidget {
   final List<DisplayableContent> articles;
@@ -70,20 +70,7 @@ class _PaginatedArticleListState extends State<PaginatedArticleList> {
               onTap: () => changePage(currentPage - 1),
               isEnabled: currentPage > 1,
             ),
-            ...List.generate(totalPages, (index) {
-              int page = index + 1;
-              if (page > 4 && page != totalPages) {
-                if (page == 5) {
-                  return _paginationText('...');
-                }
-                return const SizedBox.shrink();
-              }
-              return _paginationNumber(
-                number: page,
-                isActive: page == currentPage,
-                onTap: () => changePage(page),
-              );
-            }),
+            ..._buildPageNumbers(),
             _paginationButton(
               icon: Icons.chevron_right,
               onTap: () => changePage(currentPage + 1),
@@ -94,6 +81,46 @@ class _PaginatedArticleListState extends State<PaginatedArticleList> {
         const SizedBox(height: 20),
       ],
     );
+  }
+
+  List<Widget> _buildPageNumbers() {
+    List<Widget> pages = [];
+
+    void addPage(int page) {
+      pages.add(
+        _paginationNumber(
+          number: page,
+          isActive: page == currentPage,
+          onTap: () => changePage(page),
+        ),
+      );
+    }
+
+    if (totalPages <= 7) {
+      for (int i = 1; i <= totalPages; i++) {
+        addPage(i);
+      }
+    } else {
+      addPage(1);
+
+      if (currentPage > 4) {
+        pages.add(_paginationText('...'));
+      }
+
+      int start = (currentPage - 1).clamp(2, totalPages - 3);
+      int end = (currentPage + 1).clamp(2, totalPages - 1);
+      for (int i = start; i <= end; i++) {
+        addPage(i);
+      }
+
+      if (currentPage < totalPages - 3) {
+        pages.add(_paginationText('...'));
+      }
+
+      addPage(totalPages);
+    }
+
+    return pages;
   }
 
   Widget _paginationButton({
@@ -127,14 +154,16 @@ class _PaginatedArticleListState extends State<PaginatedArticleList> {
         margin: const EdgeInsets.symmetric(horizontal: 4),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
+          border: Border.all(
+            color: isActive ? AppColors.accentColor : Colors.white,
+          ),
           borderRadius: BorderRadius.circular(5),
           color: Colors.transparent,
         ),
         child: Text(
           '$number',
           style: TextStyle(
-            color: Colors.white,
+            color: isActive ? AppColors.accentColor : Colors.white,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
             decoration: isActive ? TextDecoration.underline : null,
           ),

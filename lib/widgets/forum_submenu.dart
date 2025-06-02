@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/forum_detail_screen.dart';
+import 'package:operationsports/screens/forum_list.dart';
 
 class ForumSubMenu extends StatefulWidget {
   final String title;
-  final List<String> subItems;
+  final List<ForumSectionMenu> subItems;
 
   const ForumSubMenu({super.key, required this.title, required this.subItems});
 
@@ -60,11 +63,28 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
           Column(
             children:
                 widget.subItems.map((item) {
+                  int timestampInt = int.parse(item.publishdate);
+                  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+                    timestampInt * 1000,
+                  );
+                  String formattedDate = DateFormat(
+                    'MM-dd-yyyy, hh:mm a',
+                  ).format(dateTime);
+                  String authorname =
+                      item.authorname != ''
+                          ? 'by ${item.authorname}'
+                          : 'bu ${item.lastcontentauthor}';
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ForumDetail()),
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  item.userid == '1'
+                                      ? ForumList(parentId: item.id)
+                                      : ForumDetail(),
+                        ),
                       );
                     },
                     child: Container(
@@ -86,7 +106,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item,
+                                    item.title,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -95,7 +115,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                   ),
                                   const SizedBox(height: 18),
                                   Row(
-                                    children: const [
+                                    children: [
                                       Icon(
                                         Icons.account_circle_outlined,
                                         color: Colors.white,
@@ -107,16 +127,16 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            // Text(
+                                            //   "Arcade Sports Games Need a Revival",
+                                            //   style: TextStyle(
+                                            //     color: Colors.white,
+                                            //     fontSize: 11,
+                                            //   ),
+                                            //   overflow: TextOverflow.ellipsis,
+                                            // ),
                                             Text(
-                                              "Arcade Sports Games Need a Revival",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 11,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              "by Steve_OS\n04-08-2025, 03:25 PM",
+                                              "$authorname\n$formattedDate",
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 11,

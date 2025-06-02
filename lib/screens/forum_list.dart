@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/new_topic.dart';
+import 'package:operationsports/services/forum_service.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
@@ -8,113 +10,125 @@ import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/default_button.dart';
 import 'package:operationsports/widgets/forum_submenu.dart';
 
-class ForumList extends StatelessWidget {
-  const ForumList({super.key});
+class ForumList extends StatefulWidget {
+  final String parentId;
+  const ForumList({super.key, required this.parentId});
+
+  @override
+  State<ForumList> createState() => _ForumListState();
+}
+
+class _ForumListState extends State<ForumList> {
+  late Future<List<ForumSectionMenu>> _futureForumSectionMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadForumSectionMenu();
+  }
+
+  void _loadForumSectionMenu() {
+    _futureForumSectionMenu = ForumService.fetchForumSectionMenu(
+      widget.parentId,
+    );
+  }
+
+  Future<void> _handleRefresh() async {
+    _loadForumSectionMenu();
+    setState(() {}); // Trigger rebuild with new data
+  }
 
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
       child: RefreshIndicator(
-        onRefresh: () async => {},
-        child: Builder(
-          builder: (context) {
-            return ListView(
+        onRefresh: _handleRefresh,
+        child: ListView(
+          children: [
+            const Header(selectedMenu: 2),
+
+            Column(
               children: [
-                const Header(selectedMenu: 2),
-
-                Column(
-                  children: [
-                    MenuGrid(
-                      menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
-                      highlightedItems: {'FORUMS'},
-                    ),
-                    MenuGrid(
-                      menuItems: [
-                        'Today\'s posts',
-                        'Member list',
-                        'Calendar',
-                        'News',
-                        'Reviews',
-                      ],
-                      highlightedItems: {'Today\'s posts'},
-                    ),
+                MenuGrid(
+                  menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
+                  highlightedItems: {'FORUMS'},
+                ),
+                MenuGrid(
+                  menuItems: [
+                    'Today\'s posts',
+                    'Member list',
+                    'Calendar',
+                    'News',
+                    'Reviews',
                   ],
+                  highlightedItems: {'Today\'s posts'},
                 ),
-
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      ForumSubMenu(
-                        title: 'All Pro Football 2K',
-                        subItems: ['APF 2K Rosters'],
-                      ),
-                      ForumSubMenu(
-                        title: 'ESPN NFL 2K5 Football',
-                        subItems: [
-                          'ESPN NFL 2K5 Rosters',
-                          'ESPN NFL 2K5 Sliders',
-                          'ESPN NFL 2K5 Online',
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: TopicGrid(
-                    menuItems: [
-                      'Topics',
-                      'Latest Activity',
-                      'My Subscriptions',
-                    ],
-                    selectedItems: [
-                      'Topics'
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: DefaultButton(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreateTopicPage(),
-                        ),
-                      );
-                    },
-                    buttonLabel: "New Topic    +",
-                  ),
-                ),
-
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      ForumSubMenu(
-                        title: '',
-                        subItems: [
-                          '2k never getting the NFL sim license!!',
-                          'Operation Sports Content and Other News',
-                          '2k never getting the NFL sim license!!',
-                          'Operation Sports Content and Other News',
-                          '2k never getting the NFL sim license!!',
-                          'Operation Sports Content and Other News',
-                          '2k never getting the NFL sim license!!',
-                          'Operation Sports Content and Other News',
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                const AppFooter(),
               ],
-            );
-          },
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: FutureBuilder<List<ForumSectionMenu>>(
+                future: _futureForumSectionMenu,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('No forum data available.'),
+                    );
+                  }
+
+                  final sections = snapshot.data!;
+                  final subForumTitles =
+                      sections.where((s) => s.userid == "1").toList();
+                  final topicTitles =
+                      sections.where((s) => s.userid != "1").toList();
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (subForumTitles.isNotEmpty)
+                        ForumSubMenu(
+                          title: 'Sub Forums',
+                          subItems: subForumTitles,
+                        ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: TopicGrid(
+                          menuItems: [
+                            'Topics',
+                            'Latest Activity',
+                            'My Subscriptions',
+                          ],
+                          selectedItems: ['Topics'],
+                        ),
+                      ),
+                      DefaultButton(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CreateTopicPage(),
+                            ),
+                          );
+                        },
+                        buttonLabel: "New Topic    +",
+                      ),
+                      const SizedBox(height: 20),
+                      if (topicTitles.isNotEmpty)
+                        ForumSubMenu(title: '', subItems: topicTitles),
+                    ],
+                  );
+                },
+              ),
+            ),
+
+            const AppFooter(),
+          ],
         ),
       ),
     );

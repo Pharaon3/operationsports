@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/forum_list.dart';
 
 class ForumMenu extends StatefulWidget {
   final String title;
-  final List<String> subItems;
+  final List<ForumSubItem> subItems;
 
   const ForumMenu({super.key, required this.title, required this.subItems});
 
@@ -85,7 +86,7 @@ class _ForumMenuState extends State<ForumMenu> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                item,
+                                item.title,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -124,7 +125,7 @@ class _ForumMenuState extends State<ForumMenu> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ForumList(),
+                                  builder: (context) => ForumList(parentId: item.parentId),
                                 ),
                               );
                             },
