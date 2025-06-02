@@ -8,7 +8,7 @@ import '../models/article_model.dart';
 import '../services/article_service.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/article_card.dart';
-import '../widgets/comment.dart';
+// import '../widgets/comment.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 
