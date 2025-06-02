@@ -122,6 +122,56 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _buildPaginationControls() {
+    const int maxVisiblePages = 3;
+
+    int startPage = (currentPage - (maxVisiblePages ~/ 2)).clamp(1, totalPages);
+    int endPage = (startPage + maxVisiblePages - 1).clamp(1, totalPages);
+
+    // Adjust startPage if we’re near the end
+    if (endPage - startPage < maxVisiblePages - 1) {
+      startPage = (endPage - maxVisiblePages + 1).clamp(1, totalPages);
+    }
+
+    List<Widget> pageButtons = [];
+
+    // Always show first page
+    if (startPage > 1) {
+      pageButtons.add(
+        _paginationNumber(
+          number: 1,
+          isActive: currentPage == 1,
+          onTap: () => changePage(1),
+        ),
+      );
+      if (startPage > 2) {
+        pageButtons.add(_paginationText('...'));
+      }
+    }
+
+    for (int page = startPage; page <= endPage; page++) {
+      pageButtons.add(
+        _paginationNumber(
+          number: page,
+          isActive: page == currentPage,
+          onTap: () => changePage(page),
+        ),
+      );
+    }
+
+    // Always show last page
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pageButtons.add(_paginationText('...'));
+      }
+      pageButtons.add(
+        _paginationNumber(
+          number: totalPages,
+          isActive: currentPage == totalPages,
+          onTap: () => changePage(totalPages),
+        ),
+      );
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -130,18 +180,7 @@ class _GameScreenState extends State<GameScreen> {
           onTap: () => changePage(currentPage - 1),
           isEnabled: currentPage > 1,
         ),
-        ...List.generate(totalPages, (index) {
-          int page = index + 1;
-          if (page > 4 && page != totalPages) {
-            if (page == 5) return _paginationText('...');
-            return const SizedBox.shrink();
-          }
-          return _paginationNumber(
-            number: page,
-            isActive: page == currentPage,
-            onTap: () => changePage(page),
-          );
-        }),
+        ...pageButtons,
         _paginationButton(
           icon: Icons.chevron_right,
           onTap: () => changePage(currentPage + 1),
@@ -181,7 +220,9 @@ class _GameScreenState extends State<GameScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 4),
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: isActive ? AppColors.accentColor : Colors.white),
+          border: Border.all(
+            color: isActive ? AppColors.accentColor : Colors.white,
+          ),
           borderRadius: BorderRadius.circular(5),
           color: Colors.transparent,
         ),
