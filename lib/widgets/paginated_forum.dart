@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/models/forum_model.dart';
+import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/widgets/forum_card.dart';
 
 class PaginatedForumList extends StatefulWidget {
-  final List<ForumModel> forums;
+  final List<ForumSectionMenu> forums;
 
   const PaginatedForumList({super.key, required this.forums});
 
@@ -17,7 +17,7 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
 
   int get totalPages => (widget.forums.length / itemsPerPage).ceil();
 
-  List<ForumModel> get currentForums {
+  List<ForumSectionMenu> get currentForums {
     final startIndex = (currentPage - 1) * itemsPerPage;
     final endIndex = (startIndex + itemsPerPage).clamp(0, widget.forums.length);
     return widget.forums.sublist(startIndex, endIndex);
@@ -36,10 +36,12 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
         // Forum List
         ...currentForums.map((forum) {
           return ForumCard(
-            forumName: forum.forumName,
-            postText: forum.postText,
-            date: forum.date,
-            imageUrl: forum.imageUrl,
+            isMainForum: false,
+            authorname: forum.authorname,
+            forumName: forum.title,
+            postText: forum.content,
+            date: forum.publishdate,
+            imageUrl: '',
           );
         }),
 

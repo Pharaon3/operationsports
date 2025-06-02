@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/models/forum_model.dart';
+import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/new_topic.dart';
+import 'package:operationsports/services/forum_service.dart';
+import 'package:operationsports/widgets/forum_card.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
@@ -10,11 +13,55 @@ import 'package:operationsports/widgets/paginated_forum.dart';
 import 'package:operationsports/widgets/post_input_box.dart';
 import 'package:operationsports/test_data/test_forum_data.dart';
 
-class ForumDetail extends StatelessWidget {
-  const ForumDetail({super.key});
+class ForumDetail extends StatefulWidget {
+  final String parentId;
+  final String content;
+  final String title;
+  final String authorname;
+  final String publishdate;
+  const ForumDetail({
+    super.key,
+    required this.parentId,
+    required this.content,
+    required this.title,
+    required this.authorname,
+    required this.publishdate,
+  });
+
+  @override
+  State<ForumDetail> createState() => _ForumDetailState();
+}
+
+class _ForumDetailState extends State<ForumDetail> {
+  late Future<List<ForumSectionMenu>> _futureForumDetail;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadForumSectionMenu();
+  }
+
+  void _loadForumSectionMenu() {
+    _futureForumDetail = ForumService.fetchForumSectionMenu(widget.parentId);
+  }
 
   @override
   Widget build(BuildContext context) {
+    String parseBBCodeToHtml(String bbcode) {
+      return bbcode
+          .replaceAll('[B]', '<b>')
+          .replaceAll('[/B]', '</b>')
+          .replaceAll('[I]', '<i>')
+          .replaceAll('[/I]', '</i>')
+          .replaceAll('[COLOR="Red"]', '<span style="color:red;">')
+          .replaceAll('[COLOR="Blue"]', '<span style="color:blue;">')
+          .replaceAll('[/COLOR]', '</span>')
+          .replaceAllMapped(
+            RegExp(r'\[URL="(.+?)"\](.+?)\[/URL\]', dotAll: true),
+            (match) => '<a href="${match[1]}">${match[2]}</a>',
+          );
+    }
+
     return MainScaffold(
       child: RefreshIndicator(
         onRefresh: () async => {},
@@ -44,16 +91,13 @@ class ForumDetail extends StatelessWidget {
                   ],
                 ),
 
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    '2k never getting the NFL sim license!!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                ForumCard(
+                  isMainForum: true,
+                  authorname: widget.authorname,
+                  forumName: widget.title,
+                  postText: parseBBCodeToHtml(widget.content),
+                  date: widget.publishdate,
+                  imageUrl: '',
                 ),
 
                 SizedBox(height: 12),
@@ -77,14 +121,22 @@ class ForumDetail extends StatelessWidget {
 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: PaginatedForumList(
-                    forums: [
-                      ...forumList,
-                      ...forumList,
-                      ...forumList,
-                      ...forumList,
-                      ...forumList,
-                    ],
+                  child: FutureBuilder<List<ForumSectionMenu>>(
+                    future: _futureForumDetail,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                          child: Text('No forum data available.'),
+                        );
+                      }
+
+                      final sections = snapshot.data!;
+                      return PaginatedForumList(forums: sections);
+                    },
                   ),
                 ),
 

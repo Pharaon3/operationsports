@@ -36,6 +36,7 @@ class ForumSectionMenu {
   final String lastcontentauthor;
   final String publishdate;
   final String userid;
+  final String content;
 
   ForumSectionMenu({
     required this.id,
@@ -44,6 +45,7 @@ class ForumSectionMenu {
     required this.lastcontentauthor,
     required this.publishdate,
     required this.userid,
+    required this.content,
   });
 
   factory ForumSectionMenu.fromMapEntry(MapEntry<String, dynamic> entry) {
@@ -55,6 +57,7 @@ class ForumSectionMenu {
       lastcontentauthor: data['lastcontentauthor'] ?? '',
       publishdate: data['publishdate'] ?? '',
       userid: data['userid'] ?? '',
+      content: data['content']?['rawtext'] ?? '',
     );
   }
 }

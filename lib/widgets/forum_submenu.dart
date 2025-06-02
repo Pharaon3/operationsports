@@ -83,7 +83,13 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                               (context) =>
                                   item.userid == '1'
                                       ? ForumList(parentId: item.id)
-                                      : ForumDetail(),
+                                      : ForumDetail(
+                                        parentId: item.id,
+                                        content: item.content,
+                                        title: item.title,
+                                        authorname: item.authorname,
+                                        publishdate: item.publishdate,
+                                      ),
                         ),
                       );
                     },

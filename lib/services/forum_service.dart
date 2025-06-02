@@ -71,7 +71,6 @@ class ForumService {
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print('data: $data');
       final sections =
           (data as Map<String, dynamic>).entries
               .map((entry) => ForumSectionMenu.fromMapEntry(entry))

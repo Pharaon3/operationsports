@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ForumCard extends StatelessWidget {
+  final bool isMainForum;
   final String forumName;
   final String postText;
   final String imageUrl;
   final String date;
   final int stars;
   final String joinDate;
+  final String authorname;
   final int postCount;
 
   const ForumCard({
     super.key,
+    required this.isMainForum,
     required this.forumName,
     required this.postText,
+    required this.authorname,
     this.imageUrl = "",
     required this.date,
     this.stars = 4,
@@ -23,6 +30,57 @@ class ForumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int timestampInt = int.parse(date);
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+      timestampInt * 1000,
+    );
+    String formattedDate = DateFormat('MM-dd-yyyy, hh:mm a').format(dateTime);
+
+    TextSpan buildStyledPostText(String rawText) {
+      final spans = <TextSpan>[];
+
+      final quoteRegex = RegExp(
+        r'\[QUOTE=[^\]]*\](.*?)\[/QUOTE\]',
+        dotAll: true,
+      );
+      int lastEnd = 0;
+
+      for (final match in quoteRegex.allMatches(rawText)) {
+        if (match.start > lastEnd) {
+          spans.add(
+            TextSpan(
+              text: rawText.substring(lastEnd, match.start),
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
+        }
+
+        final quotedText = match.group(1)?.trim() ?? '';
+        spans.add(
+          TextSpan(
+            text: '"$quotedText"\n',
+            style: const TextStyle(
+              fontStyle: FontStyle.italic,
+              color: Colors.white70,
+            ),
+          ),
+        );
+
+        lastEnd = match.end;
+      }
+
+      if (lastEnd < rawText.length) {
+        spans.add(
+          TextSpan(
+            text: rawText.substring(lastEnd),
+            style: const TextStyle(color: Colors.white),
+          ),
+        );
+      }
+
+      return TextSpan(children: spans);
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       // padding: const EdgeInsets.all(16),
@@ -53,13 +111,16 @@ class ForumCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              forumName,
+                              forumName.length > 25
+                                  ? '${forumName.substring(0, 25)}...'
+                                  : forumName,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               ),
                             ),
+
                             Row(
                               children: List.generate(
                                 5,
@@ -93,6 +154,13 @@ class ForumCard extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Text(
+                          "By: $authorname",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 9,
+                          ),
+                        ),
                         Text(
                           "Join Date: $joinDate",
                           style: const TextStyle(
@@ -130,18 +198,34 @@ class ForumCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        date,
+                        formattedDate,
                         style: const TextStyle(color: Colors.grey, fontSize: 7),
                       ),
 
                       const SizedBox(height: 12),
-                      Text(
-                        postText,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
+                      if (isMainForum)
+                        HtmlWidget(
+                          postText.replaceAll('***', ""),
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            height: 1.6,
+                          ),
+                          onTapUrl: (url) async {
+                            if (await canLaunchUrl(Uri.parse(url))) {
+                              launchUrl(
+                                Uri.parse(url),
+                                mode: LaunchMode.externalApplication,
+                              );
+                            }
+                            return true;
+                          },
+                        )
+                      else
+                        Text.rich(
+                          buildStyledPostText(postText),
+                          style: const TextStyle(fontSize: 12),
                         ),
-                      ),
                     ],
                   ),
                 ),
