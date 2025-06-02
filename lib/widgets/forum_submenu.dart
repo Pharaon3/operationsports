@@ -73,7 +73,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                   String authorname =
                       item.authorname != ''
                           ? 'by ${item.authorname}'
-                          : 'bu ${item.lastcontentauthor}';
+                          : 'by ${item.lastcontentauthor}';
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
