@@ -20,7 +20,10 @@ class GameListWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => GameList(categoryId: categories[index].id)),
+              MaterialPageRoute(
+                builder:
+                    (context) => GameList(categoryId: categories[index].id),
+              ),
             );
           },
           child: Container(
@@ -34,7 +37,9 @@ class GameListWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  categories[index].title,
+                  categories[index].title.length > 35
+                      ? '${categories[index].title.substring(0, 35)}...'
+                      : categories[index].title,
                   style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ],
