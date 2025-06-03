@@ -191,16 +191,16 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                         tagsToExtend: {"iframe"},
                         builder: (context) {
                           final attrs = context.attributes;
-                          if (attrs["data-test-id"] == "beehiiv-embed") {
-                            final src =
-                                'https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 12.0,
-                              ),
-                              child: VideoWidget(url: src),
-                            );
-                          }
+                          // if (attrs["data-test-id"] == "beehiiv-embed") {
+                          //   final src =
+                          //       'https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';
+                          //   return Padding(
+                          //     padding: const EdgeInsets.symmetric(
+                          //       vertical: 12.0,
+                          //     ),
+                          //     child: VideoWidget(url: src),
+                          //   );
+                          // }
 
                           // If not the specific iframe, fallback to default or ignore
                           return const SizedBox.shrink();
