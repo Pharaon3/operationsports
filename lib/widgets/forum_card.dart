@@ -11,9 +11,9 @@ class ForumCard extends StatelessWidget {
   final String imageUrl;
   final String date;
   final int stars;
-  final String joinDate;
   final String authorname;
-  final int postCount;
+  final String joinedDate;
+  final String postCount;
 
   const ForumCard({
     super.key,
@@ -21,11 +21,11 @@ class ForumCard extends StatelessWidget {
     required this.forumName,
     required this.postText,
     required this.authorname,
+    required this.joinedDate,
     this.imageUrl = "",
     required this.date,
     this.stars = 4,
-    this.joinDate = 'Jul 2002',
-    this.postCount = 33300,
+    required this.postCount,
   });
 
   @override
@@ -35,6 +35,12 @@ class ForumCard extends StatelessWidget {
       timestampInt * 1000,
     );
     String formattedDate = DateFormat('MM-dd-yyyy, hh:mm a').format(dateTime);
+
+    int joinedDatetimestampInt = int.parse(joinedDate);
+    DateTime joinedDatedateTime = DateTime.fromMillisecondsSinceEpoch(
+      joinedDatetimestampInt * 1000,
+    );
+    String joinedDateformattedDate = DateFormat('MM-dd-yyyy').format(joinedDatedateTime);
 
     TextSpan buildStyledPostText(String rawText) {
       final spans = <TextSpan>[];
@@ -162,7 +168,7 @@ class ForumCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Join Date: $joinDate",
+                          "Join Date: $joinedDateformattedDate",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 9,

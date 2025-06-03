@@ -46,8 +46,6 @@ class _ForumScreenState extends State<ForumScreen> {
                     'Today\'s posts',
                     'Member list',
                     'Calendar',
-                    'News',
-                    'Reviews',
                   ],
                   highlightedItems: {'Today\'s posts'},
                 ),

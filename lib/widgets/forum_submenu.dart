@@ -89,6 +89,8 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                         title: item.title,
                                         authorname: item.authorname,
                                         publishdate: item.publishdate,
+                                        joinedDate: item.joinedDate,
+                                        posts: item.posts,
                                       ),
                         ),
                       );

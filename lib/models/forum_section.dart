@@ -37,6 +37,8 @@ class ForumSectionMenu {
   final String publishdate;
   final String userid;
   final String content;
+  final String joinedDate;
+  final String posts;
 
   ForumSectionMenu({
     required this.id,
@@ -46,6 +48,8 @@ class ForumSectionMenu {
     required this.publishdate,
     required this.userid,
     required this.content,
+    required this.joinedDate,
+    required this.posts,
   });
 
   factory ForumSectionMenu.fromMapEntry(MapEntry<String, dynamic> entry) {
@@ -58,6 +62,8 @@ class ForumSectionMenu {
       publishdate: data['publishdate'] ?? '',
       userid: data['userid'] ?? '',
       content: data['content']?['rawtext'] ?? '',
+      joinedDate: data['content']?['userinfo']?['joindate'] ?? '',
+      posts: data['content']?['userinfo']?['posts'] ?? '',
     );
   }
 }

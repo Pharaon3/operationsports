@@ -19,6 +19,8 @@ class ForumDetail extends StatefulWidget {
   final String title;
   final String authorname;
   final String publishdate;
+  final String joinedDate;
+  final String posts;
   const ForumDetail({
     super.key,
     required this.parentId,
@@ -26,6 +28,8 @@ class ForumDetail extends StatefulWidget {
     required this.title,
     required this.authorname,
     required this.publishdate,
+    required this.joinedDate,
+    required this.posts,
   });
 
   @override
@@ -98,6 +102,8 @@ class _ForumDetailState extends State<ForumDetail> {
                   postText: parseBBCodeToHtml(widget.content),
                   date: widget.publishdate,
                   imageUrl: '',
+                  joinedDate: widget.joinedDate,
+                  postCount: widget.posts,
                 ),
 
                 SizedBox(height: 12),
