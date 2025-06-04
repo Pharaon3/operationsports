@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
+import 'package:operationsports/models/forum_activity_item.dart';
 import '../models/forum_section.dart';
 
 class ForumService {
@@ -78,6 +79,77 @@ class ForumService {
       return sections;
     } else {
       throw Exception('Failed to fetch forum section menu.');
+    }
+  }
+
+  static Future<List<ForumActivityItem>> fetchLatestActivity() async {
+    await _ensureInitialized();
+
+    const baseCall = 'api_m=stream.get&perpage=10';
+    final signature = _generateSignature(base: baseCall);
+
+    final uri = Uri.parse(
+      '$_baseUrl?api_m=stream.get&perpage=10'
+      '&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature',
+    );
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+
+      final rawItems = data['activity'] as List<dynamic>;
+      return rawItems.map((item) {
+        return ForumActivityItem(
+          username: item['authorname'] ?? '',
+          threadTitle: item['title'] ?? '',
+          forumTitle: item['forum_title'] ?? '',
+          replySnippet: item['previewtext'] ?? '',
+          date: DateTime.fromMillisecondsSinceEpoch(
+            int.tryParse(item['publishdate'].toString())! * 1000,
+          ),
+          avatarUrl: item['avatarurl'] ?? '',
+          postUrl: item['url'] ?? '',
+        );
+      }).toList();
+    } else {
+      throw Exception('Failed to fetch latest activity.');
+    }
+  }
+
+  static Future<List<ForumActivityItem>> fetchMySubscriptions() async {
+    await _ensureInitialized();
+
+    const baseCall = 'api_m=subscription.listSubscriptions';
+    final signature = _generateSignature(base: baseCall);
+
+    final uri = Uri.parse(
+      '$_baseUrl?api_m=subscription.listSubscriptions'
+      '&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature',
+    );
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print('data: $data');
+
+      final subscriptions = data['subscriptions'] as List<dynamic>;
+      return subscriptions.map((item) {
+        return ForumActivityItem(
+          username: item['lastposter'] ?? '',
+          threadTitle: item['title'] ?? '',
+          forumTitle: item['forumtitle'] ?? '',
+          replySnippet: item['excerpt'] ?? '',
+          date: DateTime.fromMillisecondsSinceEpoch(
+            int.tryParse(item['lastpost'])! * 1000,
+          ),
+          avatarUrl: item['avatarurl'] ?? '',
+          postUrl: item['url'] ?? '',
+        );
+      }).toList();
+    } else {
+      throw Exception('Failed to fetch subscriptions');
     }
   }
 

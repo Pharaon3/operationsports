@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/models/forum_activity_item.dart';
 import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/new_topic.dart';
 import 'package:operationsports/services/forum_service.dart';
+import 'package:operationsports/widgets/forum_activity_list.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
 import 'package:operationsports/widgets/menu_grid.dart';
@@ -130,10 +132,76 @@ class _ForumListState extends State<ForumList> {
                         if (topicTitles.isNotEmpty)
                           ForumSubMenu(title: '', subItems: topicTitles),
                       ] else if (_selectedTab == 'Latest Activity') ...[
-                        // Replace with your own widget
-                        const Text('Show latest activity here'),
+                        FutureBuilder<List<ForumActivityItem>>(
+                          future: ForumService.fetchLatestActivity(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text('Failed to load latest activity'),
+                              );
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.isEmpty) {
+                              return const Center(
+                                child: Text('No recent activity.'),
+                              );
+                            }
+
+                            return ForumActivityList(
+                              activities: snapshot.data!,
+                            );
+                          },
+                        ),
                       ] else if (_selectedTab == 'My Subscriptions') ...[
-                        const Text('Show user subscriptions here'),
+                        FutureBuilder<List<ForumActivityItem>>(
+                          future: ForumService.fetchMySubscriptions(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text('Error: ${snapshot.error}'),
+                              );
+                            } else if (!snapshot.hasData ||
+                                snapshot.data!.isEmpty) {
+                              return const Center(
+                                child: Text('No subscriptions found.'),
+                              );
+                            }
+
+                            final subscriptions = snapshot.data!;
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: subscriptions.length,
+                              separatorBuilder: (_, __) => const Divider(),
+                              itemBuilder: (context, index) {
+                                final item = subscriptions[index];
+                                return ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      item.avatarUrl,
+                                    ),
+                                  ),
+                                  title: Text(item.threadTitle),
+                                  subtitle: Text(
+                                    '${item.username} · ${item.forumTitle}',
+                                  ),
+                                  onTap: () {
+                                    // You can use url_launcher to open item.postUrl in browser
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
                       ] else if (_selectedTab == 'Photos') ...[
                         const Text('Show photo content here'),
                       ],
