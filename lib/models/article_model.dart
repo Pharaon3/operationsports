@@ -82,6 +82,7 @@ class ArticleModel  implements DisplayableContent{
     return document.body?.text ?? '';
   }
 
+  @override
   String get formattedDate {
     try {
       final parsedDate = DateTime.parse(date);
