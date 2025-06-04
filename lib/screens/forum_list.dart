@@ -20,6 +20,7 @@ class ForumList extends StatefulWidget {
 
 class _ForumListState extends State<ForumList> {
   late Future<List<ForumSectionMenu>> _futureForumSectionMenu;
+  String _selectedTab = 'Topics';
 
   @override
   void initState() {
@@ -103,24 +104,39 @@ class _ForumListState extends State<ForumList> {
                             'Topics',
                             'Latest Activity',
                             'My Subscriptions',
+                            'Photos',
                           ],
-                          selectedItems: ['Topics'],
+                          selectedItem: _selectedTab,
+                          onItemSelected: (value) {
+                            setState(() {
+                              _selectedTab = value;
+                            });
+                          },
                         ),
                       ),
-                      DefaultButton(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CreateTopicPage(),
-                            ),
-                          );
-                        },
-                        buttonLabel: "New Topic    +",
-                      ),
-                      const SizedBox(height: 20),
-                      if (topicTitles.isNotEmpty)
-                        ForumSubMenu(title: '', subItems: topicTitles),
+                      if (_selectedTab == 'Topics') ...[
+                        DefaultButton(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CreateTopicPage(),
+                              ),
+                            );
+                          },
+                          buttonLabel: "New Topic    +",
+                        ),
+                        const SizedBox(height: 20),
+                        if (topicTitles.isNotEmpty)
+                          ForumSubMenu(title: '', subItems: topicTitles),
+                      ] else if (_selectedTab == 'Latest Activity') ...[
+                        // Replace with your own widget
+                        const Text('Show latest activity here'),
+                      ] else if (_selectedTab == 'My Subscriptions') ...[
+                        const Text('Show user subscriptions here'),
+                      ] else if (_selectedTab == 'Photos') ...[
+                        const Text('Show photo content here'),
+                      ],
                     ],
                   );
                 },

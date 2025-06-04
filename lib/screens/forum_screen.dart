@@ -34,7 +34,9 @@ class _ForumScreenState extends State<ForumScreen> {
         },
         child: ListView(
           children: [
+
             const Header(selectedMenu: 2),
+
             Column(
               children: [
                 MenuGrid(
@@ -51,6 +53,7 @@ class _ForumScreenState extends State<ForumScreen> {
                 ),
               ],
             ),
+            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: FutureBuilder<List<ForumSection>>(
@@ -79,7 +82,9 @@ class _ForumScreenState extends State<ForumScreen> {
                 },
               ),
             ),
+            
             const AppFooter(),
+
           ],
         ),
       ),
