@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:operationsports/widgets/bbcode_parser.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ForumCard extends StatelessWidget {
@@ -40,7 +41,9 @@ class ForumCard extends StatelessWidget {
     DateTime joinedDatedateTime = DateTime.fromMillisecondsSinceEpoch(
       joinedDatetimestampInt * 1000,
     );
-    String joinedDateformattedDate = DateFormat('MM-dd-yyyy').format(joinedDatedateTime);
+    String joinedDateformattedDate = DateFormat(
+      'MM-dd-yyyy',
+    ).format(joinedDatedateTime);
 
     TextSpan buildStyledPostText(String rawText) {
       final spans = <TextSpan>[];
@@ -209,29 +212,37 @@ class ForumCard extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 12),
-                      if (isMainForum)
-                        HtmlWidget(
-                          postText.replaceAll('***', ""),
-                          textStyle: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            height: 1.6,
-                          ),
-                          onTapUrl: (url) async {
-                            if (await canLaunchUrl(Uri.parse(url))) {
-                              launchUrl(
-                                Uri.parse(url),
-                                mode: LaunchMode.externalApplication,
-                              );
-                            }
-                            return true;
-                          },
-                        )
-                      else
-                        Text.rich(
-                          buildStyledPostText(postText),
-                          style: const TextStyle(fontSize: 12),
+                      SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: BBCodeParser.parseBBCodeToWidgets(postText),
                         ),
+                      ),
+
+                      Text(postText),
+                      // if (isMainForum)
+                      //   HtmlWidget(
+                      //     postText.replaceAll('***', ""),
+                      //     textStyle: const TextStyle(
+                      //       color: Colors.white,
+                      //       fontSize: 15,
+                      //       height: 1.6,
+                      //     ),
+                      //     onTapUrl: (url) async {
+                      //       if (await canLaunchUrl(Uri.parse(url))) {
+                      //         launchUrl(
+                      //           Uri.parse(url),
+                      //           mode: LaunchMode.externalApplication,
+                      //         );
+                      //       }
+                      //       return true;
+                      //     },
+                      //   )
+                      // else
+                      //   Text.rich(
+                      //     buildStyledPostText(postText),
+                      //     style: const TextStyle(fontSize: 12),
+                      //   ),
                     ],
                   ),
                 ),

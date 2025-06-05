@@ -132,7 +132,6 @@ class ForumService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      print('data: $data');
 
       final subscriptions = data['subscriptions'] as List<dynamic>;
       return subscriptions.map((item) {

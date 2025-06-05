@@ -11,3 +11,6 @@
 - Blogs
 - Articles
 - Groups
+
+## To do myself
+- Forum page style
