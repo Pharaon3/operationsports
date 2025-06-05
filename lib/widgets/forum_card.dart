@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:operationsports/core/constants.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:operationsports/widgets/bbcode_parser.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ForumCard extends StatelessWidget {
   final bool isMainForum;
@@ -45,50 +43,6 @@ class ForumCard extends StatelessWidget {
       'MM-dd-yyyy',
     ).format(joinedDatedateTime);
 
-    TextSpan buildStyledPostText(String rawText) {
-      final spans = <TextSpan>[];
-
-      final quoteRegex = RegExp(
-        r'\[QUOTE=[^\]]*\](.*?)\[/QUOTE\]',
-        dotAll: true,
-      );
-      int lastEnd = 0;
-
-      for (final match in quoteRegex.allMatches(rawText)) {
-        if (match.start > lastEnd) {
-          spans.add(
-            TextSpan(
-              text: rawText.substring(lastEnd, match.start),
-              style: const TextStyle(color: Colors.white),
-            ),
-          );
-        }
-
-        final quotedText = match.group(1)?.trim() ?? '';
-        spans.add(
-          TextSpan(
-            text: '"$quotedText"\n',
-            style: const TextStyle(
-              fontStyle: FontStyle.italic,
-              color: Colors.white70,
-            ),
-          ),
-        );
-
-        lastEnd = match.end;
-      }
-
-      if (lastEnd < rawText.length) {
-        spans.add(
-          TextSpan(
-            text: rawText.substring(lastEnd),
-            style: const TextStyle(color: Colors.white),
-          ),
-        );
-      }
-
-      return TextSpan(children: spans);
-    }
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),

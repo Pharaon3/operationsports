@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/providers/article_provider.dart';
-import 'package:operationsports/widgets/video_player.dart';
+// import 'package:operationsports/widgets/video_player.dart';
 import 'package:provider/provider.dart';
 import '../models/article_model.dart';
 import '../services/article_service.dart';
@@ -190,7 +190,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                       TagExtension(
                         tagsToExtend: {"iframe"},
                         builder: (context) {
-                          final attrs = context.attributes;
+                          // final attrs = context.attributes;
                           // if (attrs["data-test-id"] == "beehiiv-embed") {
                           //   final src =
                           //       'https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/models/forum_model.dart';
 import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/new_topic.dart';
 import 'package:operationsports/services/forum_service.dart';
@@ -11,7 +10,6 @@ import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/default_button.dart';
 import 'package:operationsports/widgets/paginated_forum.dart';
 import 'package:operationsports/widgets/post_input_box.dart';
-import 'package:operationsports/test_data/test_forum_data.dart';
 
 class ForumDetail extends StatefulWidget {
   final String parentId;
@@ -71,7 +69,6 @@ class _ForumDetailState extends State<ForumDetail> {
         onRefresh: () async => {},
         child: Builder(
           builder: (context) {
-            List<ForumModel> forumList = getTestForumList();
             return ListView(
               children: [
                 const Header(selectedMenu: 2),
