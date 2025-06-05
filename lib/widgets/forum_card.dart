@@ -215,11 +215,11 @@ class ForumCard extends StatelessWidget {
                       SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: BBCodeParser.parseBBCodeToWidgets(postText),
+                          children: [BBCodeParser.buildHtmlWidget(postText)],
                         ),
                       ),
 
-                      Text(postText),
+                      // Text(postText),
                       // if (isMainForum)
                       //   HtmlWidget(
                       //     postText.replaceAll('***', ""),
