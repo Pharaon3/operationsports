@@ -15,8 +15,8 @@
 ### Forum
 - <s>page style</s>
 - card [like], [comment], [bookmark] icon functionality
-- card avatar
-- card Join Date, and Posts
+- <s>card avatar</s>
+- <s>card Join Date, and Posts</s>
 - Post Reply +
 - Write comment
 - Advanced Options +

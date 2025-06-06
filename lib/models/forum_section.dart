@@ -39,6 +39,7 @@ class ForumSectionMenu {
   final String content;
   final String joinedDate;
   final String posts;
+  final String useravatar;
 
   ForumSectionMenu({
     required this.id,
@@ -50,6 +51,7 @@ class ForumSectionMenu {
     required this.content,
     required this.joinedDate,
     required this.posts,
+    required this.useravatar,
   });
 
   factory ForumSectionMenu.fromMapEntry(MapEntry<String, dynamic> entry) {
@@ -64,6 +66,7 @@ class ForumSectionMenu {
       content: data['content']?['rawtext'] ?? '',
       joinedDate: data['content']?['userinfo']?['joindate'] ?? '',
       posts: data['content']?['userinfo']?['posts'] ?? '',
+      useravatar: data['content']?['avatar']?['avatarpath'] ?? '',
     );
   }
 }

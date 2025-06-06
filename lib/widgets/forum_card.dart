@@ -13,6 +13,7 @@ class ForumCard extends StatelessWidget {
   final String authorname;
   final String joinedDate;
   final String postCount;
+  final String useravatar;
 
   const ForumCard({
     super.key,
@@ -25,6 +26,7 @@ class ForumCard extends StatelessWidget {
     required this.date,
     this.stars = 4,
     required this.postCount,
+    required this.useravatar,
   });
 
   @override
@@ -64,11 +66,7 @@ class ForumCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.account_circle_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
+                        Image.network('https://forums.operationsports.com/forums/core/$useravatar', height: 38),
                         const SizedBox(width: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

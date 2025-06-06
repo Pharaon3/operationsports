@@ -44,6 +44,7 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
             imageUrl: '',
             joinedDate: forum.joinedDate,
             postCount: forum.posts,
+            useravatar: forum.useravatar,
           );
         }),
 

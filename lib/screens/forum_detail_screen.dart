@@ -19,6 +19,7 @@ class ForumDetail extends StatefulWidget {
   final String publishdate;
   final String joinedDate;
   final String posts;
+  final String useravatar;
   const ForumDetail({
     super.key,
     required this.parentId,
@@ -28,6 +29,7 @@ class ForumDetail extends StatefulWidget {
     required this.publishdate,
     required this.joinedDate,
     required this.posts,
+    required this.useravatar,
   });
 
   @override
@@ -101,6 +103,7 @@ class _ForumDetailState extends State<ForumDetail> {
                   imageUrl: '',
                   joinedDate: widget.joinedDate,
                   postCount: widget.posts,
+                  useravatar: widget.useravatar,
                 ),
 
                 SizedBox(height: 12),

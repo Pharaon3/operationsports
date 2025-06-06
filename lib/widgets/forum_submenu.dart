@@ -91,6 +91,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                         publishdate: item.publishdate,
                                         joinedDate: item.joinedDate,
                                         posts: item.posts,
+                                        useravatar: item.useravatar,
                                       ),
                         ),
                       );
@@ -124,11 +125,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                   const SizedBox(height: 18),
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.account_circle_outlined,
-                                        color: Colors.white,
-                                        size: 44,
-                                      ),
+                                      Image.network('https://forums.operationsports.com/forums/core/${item.useravatar}', height: 44),
                                       SizedBox(width: 9),
                                       Expanded(
                                         child: Column(
