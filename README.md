@@ -1,16 +1,33 @@
-# operationsports
+## To Ask Andrew
+### Forum
+- Latest Activity API
+- My Subscriptions API
+- Photos API
+### Login
+- Forum login API
 
-A new Flutter project.
+## To Ask Riad
+### Forum
+- Blogs, Articles, Groups
+- today's list, Member List, Calendar,, Review
 
-## Getting Started
+## To do myself
+### Forum
+- <s>page style</s>
+- card [like], [comment], [bookmark] icon functionality
+- card avatar
+- card Join Date, and Posts
+- Post Reply +
+- Write comment
+- Advanced Options +
+- Page fetch all comments, forums,
+### Newsletter
 
-This project is a starting point for a Flutter application.
+### Games
+- go to page button
+- Review page at first loading issue
+- Image loading issue
+- For "All", all articles need to be shown, and "Related" in articles.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Review
+- When go to Review from Game, it doesn't load new page.
