@@ -92,6 +92,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                         joinedDate: item.joinedDate,
                                         posts: item.posts,
                                         useravatar: item.useravatar,
+                                        userrank: item.userrank,
                                       ),
                         ),
                       );
@@ -125,7 +126,10 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                   const SizedBox(height: 18),
                                   Row(
                                     children: [
-                                      Image.network('https://forums.operationsports.com/forums/core/${item.useravatar}', height: 44),
+                                      Image.network(
+                                        'https://forums.operationsports.com/forums/core/${item.useravatar}',
+                                        height: 44,
+                                      ),
                                       SizedBox(width: 9),
                                       Expanded(
                                         child: Column(
@@ -160,33 +164,30 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                   const SizedBox(height: 16),
                                   // Star Rating
                                   Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.star,
-                                        color: AppColors.accentColor,
-                                        size: 22,
+                                    children: List.generate(
+                                      5,
+                                      (index) => Container(
+                                        margin: EdgeInsets.all(4.0),
+                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: const Color(0x20000000),
+                                              blurRadius: 4,
+                                              spreadRadius: 0,
+                                              offset: Offset(0, 2.51),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Icon(
+                                          Icons.star,
+                                          color:
+                                              index < item.userrank
+                                                  ? AppColors.accentColor
+                                                  : AppColors.lightGrey,
+                                          size: 22,
+                                        ),
                                       ),
-                                      Icon(
-                                        Icons.star,
-                                        color: AppColors.accentColor,
-                                        size: 22,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: AppColors.accentColor,
-                                        size: 22,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: AppColors.accentColor,
-                                        size: 22,
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        color: Color(0xFFD9D9D9),
-                                        size: 22,
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ),

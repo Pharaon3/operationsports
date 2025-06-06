@@ -20,6 +20,7 @@ class ForumDetail extends StatefulWidget {
   final String joinedDate;
   final String posts;
   final String useravatar;
+  final int userrank;
   const ForumDetail({
     super.key,
     required this.parentId,
@@ -30,6 +31,7 @@ class ForumDetail extends StatefulWidget {
     required this.joinedDate,
     required this.posts,
     required this.useravatar,
+    required this.userrank,
   });
 
   @override
@@ -104,6 +106,7 @@ class _ForumDetailState extends State<ForumDetail> {
                   joinedDate: widget.joinedDate,
                   postCount: widget.posts,
                   useravatar: widget.useravatar,
+                  userrank: widget.userrank
                 ),
 
                 SizedBox(height: 12),

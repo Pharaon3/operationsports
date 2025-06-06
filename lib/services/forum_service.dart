@@ -44,15 +44,19 @@ class ForumService {
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final channels = data['channels'] as Map<String, dynamic>;
-      final sections =
-          channels.entries
-              .map((entry) => ForumSection.fromMapEntry(entry))
-              .where((section) => section.subItems.isNotEmpty)
-              .toList();
-      return sections;
+      if (data['channels'] is Map<String, dynamic>) {
+        final channels = data['channels'] as Map<String, dynamic>;
+        final sections =
+            channels.entries
+                .map((entry) => ForumSection.fromMapEntry(entry))
+                .where((section) => section.subItems.isNotEmpty)
+                .toList();
+        return sections;
+      } else {
+        return [];
+      }
     } else {
-      throw Exception('Failed to fetch forum sections');
+      return [];
     }
   }
 

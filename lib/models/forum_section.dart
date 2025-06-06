@@ -40,6 +40,7 @@ class ForumSectionMenu {
   final String joinedDate;
   final String posts;
   final String useravatar;
+  final int userrank;
 
   ForumSectionMenu({
     required this.id,
@@ -52,10 +53,14 @@ class ForumSectionMenu {
     required this.joinedDate,
     required this.posts,
     required this.useravatar,
+    required this.userrank,
   });
 
   factory ForumSectionMenu.fromMapEntry(MapEntry<String, dynamic> entry) {
     final data = entry.value as Map<String, dynamic>;
+    final rankHtml = data['content']?['userinfo']?['rank'] ?? '';
+    final iTagCount = RegExp(r'<i\b[^>]*>').allMatches(rankHtml).length;
+
     return ForumSectionMenu(
       id: entry.key,
       title: data['title'] ?? 'Untitled',
@@ -67,6 +72,7 @@ class ForumSectionMenu {
       joinedDate: data['content']?['userinfo']?['joindate'] ?? '',
       posts: data['content']?['userinfo']?['posts'] ?? '',
       useravatar: data['content']?['avatar']?['avatarpath'] ?? '',
+      userrank: iTagCount,
     );
   }
 }

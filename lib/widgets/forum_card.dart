@@ -9,11 +9,11 @@ class ForumCard extends StatelessWidget {
   final String postText;
   final String imageUrl;
   final String date;
-  final int stars;
   final String authorname;
   final String joinedDate;
   final String postCount;
   final String useravatar;
+  final int userrank;
 
   const ForumCard({
     super.key,
@@ -24,9 +24,9 @@ class ForumCard extends StatelessWidget {
     required this.joinedDate,
     this.imageUrl = "",
     required this.date,
-    this.stars = 4,
     required this.postCount,
     required this.useravatar,
+    required this.userrank,
   });
 
   @override
@@ -100,7 +100,7 @@ class ForumCard extends StatelessWidget {
                                   child: Icon(
                                     Icons.star,
                                     color:
-                                        index < stars
+                                        index < userrank
                                             ? AppColors.accentColor
                                             : AppColors.lightGrey,
                                     size: 16,

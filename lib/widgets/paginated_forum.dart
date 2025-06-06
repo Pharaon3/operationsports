@@ -45,6 +45,7 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
             joinedDate: forum.joinedDate,
             postCount: forum.posts,
             useravatar: forum.useravatar,
+            userrank: forum.userrank,
           );
         }),
 

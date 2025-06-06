@@ -3,6 +3,13 @@
 - Latest Activity API
 - My Subscriptions API
 - Photos API
+
+- Forum Bookmark API
+POST
+https://forums.operationsports.com/forums/ajax/api/bookmark/addBookmark
+nodeid: 947430
+securitytoken: 1749228946-0d3354c190892e9e866e0fd88d4674bfdee83132
+
 ### Login
 - Forum login API
 
@@ -22,6 +29,8 @@
 - Write comment
 - Advanced Options +
 - Page fetch all comments, forums,
+- New Topic +
+- <s>Post Star<s>
 ### Newsletter
 
 ### Games
