@@ -135,9 +135,7 @@ class _ForumDetailState extends State<ForumDetail> {
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: Text('No forum data available.'),
-                        );
+                        return SizedBox();
                       }
 
                       final sections = snapshot.data!;

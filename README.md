@@ -17,6 +17,7 @@
 - card [like], [comment], [bookmark] icon functionality
 - <s>card avatar</s>
 - <s>card Join Date, and Posts</s>
+- <s>No reply issue</s>
 - Post Reply +
 - Write comment
 - Advanced Options +

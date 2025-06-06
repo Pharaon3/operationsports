@@ -66,7 +66,7 @@ class ForumCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.network('https://forums.operationsports.com/forums/core/$useravatar', height: 38),
+                        Image.network('https://forums.operationsports.com/forums/core/$useravatar', height: 30, width: 35,),
                         const SizedBox(width: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

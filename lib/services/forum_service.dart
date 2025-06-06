@@ -72,13 +72,17 @@ class ForumService {
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final sections =
-          (data as Map<String, dynamic>).entries
-              .map((entry) => ForumSectionMenu.fromMapEntry(entry))
-              .toList();
-      return sections;
+      if (data is Map<String, dynamic>) {
+        final sections =
+            data.entries
+                .map((entry) => ForumSectionMenu.fromMapEntry(entry))
+                .toList();
+        return sections;
+      } else {
+        return [];
+      }
     } else {
-      throw Exception('Failed to fetch forum section menu.');
+      return [];
     }
   }
 
