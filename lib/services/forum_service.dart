@@ -61,16 +61,16 @@ class ForumService {
   }
 
   static Future<List<ForumSectionMenu>> fetchForumSectionMenu(
-    String parentId,
+    String parentId, int page
   ) async {
     await _ensureInitialized();
 
     final baseString =
-        'api_m=node.listNodeFullContent&depth=1&page=1&parentid=$parentId&perpage=20';
+        'api_m=node.listNodeFullContent&depth=1&page=$page&parentid=$parentId&perpage=20';
     final signature = _generateSignature(base: baseString);
 
     final uri = Uri.parse(
-      '$_baseUrl?api_m=node.listNodeFullContent&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature&depth=1&parentid=$parentId&page=1&perpage=20',
+      '$_baseUrl?api_m=node.listNodeFullContent&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature&depth=1&parentid=$parentId&page=$page&perpage=20',
     );
 
     final response = await http.get(uri);

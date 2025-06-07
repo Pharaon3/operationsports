@@ -25,7 +25,7 @@ securitytoken: 1749228946-0d3354c190892e9e866e0fd88d4674bfdee83132
 - <s>card avatar</s>
 - <s>card Join Date, and Posts</s>
 - <s>No reply issue</s>
-- Post Reply +
+- <s>Post Reply +</s>
 - Write comment
 - Advanced Options +
 - Page fetch all comments, forums,

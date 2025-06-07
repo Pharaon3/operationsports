@@ -51,7 +51,7 @@ class _ForumDetailState extends State<ForumDetail> {
   }
 
   void _loadForumSectionMenu() {
-    _futureForumDetail = ForumService.fetchForumSectionMenu(widget.parentId);
+    _futureForumDetail = ForumService.fetchForumSectionMenu(widget.parentId, 1);
   }
 
   @override
@@ -156,7 +156,10 @@ class _ForumDetailState extends State<ForumDetail> {
                       }
 
                       final sections = snapshot.data!;
-                      return PaginatedForumList(forums: sections, cardTitle: widget.title);
+                      return PaginatedForumList(
+                        forums: sections,
+                        cardTitle: widget.title,
+                      );
                     },
                   ),
                 ),
