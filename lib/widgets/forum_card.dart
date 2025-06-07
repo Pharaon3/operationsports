@@ -72,8 +72,8 @@ class ForumCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              forumName.length > 25
-                                  ? '${forumName.substring(0, 25)}...'
+                              forumName.length > 23
+                                  ? '${forumName.substring(0, 23)}...'
                                   : forumName,
                               style: const TextStyle(
                                 color: Colors.white,

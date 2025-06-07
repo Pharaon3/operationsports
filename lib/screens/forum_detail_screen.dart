@@ -21,6 +21,7 @@ class ForumDetail extends StatefulWidget {
   final String posts;
   final String useravatar;
   final int userrank;
+
   const ForumDetail({
     super.key,
     required this.parentId,
@@ -40,6 +41,8 @@ class ForumDetail extends StatefulWidget {
 
 class _ForumDetailState extends State<ForumDetail> {
   late Future<List<ForumSectionMenu>> _futureForumDetail;
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _postBoxKey = GlobalKey();
 
   @override
   void initState() {
@@ -70,10 +73,11 @@ class _ForumDetailState extends State<ForumDetail> {
 
     return MainScaffold(
       child: RefreshIndicator(
-        onRefresh: () async => {},
+        onRefresh: () async => _loadForumSectionMenu(),
         child: Builder(
           builder: (context) {
             return ListView(
+              controller: _scrollController,
               children: [
                 const Header(selectedMenu: 2),
 
@@ -106,30 +110,40 @@ class _ForumDetailState extends State<ForumDetail> {
                   joinedDate: widget.joinedDate,
                   postCount: widget.posts,
                   useravatar: widget.useravatar,
-                  userrank: widget.userrank
+                  userrank: widget.userrank,
                 ),
 
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: DefaultButton(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreateTopicPage(),
-                        ),
-                      );
+                      final context = _postBoxKey.currentContext;
+                      if (context != null) {
+                        Scrollable.ensureVisible(
+                          context,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          alignment: 0.5,
+                        );
+                      } else {
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      }
                     },
+
                     buttonLabel: "Post Reply    +",
                   ),
                 ),
 
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: FutureBuilder<List<ForumSectionMenu>>(
                     future: _futureForumDetail,
                     builder: (context, snapshot) {
@@ -138,26 +152,28 @@ class _ForumDetailState extends State<ForumDetail> {
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return SizedBox();
+                        return const SizedBox();
                       }
 
                       final sections = snapshot.data!;
-                      return PaginatedForumList(forums: sections);
+                      return PaginatedForumList(forums: sections, cardTitle: widget.title);
                     },
                   ),
                 ),
 
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  key: _postBoxKey,
+                  padding: const EdgeInsets.all(16),
                   child: PostInputBox(
                     controller: TextEditingController(),
                     onLinkPressed: () => print("Link tapped"),
                     onImagePressed: () => print("Image tapped"),
+                    onPostPressed: () => print("Post tapped"),
                   ),
                 ),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: DefaultButton(
                     onTap: () {
                       Navigator.push(

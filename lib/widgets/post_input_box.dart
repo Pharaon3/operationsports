@@ -5,12 +5,14 @@ class PostInputBox extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onLinkPressed;
   final VoidCallback onImagePressed;
+  final VoidCallback onPostPressed;
 
   const PostInputBox({
     super.key,
     required this.controller,
     required this.onLinkPressed,
     required this.onImagePressed,
+    required this.onPostPressed,
   });
 
   @override
@@ -43,6 +45,8 @@ class PostInputBox extends StatelessWidget {
                 RoundButton(icon: Icons.link, onPressed: onLinkPressed),
                 const SizedBox(width: 8),
                 RoundButton(icon: Icons.camera_alt, onPressed: onImagePressed),
+                const SizedBox(width: 8),
+                RoundButton(icon: Icons.edit_document, onPressed: onPostPressed),
               ],
             ),
           ),

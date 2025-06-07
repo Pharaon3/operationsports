@@ -4,8 +4,9 @@ import 'package:operationsports/widgets/forum_card.dart';
 
 class PaginatedForumList extends StatefulWidget {
   final List<ForumSectionMenu> forums;
+  final String cardTitle;
 
-  const PaginatedForumList({super.key, required this.forums});
+  const PaginatedForumList({super.key, required this.forums, required this.cardTitle});
 
   @override
   State<PaginatedForumList> createState() => _PaginatedForumListState();
@@ -38,7 +39,7 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
           return ForumCard(
             isMainForum: false,
             authorname: forum.authorname,
-            forumName: forum.title,
+            forumName: forum.title != "" ? forum.title : widget.cardTitle,
             postText: forum.content,
             date: forum.publishdate,
             imageUrl: '',
