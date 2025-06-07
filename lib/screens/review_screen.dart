@@ -39,10 +39,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
       isLoading: articleProvider.isLoading,
       hasError: articleProvider.hasError,
       errorMessage: articleProvider.errorMessage,
-      articles: articles,
+      articles: articleProvider.articles,
       featuredArticles: articleProvider.articles,
       trendArticles: trendArticles,
       selectedMenu: 3,
+      latestArticles: articles,
+      popularArticles: articles,
     );
   }
 }

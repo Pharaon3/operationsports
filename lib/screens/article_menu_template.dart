@@ -19,6 +19,8 @@ class ArticleMenuTemplate extends StatefulWidget {
   final List<ArticleModel> articles;
   final List<ArticleModel> featuredArticles;
   final List<ArticleModel> trendArticles;
+  final List<ArticleModel> latestArticles;
+  final List<ArticleModel> popularArticles;
   final int selectedMenu;
 
   const ArticleMenuTemplate({
@@ -31,6 +33,8 @@ class ArticleMenuTemplate extends StatefulWidget {
     required this.selectedMenu,
     required this.featuredArticles,
     required this.trendArticles,
+    required this.latestArticles,
+    required this.popularArticles
   });
 
   @override
@@ -43,12 +47,12 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
   List<ArticleModel> get selectedArticles {
     switch (selectedCategory) {
       case 'Latest Posts':
-        List<ArticleModel> sortedArticles = List.from(widget.articles);
+        List<ArticleModel> sortedArticles = List.from(widget.latestArticles);
         sortedArticles.sort((a, b) => b.date.compareTo(a.date));
         return sortedArticles;
       case 'Most Popular':
         // You may change this logic if you have a separate popular list.
-        return widget.articles;
+        return widget.popularArticles;
       case 'All':
         List<ArticleModel> sortedArticles = List.from(widget.articles);
         sortedArticles.sort((a, b) => a.title.compareTo(b.title));

@@ -19,6 +19,8 @@ class HomeScreen extends StatelessWidget {
       featuredArticles: articleProvider.featuredArticles,
       trendArticles: articleProvider.articles,
       selectedMenu: 0,
+      latestArticles: articleProvider.articles,
+      popularArticles: articleProvider.articles,
     );
   }
 }

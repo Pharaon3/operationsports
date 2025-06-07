@@ -30,7 +30,7 @@ securitytoken: 1749228946-0d3354c190892e9e866e0fd88d4674bfdee83132
 - Advanced Options +
 - <u>Page fetch all comments, forums,</u>
 - New Topic +
-- <s>Post Star<s>
+- <s>Post Star</s>
 ### Newsletter
 
 ### Games

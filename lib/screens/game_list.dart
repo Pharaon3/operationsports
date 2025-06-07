@@ -48,10 +48,12 @@ class _GameListState extends State<GameList> {
           isLoading: provider.isLoading,
           hasError: provider.hasError,
           errorMessage: provider.errorMessage,
-          articles: articles,
+          articles: allArticles,
           featuredArticles: allArticles,
           trendArticles: trendArticles,
           selectedMenu: 4,
+          latestArticles: articles,
+          popularArticles: articles,
         );
       },
     );
