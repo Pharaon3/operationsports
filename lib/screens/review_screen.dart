@@ -4,8 +4,22 @@ import 'package:operationsports/providers/category_provider.dart';
 import 'package:operationsports/screens/article_menu_template.dart';
 import 'package:provider/provider.dart';
 
-class ReviewScreen extends StatelessWidget {
+class ReviewScreen extends StatefulWidget {
   const ReviewScreen({super.key});
+
+  @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      final articleProvider = Provider.of<CategoryProvider>(context, listen: false);
+      articleProvider.fetchCategoryPost(4849);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

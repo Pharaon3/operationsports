@@ -28,16 +28,16 @@ securitytoken: 1749228946-0d3354c190892e9e866e0fd88d4674bfdee83132
 - <s>Post Reply +</s>
 - Write comment
 - Advanced Options +
-- Page fetch all comments, forums,
+- <u>Page fetch all comments, forums,</u>
 - New Topic +
 - <s>Post Star<s>
 ### Newsletter
 
 ### Games
 - go to page button
-- Review page at first loading issue
+- <s>Review page at first loading issue</s>
 - Image loading issue
 - For "All", all articles need to be shown, and "Related" in articles.
 
 ### Review
-- When go to Review from Game, it doesn't load new page.
+- <s>When go to Review from Game, it doesn't load new page.</s>
