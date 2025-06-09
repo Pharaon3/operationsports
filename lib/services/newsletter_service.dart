@@ -14,7 +14,7 @@ class NewsletterService {
       final List jsonList = json.decode(response.body);
       return jsonList.map((json) => ArticleModel.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to load newsletters');
+      return [];
     }
   }
 

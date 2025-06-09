@@ -26,8 +26,9 @@ class NewsProvider with ChangeNotifier {
     try {
       _newsletters = await NewsletterService.fetchNewsletters();
     } catch (e) {
-      _hasError = true;
-      _errorMessage = e.toString();
+      // _hasError = true;
+      // _errorMessage = e.toString();
+      _newsletters = [];
     } finally {
       _isLoading = false;
       notifyListeners();
