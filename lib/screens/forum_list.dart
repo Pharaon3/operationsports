@@ -55,11 +55,15 @@ class _ForumListState extends State<ForumList> {
         _currentPage,
       );
 
+      final existingIds = _forumSections.map((e) => e.id).toSet();
+      final uniqueNewSections =
+          newSections.where((s) => !existingIds.contains(s.id)).toList();
+
       setState(() {
-        _forumSections.addAll(newSections);
-        if (newSections.isEmpty) {
+        if (uniqueNewSections.length < newSections.length || uniqueNewSections.isEmpty) {
           _hasMore = false;
         } else {
+          _forumSections.addAll(uniqueNewSections);
           _currentPage++;
         }
         _isLoading = false;
