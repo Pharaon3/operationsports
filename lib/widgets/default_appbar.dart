@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/screens/home_screen.dart';
 
 class DefaultAppbar extends StatelessWidget {
   final VoidCallback onMenuPressed;
@@ -21,9 +22,17 @@ class DefaultAppbar extends StatelessWidget {
                 child: Image.asset('assets/logo.png', height: 22),
               ),
               const SizedBox(width: 4.0),
-              const Text(
-                'OPERATION SPORTS',
-                style: TextStyle(color: Colors.white, fontSize: 22.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                },
+                child: const Text(
+                  'OPERATION SPORTS',
+                  style: TextStyle(color: Colors.white, fontSize: 22.0),
+                ),
               ),
             ],
           ),
