@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:operationsports/core/constants.dart';
@@ -16,7 +17,11 @@ class ArticleDetailScreen extends StatefulWidget {
   final String articleId;
   final List<ArticleModel> articles;
 
-  const ArticleDetailScreen({super.key, required this.articleId, required this.articles});
+  const ArticleDetailScreen({
+    super.key,
+    required this.articleId,
+    required this.articles,
+  });
 
   @override
   State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
@@ -39,7 +44,6 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: FutureBuilder<ArticleModel>(
@@ -62,11 +66,17 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
               children: [
                 Stack(
                   children: [
-                    Image.network(
-                      article.imageUrl,
-                      width: double.infinity,
+                    CachedNetworkImage(
+                      imageUrl: article.imageUrl,
                       height: 344,
                       fit: BoxFit.cover,
+                      placeholder:
+                          (context, url) => const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                      errorWidget:
+                          (context, url, error) =>
+                              const Icon(Icons.broken_image),
                     ),
                     // Back Button
                     Positioned(

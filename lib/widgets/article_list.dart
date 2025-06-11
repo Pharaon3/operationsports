@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/models/displayable_content.dart';
@@ -26,12 +27,19 @@ class ArticleList extends StatelessWidget {
               // Image with border radius
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  article.imageUrl,
-                  height: 92,
-                  width: 147,
-                  fit: BoxFit.cover,
-                ),
+                child: CachedNetworkImage(
+                      imageUrl: article.imageUrl,
+                      height: 92,
+                      width: 147,
+                      fit: BoxFit.cover,
+                      placeholder:
+                          (context, url) => const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                      errorWidget:
+                          (context, url, error) =>
+                              const Icon(Icons.broken_image),
+                    )
               ),
               const SizedBox(width: 11),
               // Textual content

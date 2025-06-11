@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../models/article_model.dart';
 
@@ -22,13 +23,21 @@ class ArticleCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: SizedBox(
                   width: 250,
                   height: 140,
-                  child: Image.network(article.imageUrl, fit: BoxFit.cover),
+                  child: CachedNetworkImage(
+                    imageUrl: article.imageUrl,
+                    fit: BoxFit.cover,
+                    placeholder:
+                        (context, url) => const Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                    errorWidget:
+                        (context, url, error) => const Icon(Icons.broken_image),
+                  ),
                 ),
               ),
 

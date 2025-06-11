@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
 import '../models/article_model.dart';
@@ -25,7 +26,17 @@ class MainArticleCard extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: ClipRRect(
-                  child: Image.network(article.imageUrl, fit: BoxFit.cover),
+                  child: CachedNetworkImage(
+                      imageUrl: article.imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder:
+                          (context, url) => const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                      errorWidget:
+                          (context, url, error) =>
+                              const Icon(Icons.broken_image),
+                    ),
                 ),
               ),
               Container(
