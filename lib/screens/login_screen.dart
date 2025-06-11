@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                             alignment: Alignment.center,
                                             child: Text(
-                                              'Sgin in',
+                                              'Sign in',
                                               style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.white,

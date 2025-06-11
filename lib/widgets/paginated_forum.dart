@@ -6,7 +6,7 @@ class PaginatedForumList extends StatefulWidget {
   final List<ForumSectionMenu> forums;
   final String cardTitle;
   final Future<void> Function() loadMore;
-  final bool hasMore; // <-- new
+  final bool hasMore;
 
   const PaginatedForumList({
     super.key,
