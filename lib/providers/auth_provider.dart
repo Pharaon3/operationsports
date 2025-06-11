@@ -1,17 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AuthProvider with ChangeNotifier {
   bool _isAuthenticated = false;
   String _username = '';
+  String _token = '';
 
   bool get isAuthenticated => _isAuthenticated;
   String get username => _username;
+  String get token => _token;
 
   Future<void> login(String username, String password) async {
-    // TODO: Replace this with actual API call to WordPress (via JWT plugin or similar)
-    if (username == 'admin' && password == 'password') {
+    final response = await http.post(
+      Uri.parse('https://forums.operationsports.com/forums/auth/ajax-login'),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: {'username': username, 'password': password},
+    );
+
+    final data = json.decode(response.body);
+
+    if (data['success'] == true) {
       _isAuthenticated = true;
       _username = username;
+      _token = data['newtoken'];
       notifyListeners();
     } else {
       throw Exception('Invalid credentials');
@@ -28,6 +41,7 @@ class AuthProvider with ChangeNotifier {
   void logout() {
     _isAuthenticated = false;
     _username = '';
+    _token = '';
     notifyListeners();
   }
 }

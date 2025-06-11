@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../widgets/loading_indicator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,33 +21,55 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
-  final bool _isLoading = false;
+  bool _isLoading = false;
   bool _isSignIn = true;
 
-  // Future<void> _login(BuildContext context) async {
-  //   if (!_formKey.currentState!.validate()) return;
-
-  //   setState(() {
-  //     _isLoading = true;
-  //     _error = null;
-  //   });
-
-  //   try {
-  //     await Provider.of<AuthProvider>(
-  //       context,
-  //       listen: false,
-  //     ).login(_usernameController.text, _passwordController.text);
-  //     Navigator.of(context).pushReplacementNamed('/home');
-  //   } catch (e) {
-  //     setState(() => _error = e.toString());
-  //   } finally {
-  //     setState(() => _isLoading = false);
-  //   }
-  // }
-
   Future<void> _login(BuildContext context) async {
-    context.go('/');
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      await Provider.of<AuthProvider>(
+        context,
+        listen: false,
+      ).login(_usernameController.text, _passwordController.text);
+
+      context.go('/');
+    } catch (e) {
+      _showErrorDialog(context, 'Login failed. Please check your credentials.');
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder:
+          (_) => AlertDialog(
+            title: const Text('Error'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+    );
+  }
+
+void _openSignup() async {
+  final url = Uri.parse('https://forums.operationsports.com/forums/register');
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -148,11 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       Expanded(
                                         child: GestureDetector(
-                                          onTap:
-                                              () => Navigator.pushNamed(
-                                                context,
-                                                '/signup',
-                                              ),
+                                          onTap: () => _openSignup(),
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 12,
@@ -198,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Colors.white,
                                       ),
                                       decoration: InputDecoration(
-                                        hintText: 'E-mail',
+                                        hintText: 'User Name',
                                         hintStyle: const TextStyle(
                                           color: Colors.grey,
                                         ),
@@ -415,7 +439,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
 
                             const SizedBox(height: 80),
-
                           ],
                         ),
                       ),
