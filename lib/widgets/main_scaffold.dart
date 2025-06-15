@@ -61,8 +61,12 @@ class _MainScaffoldState extends State<MainScaffold>
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: AppColors.primaryColor,
-          title: DefaultAppbar(onMenuPressed: _toggleDrawer),
+          title: DefaultAppbar(
+            onMenuPressed: _toggleDrawer,
+            searchQuery: (String query) => {},
+          ),
         ),
         body: Stack(
           children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/core/constants.dart';
-import 'package:operationsports/screens/game_screen.dart';
+// import 'package:operationsports/screens/game_screen.dart';
 import 'package:operationsports/screens/review_screen.dart';
 import '../screens/forum_screen.dart';
 import '../screens/newsletter.dart';
@@ -12,13 +12,13 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> menuItems = ["NEWSLETTER", "FORUMS", "REVIEW", "GAMES"];
+    final List<String> menuItems = ["NEWSLETTER", "FORUMS", "REVIEWS"];
 
     final List<Widget Function(BuildContext)> menuBuilder = [
       (context) => const NewsLetter(),
       (context) => const ForumScreen(),
       (context) => const ReviewScreen(),
-      (context) => const GameScreen(),
+      // (context) => const GameScreen(),
     ];
 
     return SizedBox(

@@ -6,3 +6,8 @@ class AppColors {
   static const Color lightGrey = Color(0xFFD9D9D9);
   static const Color accentColor = Color(0xFFFF5757);
 }
+
+class ScreenSize {
+  static const int refScreenWidth = 440;
+  
+}

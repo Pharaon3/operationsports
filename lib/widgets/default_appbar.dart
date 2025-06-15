@@ -1,13 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/screens/home_screen.dart';
 
-class DefaultAppbar extends StatelessWidget {
+class DefaultAppbar extends StatefulWidget {
   final VoidCallback onMenuPressed;
+  final void Function(String) searchQuery;
 
-  const DefaultAppbar({super.key, required this.onMenuPressed});
+  const DefaultAppbar({
+    super.key,
+    required this.onMenuPressed,
+    required this.searchQuery,
+  });
+
+  @override
+  State<DefaultAppbar> createState() => _DefaultAppbarState();
+}
+
+class _DefaultAppbarState extends State<DefaultAppbar> {
+  bool isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
+
+  void onSearchPress() {
+    setState(() {
+      isSearching = true;
+    });
+  }
+
+  void onSearchSubmit() {
+    final query = _searchController.text.trim();
+    if (query.isNotEmpty) {
+      // Perform your search logic here
+      widget.searchQuery(query);
+      print("Searching for: $query");
+    }
+  }
+
+  void onSearchCancel() {
+    setState(() {
+      isSearching = false;
+      _searchController.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (isSearching) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: onSearchCancel,
+            ),
+            Expanded(
+              child: TextField(
+                controller: _searchController,
+                autofocus: true,
+                style: const TextStyle(color: Colors.black),
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  hintText: 'Search...',
+                  hintStyle: TextStyle(color: Colors.grey.shade600),
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: 0,
+                    horizontal: 16,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: BorderSide(color: Colors.grey.shade400),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                      width: 1.2,
+                    ),
+                  ),
+                ),
+                onSubmitted: (_) => onSearchSubmit(),
+              ),
+            ),
+
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.search, color: Colors.white),
+              onPressed: onSearchSubmit,
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Default AppBar
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Row(
@@ -15,7 +101,6 @@ class DefaultAppbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -37,17 +122,16 @@ class DefaultAppbar extends StatelessWidget {
             ],
           ),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: onMenuPressed,
+                onTap: onSearchPress,
                 child: Container(
                   height: 40,
                   width: 44,
                   decoration: BoxDecoration(
                     color: const Color(0xFF222222),
                     borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Color(0xFF111111),
                         blurRadius: 4,
@@ -60,7 +144,7 @@ class DefaultAppbar extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               GestureDetector(
-                onTap: onMenuPressed,
+                onTap: widget.onMenuPressed,
                 child: Image.asset('assets/menu.png', height: 40),
               ),
             ],
