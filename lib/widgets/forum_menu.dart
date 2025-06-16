@@ -14,7 +14,7 @@ class ForumMenu extends StatefulWidget {
 }
 
 class _ForumMenuState extends State<ForumMenu> {
-  bool isExpanded = true;
+  bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {

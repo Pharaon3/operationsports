@@ -1,3 +1,7 @@
+import 'package:html_unescape/html_unescape.dart';
+
+final unescape = HtmlUnescape();
+
 class ForumSubItem {
   final String title;
   final String parentId;
@@ -16,12 +20,12 @@ class ForumSection {
     final subChannels = data['subchannels'] as Map<String, dynamic>? ?? {};
 
     return ForumSection(
-      title: data['title'] ?? 'Untitled',
+      title: unescape.convert(data['title'] ?? 'Untitled'),
       subItems:
           subChannels.entries.map<ForumSubItem>((subEntry) {
             final subData = subEntry.value as Map<String, dynamic>;
             return ForumSubItem(
-              title: subData['title'] ?? 'Unnamed Subforum',
+              title: unescape.convert(subData['title'] ?? 'Unnamed Subforum'),
               parentId: subEntry.key,
             );
           }).toList(),
@@ -63,7 +67,7 @@ class ForumSectionMenu {
 
     return ForumSectionMenu(
       id: entry.key,
-      title: data['title'] ?? 'Untitled',
+      title: unescape.convert(data['title'] ?? 'Untitled'),
       authorname: data['authorname'] ?? '',
       lastcontentauthor: data['lastcontentauthor'] ?? '',
       publishdate: data['publishdate'] ?? '',

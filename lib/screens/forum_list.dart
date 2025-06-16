@@ -90,24 +90,24 @@ class _ForumListState extends State<ForumList> {
           children: [
             const Header(selectedMenu: 2),
 
-            Column(
-              children: [
-                MenuGrid(
-                  menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
-                  highlightedItems: {'FORUMS'},
-                ),
-                MenuGrid(
-                  menuItems: [
-                    'Today\'s posts',
-                    'Member list',
-                    'Calendar',
-                    'News',
-                    'Reviews',
-                  ],
-                  highlightedItems: {'Today\'s posts'},
-                ),
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     MenuGrid(
+            //       menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
+            //       highlightedItems: {'FORUMS'},
+            //     ),
+            //     MenuGrid(
+            //       menuItems: [
+            //         'Today\'s posts',
+            //         'Member list',
+            //         'Calendar',
+            //         'News',
+            //         'Reviews',
+            //       ],
+            //       highlightedItems: {'Today\'s posts'},
+            //     ),
+            //   ],
+            // ),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -119,20 +119,20 @@ class _ForumListState extends State<ForumList> {
 
                   const SizedBox(height: 20),
 
-                  TopicGrid(
-                    menuItems: [
-                      'Topics',
-                      'Latest Activity',
-                      'My Subscriptions',
-                      'Photos',
-                    ],
-                    selectedItem: _selectedTab,
-                    onItemSelected: (value) {
-                      setState(() {
-                        _selectedTab = value;
-                      });
-                    },
-                  ),
+                  // TopicGrid(
+                  //   menuItems: [
+                  //     'Topics',
+                  //     'Latest Activity',
+                  //     'My Subscriptions',
+                  //     'Photos',
+                  //   ],
+                  //   selectedItem: _selectedTab,
+                  //   onItemSelected: (value) {
+                  //     setState(() {
+                  //       _selectedTab = value;
+                  //     });
+                  //   },
+                  // ),
 
                   const SizedBox(height: 20),
 

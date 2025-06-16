@@ -3,6 +3,74 @@ import 'package:operationsports/core/constants.dart';
 import 'right_side_drawer.dart';
 import 'default_appbar.dart';
 
+class ScrollControlWrapper extends StatefulWidget {
+  final Widget child;
+  final ScrollController? controller;
+
+  const ScrollControlWrapper({super.key, required this.child, this.controller});
+
+  @override
+  State<ScrollControlWrapper> createState() => _ScrollControlWrapperState();
+}
+
+class _ScrollControlWrapperState extends State<ScrollControlWrapper> {
+  late ScrollController _scrollController;
+  bool _showButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = widget.controller ?? ScrollController();
+    _scrollController.addListener(() {
+      setState(() {
+        _showButton = _scrollController.offset > 200;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _scrollController.dispose();
+    }
+    super.dispose();
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        PrimaryScrollController(
+          controller: _scrollController,
+          child: widget.child,
+        ),
+        if (_showButton)
+          Positioned(
+            right: 16,
+            bottom: 20,
+            width: 50,
+            height: 50,
+            child: FloatingActionButton(
+              heroTag: 'scroll_up',
+              mini: true,
+              onPressed: _scrollToTop,
+              backgroundColor: Colors.white,
+              child: const Icon(Icons.keyboard_arrow_up, size: 40),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
 class MainScaffold extends StatefulWidget {
   final Widget child;
 
@@ -55,8 +123,7 @@ class _MainScaffoldState extends State<MainScaffold>
   Widget build(BuildContext context) {
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
-        if (details.delta.direction > 0)
-          _closeDrawer(); // swipe left to right to close
+        if (details.delta.direction > 0) _closeDrawer();
       },
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
@@ -70,7 +137,7 @@ class _MainScaffoldState extends State<MainScaffold>
         ),
         body: Stack(
           children: [
-            widget.child,
+            ScrollControlWrapper(child: widget.child),
             if (_isDrawerOpen)
               SlideTransition(
                 position: _slideAnimation,

@@ -16,7 +16,7 @@ class ForumSubMenu extends StatefulWidget {
 }
 
 class _ForumSubMenuState extends State<ForumSubMenu> {
-  bool isExpanded = true;
+  bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
           ),
 
         // Sub-items
-        if (isExpanded)
+        if (isExpanded || widget.title == "")
           Column(
             children:
                 widget.subItems.map((item) {

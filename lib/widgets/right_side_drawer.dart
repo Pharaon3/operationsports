@@ -7,15 +7,15 @@ class RightSideDrawer extends StatelessWidget {
   const RightSideDrawer({super.key});
 
   static const List<String> games = [
-    "EA Sports College Football 25",
+    "EA Sports College Football 26",
     "NBA 2K25",
-    "Madden NFL 25",
+    "Madden NFL 26",
     "EA Sports FC 25",
-    "MLB The Show 24",
-    "EA Sports F1 24",
-    "NHL 24",
-    "EA Sports PGA TOUR",
-    "PGA Tour 2K23",
+    "MLB The Show 25",
+    "EA Sports F1 25",
+    "NHL 25",
+    "EA Sports PGA Tour",
+    "PGA Tour 2K25",
   ];
 
   @override

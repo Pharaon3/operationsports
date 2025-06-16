@@ -5,7 +5,7 @@ import 'package:operationsports/services/forum_service.dart';
 import 'package:operationsports/widgets/forum_card.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
-import 'package:operationsports/widgets/menu_grid.dart';
+// import 'package:operationsports/widgets/menu_grid.dart';
 import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/default_button.dart';
 import 'package:operationsports/widgets/post_input_box.dart';
@@ -40,7 +40,7 @@ class ForumDetail extends StatefulWidget {
 }
 
 class _ForumDetailState extends State<ForumDetail> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController1 = ScrollController();
   final GlobalKey _postBoxKey = GlobalKey();
   final List<ForumSectionMenu> _forumSections = [];
   int _currentPage = 1;
@@ -116,28 +116,28 @@ class _ForumDetailState extends State<ForumDetail> {
           await _loadForumSectionMenu();
         },
         child: ListView(
-          controller: _scrollController,
+          controller: _scrollController1,
           children: [
             const Header(selectedMenu: 2),
 
-            Column(
-              children: [
-                MenuGrid(
-                  menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
-                  highlightedItems: {'FORUMS'},
-                ),
-                MenuGrid(
-                  menuItems: [
-                    'Today\'s posts',
-                    'Member list',
-                    'Calendar',
-                    'News',
-                    'Reviews',
-                  ],
-                  highlightedItems: {'Today\'s posts'},
-                ),
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     MenuGrid(
+            //       menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
+            //       highlightedItems: {'FORUMS'},
+            //     ),
+            //     MenuGrid(
+            //       menuItems: [
+            //         'Today\'s posts',
+            //         'Member list',
+            //         'Calendar',
+            //         'News',
+            //         'Reviews',
+            //       ],
+            //       highlightedItems: {'Today\'s posts'},
+            //     ),
+            //   ],
+            // ),
 
             ForumCard(
               isMainForum: true,
@@ -167,8 +167,8 @@ class _ForumDetailState extends State<ForumDetail> {
                       alignment: 0.5,
                     );
                   } else {
-                    _scrollController.animateTo(
-                      _scrollController.position.maxScrollExtent,
+                    _scrollController1.animateTo(
+                      _scrollController1.position.maxScrollExtent,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                     );
@@ -191,7 +191,7 @@ class _ForumDetailState extends State<ForumDetail> {
                         forums: _forumSections,
                         cardTitle: widget.title,
                         loadMore: _loadForumSectionMenu,
-                        hasMore: _hasMore, // <-- pass this
+                        hasMore: _hasMore,
                       ),
             ),
 

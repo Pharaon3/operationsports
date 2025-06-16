@@ -37,22 +37,22 @@ class _ForumScreenState extends State<ForumScreen> {
 
             const Header(selectedMenu: 2),
 
-            Column(
-              children: [
-                MenuGrid(
-                  menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
-                  highlightedItems: {'FORUMS'},
-                ),
-                MenuGrid(
-                  menuItems: [
-                    'Today\'s posts',
-                    'Member list',
-                    'Calendar',
-                  ],
-                  highlightedItems: {'Today\'s posts'},
-                ),
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     MenuGrid(
+            //       menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
+            //       highlightedItems: {'FORUMS'},
+            //     ),
+            //     MenuGrid(
+            //       menuItems: [
+            //         'Today\'s posts',
+            //         'Member list',
+            //         'Calendar',
+            //       ],
+            //       highlightedItems: {'Today\'s posts'},
+            //     ),
+            //   ],
+            // ),
             
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
