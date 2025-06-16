@@ -40,16 +40,26 @@ class ForumDetail extends StatefulWidget {
 }
 
 class _ForumDetailState extends State<ForumDetail> {
-  final ScrollController _scrollController1 = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   final GlobalKey _postBoxKey = GlobalKey();
   final List<ForumSectionMenu> _forumSections = [];
   int _currentPage = 1;
   bool _isLoading = false;
   bool _hasMore = true;
 
+  bool _showScrollToTopButton = false;
+
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.offset >= 300 && !_showScrollToTopButton) {
+        setState(() => _showScrollToTopButton = true);
+      } else if (_scrollController.offset < 300 && _showScrollToTopButton) {
+        setState(() => _showScrollToTopButton = false);
+      }
+    });
+
     _loadForumSectionMenu();
   }
 
@@ -115,113 +125,133 @@ class _ForumDetailState extends State<ForumDetail> {
           });
           await _loadForumSectionMenu();
         },
-        child: ListView(
-          controller: _scrollController1,
+        child: Stack(
           children: [
-            const Header(selectedMenu: 2),
+            ListView(
+              controller: _scrollController,
+              children: [
+                const Header(selectedMenu: 2),
 
-            // Column(
-            //   children: [
-            //     MenuGrid(
-            //       menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
-            //       highlightedItems: {'FORUMS'},
-            //     ),
-            //     MenuGrid(
-            //       menuItems: [
-            //         'Today\'s posts',
-            //         'Member list',
-            //         'Calendar',
-            //         'News',
-            //         'Reviews',
-            //       ],
-            //       highlightedItems: {'Today\'s posts'},
-            //     ),
-            //   ],
-            // ),
-
-            ForumCard(
-              isMainForum: true,
-              authorname: widget.authorname,
-              forumName: widget.title,
-              postText: parseBBCodeToHtml(widget.content),
-              date: widget.publishdate,
-              imageUrl: '',
-              joinedDate: widget.joinedDate,
-              postCount: widget.posts,
-              useravatar: widget.useravatar,
-              userrank: widget.userrank,
+                // Column(
+                //   children: [
+                //     MenuGrid(
+                //       menuItems: ['FORUMS', 'BLOGS', 'ARTICLES', 'GROUPS'],
+                //       highlightedItems: {'FORUMS'},
+                //     ),
+                //     MenuGrid(
+                //       menuItems: [
+                //         'Today\'s posts',
+                //         'Member list',
+                //         'Calendar',
+                //         'News',
+                //         'Reviews',
+                //       ],
+                //       highlightedItems: {'Today\'s posts'},
+                //     ),
+                //   ],
+                // ),
+                ForumCard(
+                  isMainForum: true,
+                  authorname: widget.authorname,
+                  forumName: widget.title,
+                  postText: parseBBCodeToHtml(widget.content),
+                  date: widget.publishdate,
+                  imageUrl: '',
+                  joinedDate: widget.joinedDate,
+                  postCount: widget.posts,
+                  useravatar: widget.useravatar,
+                  userrank: widget.userrank,
+                ),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DefaultButton(
+                    onTap: () {
+                      final context = _postBoxKey.currentContext;
+                      if (context != null) {
+                        Scrollable.ensureVisible(
+                          context,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          alignment: 0.5,
+                        );
+                      } else {
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    },
+                    buttonLabel: "Post Reply    +",
+                  ),
+                ),
+                const SizedBox(height: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child:
+                      _isLoading && _forumSections.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : _forumSections.isEmpty
+                          ? const Center(child: Text("No forum posts found."))
+                          : PaginatedForumList(
+                            forums: _forumSections,
+                            cardTitle: widget.title,
+                            loadMore: _loadForumSectionMenu,
+                            hasMore: _hasMore,
+                          ),
+                ),
+                Padding(
+                  key: _postBoxKey,
+                  padding: const EdgeInsets.all(16),
+                  child: PostInputBox(
+                    controller: TextEditingController(),
+                    onLinkPressed: () => print("Link tapped"),
+                    onImagePressed: () => print("Image tapped"),
+                    onPostPressed: () => print("Post tapped"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DefaultButton(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CreateTopicPage(),
+                        ),
+                      );
+                    },
+                    buttonLabel: "Advanced Options    +",
+                  ),
+                ),
+                const AppFooter(),
+              ],
             ),
-
-            const SizedBox(height: 12),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DefaultButton(
-                onTap: () {
-                  final context = _postBoxKey.currentContext;
-                  if (context != null) {
-                    Scrollable.ensureVisible(
-                      context,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      alignment: 0.5,
-                    );
-                  } else {
-                    _scrollController1.animateTo(
-                      _scrollController1.position.maxScrollExtent,
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                },
-                buttonLabel: "Post Reply    +",
+            Positioned(
+              right: 16,
+              bottom: 20,
+              width: 50,
+              height: 50,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 300),
+                opacity: _showScrollToTopButton ? 1.0 : 0.0,
+                child:
+                    _showScrollToTopButton
+                        ? FloatingActionButton(
+                          onPressed: () {
+                            _scrollController.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeOut,
+                            );
+                          },
+                          backgroundColor: Colors.white,
+                          child: const Icon(Icons.keyboard_arrow_up, size: 40),
+                        )
+                        : const SizedBox.shrink(),
               ),
             ),
-
-            const SizedBox(height: 25),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child:
-                  _isLoading && _forumSections.isEmpty
-                      ? const Center(child: CircularProgressIndicator())
-                      : _forumSections.isEmpty
-                      ? const Center(child: Text("No forum posts found."))
-                      : PaginatedForumList(
-                        forums: _forumSections,
-                        cardTitle: widget.title,
-                        loadMore: _loadForumSectionMenu,
-                        hasMore: _hasMore,
-                      ),
-            ),
-
-            Padding(
-              key: _postBoxKey,
-              padding: const EdgeInsets.all(16),
-              child: PostInputBox(
-                controller: TextEditingController(),
-                onLinkPressed: () => print("Link tapped"),
-                onImagePressed: () => print("Image tapped"),
-                onPostPressed: () => print("Post tapped"),
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DefaultButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CreateTopicPage(),
-                    ),
-                  );
-                },
-                buttonLabel: "Advanced Options    +",
-              ),
-            ),
-
-            const AppFooter(),
           ],
         ),
       ),

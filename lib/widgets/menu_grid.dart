@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 
 class MenuGrid extends StatelessWidget {
   final List<String> menuItems;
@@ -31,7 +32,7 @@ class MenuGrid extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF2A2A2A),
-                  foregroundColor: isHighlighted ? Colors.red : Colors.white54,
+                  foregroundColor: isHighlighted ? AppColors.accentColor : Colors.white54,
                   elevation: 2,
                   minimumSize: const Size(100, 40),
                   shape: RoundedRectangleBorder(

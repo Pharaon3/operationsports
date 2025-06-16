@@ -55,7 +55,7 @@ class RightSideDrawer extends StatelessWidget {
                     ),
                     Text(
                       "Profile",
-                      style: TextStyle(color: Colors.red, fontSize: 13),
+                      style: TextStyle(color: AppColors.accentColor, fontSize: 13),
                     ),
                   ],
                 ),

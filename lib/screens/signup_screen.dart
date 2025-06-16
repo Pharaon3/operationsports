@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/core/constants.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/loading_indicator.dart';
@@ -53,7 +54,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Column(
                   children: [
                     if (_error != null)
-                      Text(_error!, style: const TextStyle(color: Colors.red)),
+                      Text(_error!, style: const TextStyle(color: AppColors.accentColor)),
                     const SizedBox(height: 16),
                     TextFormField(
                       controller: _usernameController,

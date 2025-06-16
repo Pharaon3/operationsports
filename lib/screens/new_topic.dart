@@ -1,9 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/widgets/round_button.dart';
+import 'package:operationsports/widgets/forum_card.dart';
 
-class CreateTopicPage extends StatelessWidget {
+class CreateTopicPage extends StatefulWidget {
   const CreateTopicPage({super.key});
+
+  @override
+  State<CreateTopicPage> createState() => _CreateTopicPageState();
+}
+
+class _CreateTopicPageState extends State<CreateTopicPage> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _bodyController = TextEditingController();
+  final TextEditingController _tagController = TextEditingController();
+  final List<String> _tags = [];
+
+  void _addTag(String tag) {
+    tag = tag.trim().toLowerCase();
+    if (tag.isNotEmpty && !_tags.contains(tag)) {
+      setState(() => _tags.add(tag));
+    }
+  }
+
+  void _showPreviewDialog() {
+    final now = DateTime.now();
+    final timestamp = now.millisecondsSinceEpoch ~/ 1000;
+    final joinedTimestamp = DateTime(2022, 1, 1).millisecondsSinceEpoch ~/ 1000;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.primaryColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return DraggableScrollableSheet(
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: ForumCard(
+                  isMainForum: false,
+                  forumName: _titleController.text.isEmpty
+                      ? 'Preview Forum'
+                      : _titleController.text,
+                  postText: _bodyController.text,
+                  imageUrl: '',
+                  date: timestamp.toString(),
+                  authorname: 'User Name',
+                  joinedDate: joinedTimestamp.toString(),
+                  postCount: '123',
+                  useravatar: 'images/default/default_avatar_large.png', // relative to core URL
+                  userrank: 2,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,114 +78,73 @@ class CreateTopicPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.all(35),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title Row
-              Row(
-                children: [
-                  const Expanded(
-                    flex: 1,
-                    child: ElevatedButton(
-                      onPressed: null,
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll(Colors.white),
-                        elevation: WidgetStatePropertyAll(4),
-                        shadowColor: WidgetStatePropertyAll(Colors.black26),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      hintText: 'Title...',
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide.none,
                       ),
-                      child: Text('Icon'),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Container(
+              height: 180,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
                   Expanded(
-                    flex: 3,
                     child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Title...',
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
+                      controller: _bodyController,
+                      maxLines: null,
+                      expands: true,
+                      keyboardType: TextInputType.multiline,
+                      decoration: const InputDecoration.collapsed(
+                        hintText: "Write Your Post...",
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RoundButton(icon: Icons.link, onPressed: () {}),
+                      const SizedBox(width: 8),
+                      RoundButton(icon: Icons.camera_alt, onPressed: () {}),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-
-              // Post Body
-              Container(
-                height: 180,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 6,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        maxLines: null,
-                        expands: true,
-                        keyboardType: TextInputType.multiline,
-                        decoration: const InputDecoration.collapsed(
-                          hintText: "Write Your Post...",
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Attachment Buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        RoundButton(icon: Icons.link, onPressed: () {}),
-                        const SizedBox(width: 8),
-                        RoundButton(icon: Icons.camera_alt, onPressed: () {}),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              // Tags Input
-              Row(
-                children: [
-                  Container(
-                    height: 40,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 18,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.accentColor,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Text(
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  decoration: BoxDecoration(
+                    color: AppColors.accentColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Center(
+                    child: Text(
                       'Tags',
                       style: TextStyle(
                         color: Colors.white,
@@ -133,133 +153,78 @@ class CreateTopicPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Container(
-                      height: 40, // Set the height to 40 pixels
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                    controller: _tagController,
+                    onSubmitted: (val) {
+                      val.split(',').forEach(_addTag);
+                      _tagController.clear();
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Add tags (comma separated)...',
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(
-                              0.1,
-                            ), // Shadow color
-                            spreadRadius: 2, // Spread radius
-                            blurRadius: 4, // Blur radius
-                            offset: Offset(0, 2), // Offset of the shadow
-                          ),
-                        ],
+                        borderSide: BorderSide.none,
                       ),
-                      child: TextField(
-                        style: TextStyle(fontSize: 16),
-                        decoration: InputDecoration(
-                          hintText: 'Add tags...',
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                        ),
-                        maxLines: 1,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-              // Tag Suggestions
-              const Text(
-                'You can also choose from the popular tag list:',
-                style: TextStyle(color: Color(0xFF707070), fontSize: 13),
-              ),
-              const SizedBox(height: 10),
-              Wrap(
-                spacing: 5,
-                runSpacing: 2,
-                children:
-                    [
-                      'nba',
-                      'nba2k',
-                      'basketball',
-                      'draft',
-                      'nfl',
-                      'online',
-                      'xbox360',
-                      'franchise',
-                      'roster',
-                      'sliders',
-                      'dynasty',
-                    ].map((tag) {
-                      return Chip(
-                        label: Text(tag, style: TextStyle(fontSize: 13)),
-                        backgroundColor: const Color(0xFFF6F6F6),
-                        labelStyle: const TextStyle(
-                          color: Colors.deepPurple,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        elevation: 6,
-                        shadowColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          side: BorderSide(color: Color(0xFFF6F6F6), width: 1),
-                        ),
-                        padding: EdgeInsets.all(1),
-                      );
-                    }).toList(),
-              ),
-
-              const SizedBox(height: 30),
-
-              // Advanced Options
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 16,
                 ),
-                decoration: BoxDecoration(
-                  color: AppColors.accentColor,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 4,
-                      offset: Offset(0, 2),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 5,
+              children: _tags
+                  .map(
+                    (tag) => Chip(
+                      label: Text(tag),
+                      onDeleted: () => setState(() => _tags.remove(tag)),
                     ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      'Advanced Options',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 5,
+              runSpacing: 2,
+              children: [
+                'nba',
+                'nba2k',
+                'basketball',
+                'draft',
+                'nfl',
+                'online',
+                'xbox360',
+                'franchise',
+                'roster',
+                'sliders',
+                'dynasty',
+              ]
+                  .map(
+                    (tag) => ActionChip(
+                      label: Text(tag),
+                      onPressed: () => _addTag(tag),
                     ),
-                    Icon(Icons.add, color: Colors.white),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
-              // Bottom Buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _buildFlatButton("Cancel", onPressed: () {}),
-                  const SizedBox(width: 8),
-                  _buildFlatButton("Preview", onPressed: () {}),
-                  const SizedBox(width: 8),
-                  _buildFilledButton("Post", onPressed: () {}),
-                ],
-              ),
-            ],
-          ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                _buildFlatButton("Cancel", onPressed: () {}),
+                const SizedBox(width: 8),
+                _buildFlatButton("Preview", onPressed: _showPreviewDialog),
+                const SizedBox(width: 8),
+                _buildFilledButton("Post", onPressed: () {}),
+              ],
+            ),
+          ],
         ),
       ),
     );
