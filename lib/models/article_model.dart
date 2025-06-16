@@ -2,8 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:operationsports/models/displayable_content.dart';
 
-class ArticleModel  implements DisplayableContent{
-
+class ArticleModel implements DisplayableContent {
   @override
   final int id;
   @override
@@ -49,13 +48,26 @@ class ArticleModel  implements DisplayableContent{
     );
   }
 
+  factory ArticleModel.fromNewsletter(Map<String, dynamic> json) {
+    return ArticleModel(
+      id: json['id'],
+      title: json['web_title'],
+      excerpt: json['web_subtitle'],
+      content: json['web_subtitle'] ?? '',
+      imageUrl: json['image_url'] ?? '',
+      date: json['created_at'] ?? '',
+      author: json['authors']?[0]['name'] ?? '',
+      graph: json['authors'] ?? [],
+    );
+  }
+
   String get websiteName {
     for (var item in graph) {
       if (item['@type'] == 'WebSite') {
         return item['name'] ?? '';
       }
     }
-      return '';
+    return '';
   }
 
   @override
@@ -65,7 +77,7 @@ class ArticleModel  implements DisplayableContent{
         return item['articleSection']?[0] ?? '';
       }
     }
-      return '';
+    return '';
   }
 
   static String _parseText(String? raw) {
@@ -86,7 +98,9 @@ class ArticleModel  implements DisplayableContent{
   String get formattedDate {
     try {
       final parsedDate = DateTime.parse(date);
-      return DateFormat('MMMM d, y').format(parsedDate).toUpperCase(); // e.g., May 12, 2025
+      return DateFormat(
+        'MMMM d, y',
+      ).format(parsedDate).toUpperCase(); // e.g., May 12, 2025
     } catch (e) {
       return date; // fallback in case of error
     }

@@ -11,8 +11,8 @@ class NewsletterService {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final List jsonList = json.decode(response.body);
-      return jsonList.map((json) => ArticleModel.fromJson(json)).toList();
+      final List jsonList = json.decode(response.body).paginatedPosts.posts;
+      return jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList();
     } else {
       return [];
     }
@@ -24,8 +24,8 @@ class NewsletterService {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      return ArticleModel.fromJson(jsonData);
+      final jsonData = json.decode(response.body).paginatedPosts.posts;
+      return ArticleModel.fromNewsletter(jsonData);
     } else {
       throw Exception('Failed to load newsletter with page $page');
     }
@@ -36,8 +36,8 @@ class NewsletterService {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      return ArticleModel.fromJson(jsonData);
+      final jsonData = json.decode(response.body).paginatedPosts.posts;
+      return ArticleModel.fromNewsletter(jsonData);
     } else {
       throw Exception('Failed to load newsletter with id $id');
     }

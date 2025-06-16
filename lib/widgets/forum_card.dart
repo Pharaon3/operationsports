@@ -214,22 +214,10 @@ class ForumCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 22),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: const [
                       Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                      SizedBox(width: 16),
-                      Icon(
                         Icons.chat_bubble_outline,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                      SizedBox(width: 16),
-                      Icon(
-                        Icons.bookmark_border_outlined,
                         color: Colors.white,
                         size: 24,
                       ),

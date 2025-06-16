@@ -77,7 +77,11 @@ flutter:
     - assets/newsletter-selected.png
     - assets/games-selected.png
     - assets/forums-selected.png
-    - assets/review-selected.png
+    - assets/reviews-selected.png
+    - assets/newsletter-selected-blue.png
+    - assets/games-selected-blue.png
+    - assets/forums-selected-blue.png
+    - assets/reviews-selected-blue.png
     - assets/newsletter background.png
     - assets/newsletter logo.png
     - assets/white gamurs.png
