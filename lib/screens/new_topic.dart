@@ -249,7 +249,7 @@ Widget _buildFlatButton(String label, {required VoidCallback onPressed}) {
     ),
     child: TextButton(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.red,
+        foregroundColor: AppColors.accentColor,
         padding: EdgeInsets.zero,
         textStyle: const TextStyle(fontSize: 12),
       ),
@@ -276,7 +276,7 @@ Widget _buildFilledButton(String label, {required VoidCallback onPressed}) {
     ),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.accentColor,
         foregroundColor: Colors.white,
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BBCodeParser {
   /// Converts BBCode to HTML string.
@@ -23,6 +24,14 @@ class BBCodeParser {
 
     // Links and images
     output = output
+        .replaceAllMapped(
+          RegExp(
+            r'\[url="(.+?)\"](.+?)\[/url]',
+            dotAll: true,
+            caseSensitive: false,
+          ),
+          (m) => '<a href="${m[1]}">${m[2]}</a>',
+        )
         .replaceAllMapped(
           RegExp(
             r'\[url=(.+?)\](.+?)\[/url]',
@@ -144,6 +153,15 @@ class BBCodeParser {
           margin: Margins.only(top: 10, bottom: 10),
           border: Border.all(color: Colors.grey[700]!),
         ),
+      },
+      onLinkTap: (url, _, __) {
+        if (url == null) return;
+        final uri = Uri.parse(url);
+        canLaunchUrl(uri).then((canLaunch) {
+          if (canLaunch) {
+            launchUrl(uri, mode: LaunchMode.externalApplication);
+          }
+        });
       },
     );
   }
