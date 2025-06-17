@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/providers/news_provider.dart';
+// import 'package:operationsports/providers/news_provider.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
-import 'package:provider/provider.dart';
+import 'package:operationsports/widgets/paginated_newsletter.dart';
+// import 'package:provider/provider.dart';
 import '../widgets/app_footer.dart';
-import '../widgets/loading_indicator.dart';
-import '../widgets/error_widget.dart';
+// import '../widgets/loading_indicator.dart';
+// import '../widgets/error_widget.dart';
 import '../widgets/newslettersection.dart';
-import '../widgets/paginated_article.dart';
 
 class NewsLetter extends StatelessWidget {
   const NewsLetter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final newsProvider = Provider.of<NewsProvider>(context);
+    // final newsProvider = Provider.of<NewsProvider>(context);
     return MainScaffold(
-      child: RefreshIndicator(
-        onRefresh: () => newsProvider.fetchNewsLetter(),
-        child: Builder(
-          builder: (context) {
-            if (newsProvider.isLoading) {
-              return const LoadingIndicator();
-            }
+      child: 
+      // RefreshIndicator(
+      //   onRefresh: () => newsProvider.fetchNewsLetter(),
+      //   child: Builder(
+      //     builder: (context) {
+      //       if (newsProvider.isLoading) {
+      //         return const LoadingIndicator();
+      //       }
 
-            if (newsProvider.hasError) {
-              return AppErrorWidget(message: newsProvider.errorMessage);
-            }
+      //       if (newsProvider.hasError) {
+      //         return AppErrorWidget(message: newsProvider.errorMessage);
+      //       }
 
-            final newsletters = newsProvider.newsletters;
+      //       final newsletters = newsProvider.newsletters;
 
-            return ListView(
+      //       return 
+            ListView(
               children: [
                 const Header(selectedMenu: 1,),
 
@@ -103,16 +105,16 @@ class NewsLetter extends StatelessWidget {
                   ),
                 ),
 
-                PaginatedArticleList(articles: newsletters),
+                PaginatedNewsletterList(),
 
                 SizedBox(height: 32),
 
                 const AppFooter(),
               ],
-            );
-          },
-        ),
-      ),
+            ),
+      //     },
+      //   ),
+      // ),
     );
   }
 }

@@ -49,16 +49,17 @@ class ArticleModel implements DisplayableContent {
   }
 
   factory ArticleModel.fromNewsletter(Map<String, dynamic> json) {
-    return ArticleModel(
-      id: json['id'],
-      title: json['web_title'],
-      excerpt: json['web_subtitle'],
+    ArticleModel newsletter = ArticleModel(
+      id: int.parse(json['id'].split('-').last, radix: 16),
+      title: json['web_title'] ?? '',
+      excerpt: json['web_subtitle'] ?? '',
       content: json['web_subtitle'] ?? '',
       imageUrl: json['image_url'] ?? '',
       date: json['created_at'] ?? '',
       author: json['authors']?[0]['name'] ?? '',
       graph: json['authors'] ?? [],
     );
+    return newsletter;
   }
 
   String get websiteName {
