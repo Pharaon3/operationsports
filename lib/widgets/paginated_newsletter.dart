@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/displayable_content.dart';
 import 'package:operationsports/services/newsletter_service.dart';
 import '../screens/article_detail_screen.dart';
@@ -34,7 +35,7 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
         totalPages = result['totalpages'];
       });
     } catch (e) {
-      print("Someting went wrong: $e");
+      print("Something went wrong: $e");
     }
   }
 
@@ -62,7 +63,7 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
                   builder:
                       (context) => ArticleDetailScreen(
                         articleId: article.id.toString(),
-                        articles: [],
+                        articles: currentArticles as List<ArticleModel>,
                       ),
                 ),
               );
