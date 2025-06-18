@@ -38,72 +38,72 @@ class NewsLetter extends StatelessWidget {
 
                 const NewsletterSection(),
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 34.0,
-                    vertical: 10.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: const Text(
-                          'Archive',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Container(
-                        height:
-                            40, // Increased height for better text alignment
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 6,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search Posts...',
-                            prefixIcon: const Icon(
-                              Icons.search,
-                              color: Colors.black54,
-                              size: 20,
-                            ),
-                            hintStyle: const TextStyle(color: Colors.black54),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            isDense: true, // Reduces default vertical padding
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 14,
-                          ),
-                          onChanged: (value) {
-                            // Handle search
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 34.0,
+                //     vertical: 10.0,
+                //   ),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Container(
+                //         padding: EdgeInsets.only(left: 10),
+                //         child: const Text(
+                //           'Archive',
+                //           style: TextStyle(
+                //             color: Colors.white,
+                //             fontSize: 24,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //       const SizedBox(height: 12),
+                //       Container(
+                //         height:
+                //             40, // Increased height for better text alignment
+                //         decoration: BoxDecoration(
+                //           color: Colors.white,
+                //           borderRadius: BorderRadius.circular(5),
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: Colors.black.withOpacity(0.1),
+                //               blurRadius: 6,
+                //               offset: const Offset(0, 2),
+                //             ),
+                //           ],
+                //         ),
+                //         child: TextField(
+                //           decoration: InputDecoration(
+                //             hintText: 'Search Posts...',
+                //             prefixIcon: const Icon(
+                //               Icons.search,
+                //               color: Colors.black54,
+                //               size: 20,
+                //             ),
+                //             hintStyle: const TextStyle(color: Colors.black54),
+                //             border: OutlineInputBorder(
+                //               borderRadius: BorderRadius.circular(30),
+                //               borderSide: BorderSide.none,
+                //             ),
+                //             filled: true,
+                //             fillColor: Colors.white,
+                //             isDense: true, // Reduces default vertical padding
+                //             contentPadding: const EdgeInsets.symmetric(
+                //               vertical: 8,
+                //             ),
+                //           ),
+                //           style: const TextStyle(
+                //             color: Colors.black87,
+                //             fontSize: 14,
+                //           ),
+                //           onChanged: (value) {
+                //             // Handle search
+                //           },
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
 
                 PaginatedNewsletterList(),
 

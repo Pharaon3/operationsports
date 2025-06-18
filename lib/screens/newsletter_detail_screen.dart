@@ -69,7 +69,6 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
           }
 
           final article = snapshot.data!;
-          print("article: $article");
 
           return SingleChildScrollView(
             controller: _scrollController,
