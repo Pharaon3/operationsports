@@ -119,63 +119,63 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                   ],
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(top: 16, left: 34, right: 34),
-                  child: Column(
-                    children: [
-                      // Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Text(
-                      //     article.articleSection,
-                      //     style: const TextStyle(
-                      //       color: AppColors.accentColor,
-                      //       fontSize: 16,
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 5),
-                      // Title
-                      Text(
-                        widget.title,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 22,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          // Author
-                          Text(
-                            widget.author,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white, fontSize: 12),
-                          ),
-                          const SizedBox(width: 8),
-                          // Date
-                          Text(
-                            widget.formattedDate,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.bodyMedium?.copyWith(
-                              color: const Color(0xFF707070),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      // const SizedBox(height: 16),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 16, left: 34, right: 34),
+                //   child: Column(
+                //     children: [
+                //       // Align(
+                //       //   alignment: Alignment.centerLeft,
+                //       //   child: Text(
+                //       //     article.articleSection,
+                //       //     style: const TextStyle(
+                //       //       color: AppColors.accentColor,
+                //       //       fontSize: 16,
+                //       //     ),
+                //       //   ),
+                //       // ),
+                //       // const SizedBox(height: 5),
+                //       // Title
+                //       // Text(
+                //       //   widget.title,
+                //       //   style: Theme.of(
+                //       //     context,
+                //       //   ).textTheme.titleMedium?.copyWith(
+                //       //     fontWeight: FontWeight.bold,
+                //       //     color: Colors.white,
+                //       //     fontSize: 22,
+                //       //   ),
+                //       // ),
+                //       // const SizedBox(height: 8),
+                //       // Row(
+                //       //   children: [
+                //       //     // Author
+                //       //     Text(
+                //       //       widget.author,
+                //       //       maxLines: 2,
+                //       //       overflow: TextOverflow.ellipsis,
+                //       //       style: Theme.of(context).textTheme.bodyMedium
+                //       //           ?.copyWith(color: Colors.white, fontSize: 12),
+                //       //     ),
+                //       //     const SizedBox(width: 8),
+                //       //     // Date
+                //       //     Text(
+                //       //       widget.formattedDate,
+                //       //       maxLines: 2,
+                //       //       overflow: TextOverflow.ellipsis,
+                //       //       style: Theme.of(
+                //       //         context,
+                //       //       ).textTheme.bodyMedium?.copyWith(
+                //       //         color: const Color(0xFF707070),
+                //       //         fontWeight: FontWeight.bold,
+                //       //         fontSize: 12,
+                //       //       ),
+                //       //     ),
+                //       //   ],
+                //       // ),
+                //       // const SizedBox(height: 16),
+                //     ],
+                //   ),
+                // ),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -183,7 +183,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     horizontal: 25,
                   ),
                   child: Html(
-                    data: article,
+                    data: article.replaceAll("EAEBEC", "333333"),
                     style: {
                       "*": Style(
                         color: Colors.white,
