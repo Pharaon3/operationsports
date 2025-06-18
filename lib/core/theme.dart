@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    primarySwatch: Colors.indigo,
-    primaryColor: Colors.indigo,
+    primarySwatch: Colors.blue,
+    primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.blue,
       foregroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
@@ -23,7 +23,7 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -34,5 +34,13 @@ class AppTheme {
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
     ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: Colors.blue, // Cursor color
+      selectionColor: Colors.blue.withOpacity(
+        0.5,
+      ), // Selection background color
+      selectionHandleColor: Colors.blue, // Handle color
+    ),
+    colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
   );
 }
