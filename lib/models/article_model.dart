@@ -52,7 +52,7 @@ class ArticleModel implements DisplayableContent {
     ArticleModel newsletter = ArticleModel(
       id: int.parse(json['id'].split('-').last, radix: 16),
       title: json['web_title'] ?? '',
-      excerpt: json['web_subtitle'] ?? '',
+      excerpt: json['slug'] ?? '',
       content: json['web_subtitle'] ?? '',
       imageUrl: json['image_url'] ?? '',
       date: json['created_at'] ?? '',

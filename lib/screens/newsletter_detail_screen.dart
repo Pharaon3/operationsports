@@ -3,39 +3,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/providers/article_provider.dart';
+import 'package:operationsports/services/newsletter_service.dart';
 // import 'package:operationsports/widgets/video_player.dart';
 import 'package:provider/provider.dart';
 import '../models/article_model.dart';
-import '../services/article_service.dart';
+// import '../services/article_service.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/article_card.dart';
 import '../widgets/comment.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 
-class ArticleDetailScreen extends StatefulWidget {
-  final String articleId;
+class NewsDetailScreen extends StatefulWidget {
+  final String articleSlug;
+  final String imageUrl;
+  final String title;
+  final String author;
+  final String formattedDate;
   final List<ArticleModel> articles;
 
-  const ArticleDetailScreen({
+  const NewsDetailScreen({
     super.key,
-    required this.articleId,
+    required this.articleSlug,
     required this.articles,
+    required this.imageUrl,
+    required this.title,
+    required this.author,
+    required this.formattedDate,
   });
 
   @override
-  State<ArticleDetailScreen> createState() => _ArticleDetailScreenState();
+  State<NewsDetailScreen> createState() => _NewsDetailScreenState();
 }
 
-class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
-  late Future<ArticleModel> _articleFuture;
+class _NewsDetailScreenState extends State<NewsDetailScreen> {
+  late Future<String> _articleFuture;
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _commentKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _articleFuture = ArticleService.fetchArticleById(widget.articleId);
+    _articleFuture = NewsletterService.fetchNewsletterBySlug(
+      widget.articleSlug,
+    );
 
     Future.microtask(() {
       Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
@@ -46,7 +57,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      body: FutureBuilder<ArticleModel>(
+      body: FutureBuilder<String>(
         future: _articleFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -58,6 +69,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
           }
 
           final article = snapshot.data!;
+          print("article: $article");
 
           return SingleChildScrollView(
             controller: _scrollController,
@@ -67,7 +79,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                 Stack(
                   children: [
                     CachedNetworkImage(
-                      imageUrl: article.imageUrl,
+                      imageUrl: widget.imageUrl,
                       height: 344,
                       fit: BoxFit.cover,
                       placeholder:
@@ -112,20 +124,20 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                   padding: const EdgeInsets.only(top: 16, left: 34, right: 34),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          article.articleSection,
-                          style: const TextStyle(
-                            color: AppColors.accentColor,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
+                      // Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Text(
+                      //     article.articleSection,
+                      //     style: const TextStyle(
+                      //       color: AppColors.accentColor,
+                      //       fontSize: 16,
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 5),
                       // Title
                       Text(
-                        article.title,
+                        widget.title,
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(
@@ -139,7 +151,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                         children: [
                           // Author
                           Text(
-                            article.author,
+                            widget.author,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.bodyMedium
@@ -148,7 +160,7 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                           const SizedBox(width: 8),
                           // Date
                           Text(
-                            article.formattedDate,
+                            widget.formattedDate,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(
@@ -165,59 +177,26 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                     ],
                   ),
                 ),
-                
+
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 0,
                     horizontal: 25,
                   ),
                   child: Html(
-                    data: article.content,
+                    data: article,
                     style: {
-                      "*": Style(color: Colors.white),
-                      "img": Style(
-                        width: Width(MediaQuery.of(context).size.width),
+                      "*": Style(
+                        color: Colors.white,
+                        fontSize: FontSize(16),
+                        lineHeight: LineHeight.number(1.4),
+                      ),
+                      "p": Style(
+                        margin: Margins.zero,
+                        padding: HtmlPaddings.zero,
+                        lineHeight: LineHeight.number(1.4),
                       ),
                     },
-                    extensions: [
-                      TagExtension(
-                        tagsToExtend: {"img"},
-                        builder: (context) {
-                          final src = context.attributes['src'] ?? '';
-                          final buildContext = context.buildContext;
-
-                          final screenWidth =
-                              buildContext != null
-                                  ? MediaQuery.of(buildContext).size.width
-                                  : 300.0;
-
-                          return Image.network(
-                            src,
-                            width: screenWidth,
-                            fit: BoxFit.contain,
-                          );
-                        },
-                      ),
-                      TagExtension(
-                        tagsToExtend: {"iframe"},
-                        builder: (context) {
-                          // final attrs = context.attributes;
-                          // if (attrs["data-test-id"] == "beehiiv-embed") {
-                          //   final src =
-                          //       'https://media.istockphoto.com/id/1224313496/video/a-bus-enters-a-tunnel.mp4?s=mp4-640x640-is&k=20&c=mZiCyVFmRP1hM0XNrR13gCMrMWnGrqqLDdNzNb7e0EE=';
-                          //   return Padding(
-                          //     padding: const EdgeInsets.symmetric(
-                          //       vertical: 12.0,
-                          //     ),
-                          //     child: VideoWidget(url: src),
-                          //   );
-                          // }
-
-                          // If not the specific iframe, fallback to default or ignore
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                    ],
                   ),
                 ),
 
@@ -259,12 +238,15 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder:
-                                                (context) =>
-                                                    ArticleDetailScreen(
-                                                      articleId:
-                                                          article.id.toString(),
-                                                      articles: widget.articles,
-                                                    ),
+                                                (context) => NewsDetailScreen(
+                                                  author: article.author,
+                                                  formattedDate:
+                                                      article.formattedDate,
+                                                  imageUrl: article.imageUrl,
+                                                  title: article.title,
+                                                  articleSlug: article.excerpt,
+                                                  articles: widget.articles,
+                                                ),
                                           ),
                                         );
                                       },
@@ -288,3 +270,4 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
     );
   }
 }
+

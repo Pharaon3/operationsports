@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/displayable_content.dart';
+import 'package:operationsports/screens/newsletter_detail_screen.dart';
 import 'package:operationsports/services/newsletter_service.dart';
-import '../screens/article_detail_screen.dart';
+// import '../screens/article_detail_screen.dart';
 import 'article_list.dart';
 import '../core/constants.dart';
 
@@ -61,8 +62,12 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
                 context,
                 MaterialPageRoute(
                   builder:
-                      (context) => ArticleDetailScreen(
-                        articleId: article.id.toString(),
+                      (context) => NewsDetailScreen(
+                        author: article.author,
+                        formattedDate: article.formattedDate,
+                        imageUrl: article.imageUrl,
+                        title: article.title,
+                        articleSlug: article.excerpt,
                         articles: currentArticles as List<ArticleModel>,
                       ),
                 ),

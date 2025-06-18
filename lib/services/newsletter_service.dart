@@ -68,16 +68,16 @@ class NewsletterService {
     }
   }
 
-  /// Fetch single newsletter by ID
-  static Future<ArticleModel> fetchNewsletterById(String id) async {
-    final url = Uri.parse('$baseUrl/posts/$id?_embed');
-    final response = await http.get(url);
+  /// Fetch single newsletter by Slug
+  static Future<String> fetchNewsletterBySlug(String slug) async {
+    final client = createProxiedHttpClient();
+    final url = Uri.parse('$baseUrl/p/$slug?_data=routes%2Fp%2F%24slug');
+    final response = await client.get(url);
 
     if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body).paginatedPosts.posts;
-      return ArticleModel.fromNewsletter(jsonData);
+      return json.decode(response.body)['html'];
     } else {
-      throw Exception('Failed to load newsletter with id $id');
+      throw Exception('Failed to load newsletter with slug $slug');
     }
   }
 }
