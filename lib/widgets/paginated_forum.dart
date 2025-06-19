@@ -37,7 +37,7 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
           return ForumCard(
             isMainForum: false,
             authorname: forum.authorname,
-            forumName: forum.title != "" ? forum.title : widget.cardTitle,
+            forumName: widget.cardTitle,
             postText: forum.content,
             date: forum.publishdate,
             imageUrl: '',
