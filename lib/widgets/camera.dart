@@ -42,32 +42,32 @@ class _CameraWidgetState extends State<CameraWidget> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: _initializeControllerFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          // If the Future is complete, display the camera preview.
-          return Column(
-            children: [
-              CameraPreview(_controller),
-              ElevatedButton(
-                onPressed: () async {
-                  await _initializeControllerFuture;
-                  final image = await _controller.takePicture();
-                  // Handle the captured image (e.g., save or display).
-                  Navigator.pop(context, image.path); // Return to previous screen with the image path
-                },
-                child: Icon(Icons.camera),
-              ),
-            ],
-          );
-        } else {
-          // Otherwise, display a loading indicator.
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
-  }
+@override
+Widget build(BuildContext context) {
+  return FutureBuilder<void>(
+    future: _initializeControllerFuture,
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        return Column(
+          children: [
+            Expanded(
+              child: CameraPreview(_controller),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _initializeControllerFuture;
+                final image = await _controller.takePicture();
+                Navigator.pop(context, image.path);
+              },
+              child: Icon(Icons.camera),
+            ),
+          ],
+        );
+      } else {
+        return Center(child: CircularProgressIndicator());
+      }
+    },
+  );
+}
+
 }

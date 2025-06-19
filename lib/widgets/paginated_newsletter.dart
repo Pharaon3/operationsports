@@ -3,7 +3,6 @@ import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/displayable_content.dart';
 import 'package:operationsports/screens/newsletter_detail_screen.dart';
 import 'package:operationsports/services/newsletter_service.dart';
-// import '../screens/article_detail_screen.dart';
 import 'article_list.dart';
 import '../core/constants.dart';
 
@@ -20,10 +19,23 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
   List<DisplayableContent> currentArticles = [];
   int totalPages = 1;
 
+  bool isSubscribed = false;
+  final NewsletterService newsletterService = NewsletterService();
+
   @override
   void initState() {
     super.initState();
     fetchNewsLetter(currentPage);
+    checkSubscribe();
+  }
+
+  Future<void> checkSubscribe() async {
+    final testSub = await newsletterService.checkSubscribe(
+      "test@gmail.com",
+    );
+    setState(() {
+      isSubscribed = testSub;
+    });
   }
 
   Future<void> fetchNewsLetter(int page) async {
@@ -58,20 +70,22 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
           return ArticleList(
             article: article,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder:
-                      (context) => NewsDetailScreen(
-                        author: article.author,
-                        formattedDate: article.formattedDate,
-                        imageUrl: article.imageUrl,
-                        title: article.title,
-                        articleSlug: article.excerpt,
-                        articles: currentArticles as List<ArticleModel>,
-                      ),
-                ),
-              );
+              isSubscribed
+                  ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => NewsDetailScreen(
+                            author: article.author,
+                            formattedDate: article.formattedDate,
+                            imageUrl: article.imageUrl,
+                            title: article.title,
+                            articleSlug: article.excerpt,
+                            articles: currentArticles as List<ArticleModel>,
+                          ),
+                    ),
+                  )
+                  : {};
             },
           );
         }),

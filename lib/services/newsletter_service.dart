@@ -32,6 +32,9 @@ http.Client createProxiedHttpClient() {
 class NewsletterService {
   static const String baseUrl = 'https://newsletter.operationsports.com/';
 
+  final subscribeApi = dotenv.env['NEWS_API'] ?? '';
+  final publication = dotenv.env['NEWS_PUBLICATION'] ?? '';
+
   /// Fetch list of recent posts
   static Future<List<ArticleModel>> fetchNewsletters() async {
     final client = createProxiedHttpClient();
@@ -54,13 +57,15 @@ class NewsletterService {
     final response = await client.get(url);
 
     if (response.statusCode == 200) {
-      final List jsonList = json.decode(response.body)['paginatedPosts']['posts'];
+      final List jsonList =
+          json.decode(response.body)['paginatedPosts']['posts'];
       final totalPages =
           json.decode(
             response.body,
           )['paginatedPosts']['pagination']['total_pages'];
       return {
-        "posts": jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList(),
+        "posts":
+            jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList(),
         "totalpages": totalPages,
       };
     } else {
@@ -78,6 +83,26 @@ class NewsletterService {
       return json.decode(response.body)['html'];
     } else {
       throw Exception('Failed to load newsletter with slug $slug');
+    }
+  }
+
+  Future<bool> checkSubscribe(String email) async {
+    var headers = {'Authorization': 'Bearer $subscribeApi'};
+    var request = http.Request(
+      'GET',
+      Uri.parse(
+        'https://api.beehiiv.com/v2/publications/$publication/subscriptions/by_email/$email',
+      ),
+    );
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
