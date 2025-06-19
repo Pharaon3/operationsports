@@ -5,6 +5,12 @@ import 'package:operationsports/screens/newsletter_detail_screen.dart';
 import 'package:operationsports/services/newsletter_service.dart';
 import 'article_list.dart';
 import '../core/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<String?> getUserName() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('user_name');
+}
 
 class PaginatedNewsletterList extends StatefulWidget {
   const PaginatedNewsletterList({super.key});
@@ -31,7 +37,7 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
 
   Future<void> checkSubscribe() async {
     final testSub = await newsletterService.checkSubscribe(
-      "test@gmail.com",
+      getUserName() as String,
     );
     setState(() {
       isSubscribed = testSub;

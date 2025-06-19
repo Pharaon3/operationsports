@@ -9,6 +9,14 @@ import 'package:operationsports/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../widgets/loading_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+Future<void> saveUserName(String username) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('user_name', username);
+}
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
         context,
         listen: false,
       ).login(_usernameController.text, _passwordController.text);
-
+      saveUserName(_usernameController.text);
       context.go('/');
     } catch (e) {
       _showErrorDialog(context, 'Login failed. Please check your credentials.');
