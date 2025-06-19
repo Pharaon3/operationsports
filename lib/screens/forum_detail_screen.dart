@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:operationsports/models/forum_section.dart';
 import 'package:operationsports/screens/new_topic.dart';
 import 'package:operationsports/services/forum_service.dart';
+import 'package:operationsports/widgets/camera.dart';
 import 'package:operationsports/widgets/forum_card.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
@@ -113,6 +114,18 @@ class _ForumDetailState extends State<ForumDetail> {
         );
   }
 
+  void _openCamera(BuildContext context) async {
+    final imagePath = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CameraWidget()),
+    );
+
+    if (imagePath != null) {
+      // Do something with the image path (e.g., display it or save it)
+      print('Captured image path: $imagePath');
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
@@ -207,7 +220,7 @@ class _ForumDetailState extends State<ForumDetail> {
                   child: PostInputBox(
                     controller: TextEditingController(),
                     onLinkPressed: () => print("Link tapped"),
-                    onImagePressed: () => print("Image tapped"),
+                    onImagePressed: () => _openCamera(context),
                     onPostPressed: () => print("Post tapped"),
                   ),
                 ),
