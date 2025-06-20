@@ -44,6 +44,7 @@ class _ForumDetailState extends State<ForumDetail> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _postBoxKey = GlobalKey();
   final List<ForumSectionMenu> _forumSections = [];
+  final TextEditingController _postController = TextEditingController();
   int _currentPage = 1;
   bool _isLoading = false;
   bool _hasMore = true;
@@ -125,7 +126,27 @@ class _ForumDetailState extends State<ForumDetail> {
       print('Captured image path: $imagePath');
     }
   }
-  
+
+  Future<void> quoteReply(String quote) async {
+    _postController.text = quote;
+
+    final context = _postBoxKey.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        alignment: 0.5,
+      );
+    } else {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
@@ -174,6 +195,7 @@ class _ForumDetailState extends State<ForumDetail> {
                   postCount: widget.posts,
                   useravatar: widget.useravatar,
                   userrank: widget.userrank,
+                  quoteReply: quoteReply,
                 ),
                 const SizedBox(height: 12),
                 Padding(
@@ -206,38 +228,44 @@ class _ForumDetailState extends State<ForumDetail> {
                       _isLoading && _forumSections.isEmpty
                           ? const Center(child: CircularProgressIndicator())
                           : _forumSections.isEmpty
-                          ? const Center(child: Text("No forum posts found."))
+                          ? const Center(
+                            child: Text(
+                              "No forum posts found.",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )
                           : PaginatedForumList(
                             forums: _forumSections,
                             cardTitle: widget.title,
                             loadMore: _loadForumSectionMenu,
                             hasMore: _hasMore,
+                            quoteReply: quoteReply,
                           ),
                 ),
                 Padding(
                   key: _postBoxKey,
                   padding: const EdgeInsets.all(16),
                   child: PostInputBox(
-                    controller: TextEditingController(),
+                    controller: _postController,
                     onLinkPressed: () => print("Link tapped"),
                     onImagePressed: () => _openCamera(context),
                     onPostPressed: () => print("Post tapped"),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: DefaultButton(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreateTopicPage(),
-                        ),
-                      );
-                    },
-                    buttonLabel: "Advanced Options    +",
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16),
+                //   child: DefaultButton(
+                //     onTap: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => const CreateTopicPage(),
+                //         ),
+                //       );
+                //     },
+                //     buttonLabel: "Advanced Options    +",
+                //   ),
+                // ),
                 const AppFooter(),
               ],
             ),

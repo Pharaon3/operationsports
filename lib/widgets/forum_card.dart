@@ -14,6 +14,7 @@ class ForumCard extends StatelessWidget {
   final String postCount;
   final String useravatar;
   final int userrank;
+  final Future<void> Function(String) quoteReply;
 
   const ForumCard({
     super.key,
@@ -27,7 +28,13 @@ class ForumCard extends StatelessWidget {
     required this.postCount,
     required this.useravatar,
     required this.userrank,
+    required this.quoteReply,
   });
+
+  void quotereply() {
+    String quote = '[QUOTE=$authorname;n$date]$postText[/QUOTE]';
+    quoteReply(quote);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +51,6 @@ class ForumCard extends StatelessWidget {
     String joinedDateformattedDate = DateFormat(
       'MM-dd-yyyy',
     ).format(joinedDatedateTime);
-
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -66,7 +72,11 @@ class ForumCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.network('https://forums.operationsports.com/forums/core/$useravatar', height: 30, width: 35,),
+                        Image.network(
+                          'https://forums.operationsports.com/forums/core/$useravatar',
+                          height: 30,
+                          width: 35,
+                        ),
                         const SizedBox(width: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,11 +225,16 @@ class ForumCard extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 22),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Icon(
-                        Icons.chat_bubble_outline,
-                        color: Colors.white,
-                        size: 24,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          quotereply();
+                        },
+                        child: const Icon(
+                          Icons.chat_bubble_outline,
+                          color: Colors.white,
+                          size: 24,
+                        ),
                       ),
                     ],
                   ),

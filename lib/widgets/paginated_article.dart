@@ -62,22 +62,24 @@ class _PaginatedArticleListState extends State<PaginatedArticleList> {
         const SizedBox(height: 16),
 
         // Pagination Controls
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _paginationButton(
-              icon: Icons.chevron_left,
-              onTap: () => changePage(currentPage - 1),
-              isEnabled: currentPage > 1,
-            ),
-            ..._buildPageNumbers(),
-            _paginationButton(
-              icon: Icons.chevron_right,
-              onTap: () => changePage(currentPage + 1),
-              isEnabled: currentPage < totalPages,
-            ),
-          ],
-        ),
+        totalPages > 1
+            ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _paginationButton(
+                  icon: Icons.chevron_left,
+                  onTap: () => changePage(currentPage - 1),
+                  isEnabled: currentPage > 1,
+                ),
+                ..._buildPageNumbers(),
+                _paginationButton(
+                  icon: Icons.chevron_right,
+                  onTap: () => changePage(currentPage + 1),
+                  isEnabled: currentPage < totalPages,
+                ),
+              ],
+            )
+            : Container(),
         const SizedBox(height: 20),
       ],
     );

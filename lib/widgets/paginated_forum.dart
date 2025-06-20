@@ -7,6 +7,7 @@ class PaginatedForumList extends StatefulWidget {
   final String cardTitle;
   final Future<void> Function() loadMore;
   final bool hasMore;
+  final Future<void> Function(String) quoteReply;
 
   const PaginatedForumList({
     super.key,
@@ -14,6 +15,7 @@ class PaginatedForumList extends StatefulWidget {
     required this.cardTitle,
     required this.loadMore,
     required this.hasMore,
+    required this.quoteReply,
   });
 
   @override
@@ -45,6 +47,7 @@ class _PaginatedForumListState extends State<PaginatedForumList> {
             postCount: forum.posts,
             useravatar: forum.useravatar,
             userrank: forum.userrank,
+            quoteReply: widget.quoteReply,
           );
         }),
 

@@ -24,6 +24,8 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
     }
   }
 
+  Future<void> quoteReply(String quote) async {}
+
   void _showPreviewDialog() {
     final now = DateTime.now();
     final timestamp = now.millisecondsSinceEpoch ~/ 1000;
@@ -46,17 +48,20 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
                 padding: const EdgeInsets.all(16),
                 child: ForumCard(
                   isMainForum: false,
-                  forumName: _titleController.text.isEmpty
-                      ? 'Preview Forum'
-                      : _titleController.text,
+                  forumName:
+                      _titleController.text.isEmpty
+                          ? 'Preview Forum'
+                          : _titleController.text,
                   postText: _bodyController.text,
                   imageUrl: '',
                   date: timestamp.toString(),
                   authorname: 'User Name',
                   joinedDate: joinedTimestamp.toString(),
                   postCount: '123',
-                  useravatar: 'images/default/default_avatar_large.png', // relative to core URL
+                  useravatar:
+                      'images/default/default_avatar_large.png', // relative to core URL
                   userrank: 2,
+                  quoteReply: quoteReply,
                 ),
               ),
             );
@@ -170,7 +175,9 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
                     ),
                   ),
                 ),
@@ -179,39 +186,41 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
             const SizedBox(height: 10),
             Wrap(
               spacing: 5,
-              children: _tags
-                  .map(
-                    (tag) => Chip(
-                      label: Text(tag),
-                      onDeleted: () => setState(() => _tags.remove(tag)),
-                    ),
-                  )
-                  .toList(),
+              children:
+                  _tags
+                      .map(
+                        (tag) => Chip(
+                          label: Text(tag),
+                          onDeleted: () => setState(() => _tags.remove(tag)),
+                        ),
+                      )
+                      .toList(),
             ),
             const SizedBox(height: 10),
             Wrap(
               spacing: 5,
               runSpacing: 2,
-              children: [
-                'nba',
-                'nba2k',
-                'basketball',
-                'draft',
-                'nfl',
-                'online',
-                'xbox360',
-                'franchise',
-                'roster',
-                'sliders',
-                'dynasty',
-              ]
-                  .map(
-                    (tag) => ActionChip(
-                      label: Text(tag),
-                      onPressed: () => _addTag(tag),
-                    ),
-                  )
-                  .toList(),
+              children:
+                  [
+                        'nba',
+                        'nba2k',
+                        'basketball',
+                        'draft',
+                        'nfl',
+                        'online',
+                        'xbox360',
+                        'franchise',
+                        'roster',
+                        'sliders',
+                        'dynasty',
+                      ]
+                      .map(
+                        (tag) => ActionChip(
+                          label: Text(tag),
+                          onPressed: () => _addTag(tag),
+                        ),
+                      )
+                      .toList(),
             ),
             const SizedBox(height: 30),
             Row(

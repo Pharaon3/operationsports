@@ -110,6 +110,11 @@ class CommentsPage extends StatelessWidget {
                             icon: Icons.camera_alt,
                             onPressed: () => {},
                           ),
+                          const SizedBox(width: 8),
+                          RoundButton(
+                            icon: Icons.edit_document,
+                            onPressed: () => {},
+                          ),
                         ],
                       ),
                     ],
