@@ -3,16 +3,16 @@ import 'package:operationsports/widgets/round_button.dart';
 
 class PostInputBox extends StatelessWidget {
   final TextEditingController controller;
-  final VoidCallback onLinkPressed;
-  final VoidCallback onImagePressed;
-  final VoidCallback onPostPressed;
+  final VoidCallback? onLinkPressed;
+  final VoidCallback? onImagePressed;
+  final VoidCallback? onPostPressed;
 
   const PostInputBox({
     super.key,
     required this.controller,
-    required this.onLinkPressed,
-    required this.onImagePressed,
-    required this.onPostPressed,
+    this.onLinkPressed,
+    this.onImagePressed,
+    this.onPostPressed,
   });
 
   @override

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/widgets/round_button.dart';
 import 'package:operationsports/widgets/forum_card.dart';
+import 'package:operationsports/services/forum_service.dart';
+import 'package:operationsports/utils/shared_prefs.dart';
 
 class CreateTopicPage extends StatefulWidget {
-  const CreateTopicPage({super.key});
+  final String forumId;
+  final String forumName;
+  
+  const CreateTopicPage({
+    super.key,
+    required this.forumId,
+    required this.forumName,
+  });
 
   @override
   State<CreateTopicPage> createState() => _CreateTopicPageState();
@@ -14,14 +22,20 @@ class CreateTopicPage extends StatefulWidget {
 class _CreateTopicPageState extends State<CreateTopicPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
-  final TextEditingController _tagController = TextEditingController();
-  final List<String> _tags = [];
+  bool _isLoading = false;
+  bool _isAuthenticated = false;
 
-  void _addTag(String tag) {
-    tag = tag.trim().toLowerCase();
-    if (tag.isNotEmpty && !_tags.contains(tag)) {
-      setState(() => _tags.add(tag));
-    }
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthentication();
+  }
+
+  Future<void> _checkAuthentication() async {
+    final token = await SharedPrefs.getToken();
+    setState(() {
+      _isAuthenticated = token != null;
+    });
   }
 
   Future<void> quoteReply(String quote) async {}
@@ -71,6 +85,82 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
     );
   }
 
+  Future<void> _createTopic() async {
+    if (!_isAuthenticated) {
+      _showErrorDialog('Please login first to create a topic.');
+      return;
+    }
+
+    if (_titleController.text.trim().isEmpty) {
+      _showErrorDialog('Please enter a title for your topic.');
+      return;
+    }
+
+    if (_bodyController.text.trim().isEmpty) {
+      _showErrorDialog('Please enter content for your topic.');
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final result = await ForumService.createTopic(
+        forumId: widget.forumId,
+        title: _titleController.text.trim(),
+        content: _bodyController.text.trim(),
+      );
+
+      if (result['success'] == true) {
+        _showSuccessDialog(result['message'] ?? 'Topic created successfully!');
+      } else {
+        _showErrorDialog(result['message'] ?? 'Failed to create topic.');
+      }
+    } catch (e) {
+      _showErrorDialog('Error: ${e.toString()}');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Success'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // Go back to previous screen
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +168,7 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        title: const Text('Create New Topic'),
+        title: Text('Create New Topic - ${widget.forumName}'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -86,12 +176,31 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (!_isAuthenticated)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.only(bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade100,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.orange.shade300),
+                ),
+                child: const Text(
+                  'Please login to create a topic',
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             Row(
               children: [
                 Expanded(
                   flex: 3,
                   child: TextField(
                     controller: _titleController,
+                    enabled: _isAuthenticated && !_isLoading,
                     decoration: InputDecoration(
                       hintText: 'Title...',
                       filled: true,
@@ -118,6 +227,7 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
                   Expanded(
                     child: TextField(
                       controller: _bodyController,
+                      enabled: _isAuthenticated && !_isLoading,
                       maxLines: null,
                       expands: true,
                       keyboardType: TextInputType.multiline,
@@ -130,107 +240,38 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      RoundButton(icon: Icons.link, onPressed: () {}),
+                      RoundButton(
+                        icon: Icons.link, 
+                        onPressed: _isAuthenticated && !_isLoading ? () {} : null
+                      ),
                       const SizedBox(width: 8),
-                      RoundButton(icon: Icons.camera_alt, onPressed: () {}),
+                      RoundButton(
+                        icon: Icons.camera_alt, 
+                        onPressed: _isAuthenticated && !_isLoading ? () {} : null
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Container(
-                  height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  decoration: BoxDecoration(
-                    color: AppColors.accentColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Tags',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: TextField(
-                    controller: _tagController,
-                    onSubmitted: (val) {
-                      val.split(',').forEach(_addTag);
-                      _tagController.clear();
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Add tags (comma separated)...',
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 5,
-              children:
-                  _tags
-                      .map(
-                        (tag) => Chip(
-                          label: Text(tag),
-                          onDeleted: () => setState(() => _tags.remove(tag)),
-                        ),
-                      )
-                      .toList(),
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 5,
-              runSpacing: 2,
-              children:
-                  [
-                        'nba',
-                        'nba2k',
-                        'basketball',
-                        'draft',
-                        'nfl',
-                        'online',
-                        'xbox360',
-                        'franchise',
-                        'roster',
-                        'sliders',
-                        'dynasty',
-                      ]
-                      .map(
-                        (tag) => ActionChip(
-                          label: Text(tag),
-                          onPressed: () => _addTag(tag),
-                        ),
-                      )
-                      .toList(),
-            ),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                _buildFlatButton("Cancel", onPressed: () {}),
+                _buildFlatButton(
+                  "Cancel", 
+                  onPressed: _isLoading ? null : () => Navigator.of(context).pop()
+                ),
                 const SizedBox(width: 8),
-                _buildFlatButton("Preview", onPressed: _showPreviewDialog),
+                _buildFlatButton(
+                  "Preview", 
+                  onPressed: _isLoading ? null : _showPreviewDialog
+                ),
                 const SizedBox(width: 8),
-                _buildFilledButton("Post", onPressed: () {}),
+                _buildFilledButton(
+                  _isLoading ? "Creating..." : "Post", 
+                  onPressed: _isLoading || !_isAuthenticated ? null : _createTopic
+                ),
               ],
             ),
           ],
@@ -240,7 +281,7 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
   }
 }
 
-Widget _buildFlatButton(String label, {required VoidCallback onPressed}) {
+Widget _buildFlatButton(String label, {required VoidCallback? onPressed}) {
   return Container(
     width: 59.26,
     height: 24.33,
@@ -258,7 +299,7 @@ Widget _buildFlatButton(String label, {required VoidCallback onPressed}) {
     ),
     child: TextButton(
       style: TextButton.styleFrom(
-        foregroundColor: AppColors.accentColor,
+        foregroundColor: onPressed != null ? AppColors.accentColor : Colors.grey,
         padding: EdgeInsets.zero,
         textStyle: const TextStyle(fontSize: 12),
       ),
@@ -268,7 +309,7 @@ Widget _buildFlatButton(String label, {required VoidCallback onPressed}) {
   );
 }
 
-Widget _buildFilledButton(String label, {required VoidCallback onPressed}) {
+Widget _buildFilledButton(String label, {required VoidCallback? onPressed}) {
   return Container(
     width: 59.26,
     height: 24.33,
@@ -285,7 +326,7 @@ Widget _buildFilledButton(String label, {required VoidCallback onPressed}) {
     ),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.accentColor,
+        backgroundColor: onPressed != null ? AppColors.accentColor : Colors.grey,
         foregroundColor: Colors.white,
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(

@@ -50,6 +50,7 @@ class _ForumDetailState extends State<ForumDetail> {
   bool _hasMore = true;
 
   bool _showScrollToTopButton = false;
+  bool _isReplying = false;
 
   @override
   void initState() {
@@ -145,6 +146,64 @@ class _ForumDetailState extends State<ForumDetail> {
         curve: Curves.easeInOut,
       );
     }
+  }
+
+  Future<void> _handlePostReply() async {
+    if (_postController.text.trim().isEmpty) {
+      _showErrorDialog('Please enter a reply.');
+      return;
+    }
+    setState(() { _isReplying = true; });
+    try {
+      final result = await ForumService.createReply(
+        topicId: widget.parentId,
+        content: _postController.text.trim(),
+      );
+      if (result['success'] == true) {
+        _showSuccessDialog(result['message'] ?? 'Reply posted successfully!');
+        _postController.clear();
+        // Optionally reload forum section menu to show new reply
+        await _loadForumSectionMenu();
+      } else {
+        _showErrorDialog(result['message'] ?? 'Failed to post reply.');
+      }
+    } catch (e) {
+      _showErrorDialog('Error: \\${e.toString()}');
+    } finally {
+      setState(() { _isReplying = false; });
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Success'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -249,7 +308,7 @@ class _ForumDetailState extends State<ForumDetail> {
                     controller: _postController,
                     onLinkPressed: () => print("Link tapped"),
                     onImagePressed: () => _openCamera(context),
-                    onPostPressed: () => print("Post tapped"),
+                    onPostPressed: _isReplying ? null : _handlePostReply,
                   ),
                 ),
                 // Padding(

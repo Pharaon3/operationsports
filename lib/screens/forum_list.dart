@@ -6,8 +6,8 @@ import 'package:operationsports/services/forum_service.dart';
 import 'package:operationsports/widgets/forum_activity_list.dart';
 import 'package:operationsports/widgets/header.dart';
 import 'package:operationsports/widgets/main_scaffold.dart';
-import 'package:operationsports/widgets/menu_grid.dart';
-import 'package:operationsports/widgets/topic_grid.dart';
+// import 'package:operationsports/widgets/menu_grid.dart';
+// import 'package:operationsports/widgets/topic_grid.dart';
 import 'package:operationsports/widgets/app_footer.dart';
 import 'package:operationsports/widgets/default_button.dart';
 import 'package:operationsports/widgets/forum_submenu.dart';
@@ -142,7 +142,10 @@ class _ForumListState extends State<ForumList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const CreateTopicPage(),
+                            builder: (_) => CreateTopicPage(
+                              forumId: widget.parentId,
+                              forumName: 'Forum',
+                            ),
                           ),
                         );
                       },

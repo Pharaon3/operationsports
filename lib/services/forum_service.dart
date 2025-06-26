@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:crypto/crypto.dart';
 import 'package:operationsports/models/forum_activity_item.dart';
+import 'package:operationsports/utils/shared_prefs.dart';
 import '../models/forum_section.dart';
 
 class ForumService {
@@ -157,6 +158,126 @@ class ForumService {
       }).toList();
     } else {
       throw Exception('Failed to fetch subscriptions');
+    }
+  }
+
+  /// Create a new topic in a forum
+  static Future<Map<String, dynamic>> createTopic({
+    required String forumId,
+    required String title,
+    required String content,
+  }) async {
+    // Get the stored security token
+    final securityToken = await SharedPrefs.getToken();
+    if (securityToken == null) {
+      throw Exception('No security token found. Please login first.');
+    }
+
+    final url = Uri.parse('https://forums.operationsports.com/forums/create-content/text/');
+    
+    final body = {
+      'securitytoken': securityToken,
+      'parentid': forumId,
+      'title': title,
+      'text': content, // Note: using 'text' not 'rawtext' as per your specification
+    };
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print("data: $data");
+      
+      // Check if the response indicates success
+      if (data['success'] == true || data['nodeid'] != null) {
+        return {
+          'success': true,
+          'nodeid': data['nodeid'],
+          'message': data['message'] ?? 'Topic created successfully',
+        };
+      } else {
+        throw Exception(data['message'] ?? 'Failed to create topic');
+      }
+    } else {
+      throw Exception('HTTP ${response.statusCode}: Failed to create topic');
+    }
+  }
+
+  /// Create a reply to a topic
+  static Future<Map<String, dynamic>> createReply({
+    required String topicId,
+    required String content,
+  }) async {
+    final securityToken = await SharedPrefs.getToken();
+    if (securityToken == null) {
+      throw Exception('No security token found. Please login first.');
+    }
+
+    final url = Uri.parse('https://forums.operationsports.com/forums/create-content/text/');
+    final body = {
+      'securitytoken': securityToken,
+      'parentid': topicId,
+      'text': content,
+    };
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print("data: $data");
+      if (data['success'] == true || data['nodeid'] != null) {
+        return {
+          'success': true,
+          'nodeid': data['nodeid'],
+          'message': data['message'] ?? 'Reply posted successfully',
+        };
+      } else {
+        throw Exception(data['message'] ?? 'Failed to post reply');
+      }
+    } else {
+      throw Exception('HTTP ${response.statusCode}: Failed to post reply');
+    }
+  }
+
+  /// Fetch current user info after login
+  static Future<Map<String, dynamic>> fetchUserInfo() async {
+    final securityToken = await SharedPrefs.getToken();
+    if (securityToken == null) {
+      throw Exception('No security token found. Please login first.');
+    }
+
+    final url = Uri.parse('https://forums.operationsports.com/forums/ajax/render/user_namecard');
+    final body = {
+      'securitytoken': securityToken,
+      'isAjaxTemplateRender': 'true',
+    };
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      // You may need to parse the HTML or JSON structure depending on the API response
+      return data;
+    } else {
+      throw Exception('HTTP ${response.statusCode}: Failed to fetch user info');
     }
   }
 

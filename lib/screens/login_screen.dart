@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../widgets/loading_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:operationsports/services/forum_service.dart';
 
 
 Future<void> saveUserName(String username) async {
@@ -45,6 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
         listen: false,
       ).login(_usernameController.text, _passwordController.text);
       saveUserName(_usernameController.text);
+      // Fetch user info after login
+      final userInfo = await ForumService.fetchUserInfo();
+      print('User info: $userInfo');
+      // Optionally, store user info in SharedPrefs or Provider here
       context.go('/');
     } catch (e) {
       _showErrorDialog(context, 'Login failed. Please check your credentials.');
