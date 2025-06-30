@@ -13,7 +13,6 @@ class ForumCard extends StatelessWidget {
   final String joinedDate;
   final String postCount;
   final String useravatar;
-  final int userrank;
   final Future<void> Function(String) quoteReply;
 
   const ForumCard({
@@ -27,7 +26,6 @@ class ForumCard extends StatelessWidget {
     required this.date,
     required this.postCount,
     required this.useravatar,
-    required this.userrank,
     required this.quoteReply,
   });
 
@@ -89,33 +87,6 @@ class ForumCard extends StatelessWidget {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
-                              ),
-                            ),
-
-                            Row(
-                              children: List.generate(
-                                5,
-                                (index) => Container(
-                                  margin: EdgeInsets.all(4.0),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: const Color(0x20000000),
-                                        blurRadius: 4,
-                                        spreadRadius: 0,
-                                        offset: Offset(0, 2.51),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.star,
-                                    color:
-                                        index < userrank
-                                            ? AppColors.accentColor
-                                            : AppColors.lightGrey,
-                                    size: 16,
-                                  ),
-                                ),
                               ),
                             ),
                           ],

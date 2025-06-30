@@ -92,7 +92,6 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                         joinedDate: item.joinedDate,
                                         posts: item.posts,
                                         useravatar: item.useravatar,
-                                        userrank: item.userrank,
                                       ),
                         ),
                       );
@@ -161,34 +160,6 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
                                     color: Color(0xFFFFFFFF),
                                     thickness: 1,
                                   ),
-                                  const SizedBox(height: 16),
-                                  // Star Rating
-                                  Row(
-                                    children: List.generate(
-                                      5,
-                                      (index) => Container(
-                                        margin: EdgeInsets.all(4.0),
-                                        decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: const Color(0x20000000),
-                                              blurRadius: 4,
-                                              spreadRadius: 0,
-                                              offset: Offset(0, 2.51),
-                                            ),
-                                          ],
-                                        ),
-                                        child: Icon(
-                                          Icons.star,
-                                          color:
-                                              index < item.userrank
-                                                  ? AppColors.accentColor
-                                                  : AppColors.lightGrey,
-                                          size: 22,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -196,7 +167,7 @@ class _ForumSubMenuState extends State<ForumSubMenu> {
 
                           // Right arrow button
                           Container(
-                            height: 190,
+                            height: 140,
                             width: 73,
                             margin: const EdgeInsets.only(left: 8),
                             decoration: BoxDecoration(

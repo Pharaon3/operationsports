@@ -74,7 +74,6 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
                   postCount: '123',
                   useravatar:
                       'images/default/default_avatar_large.png', // relative to core URL
-                  userrank: 2,
                   quoteReply: quoteReply,
                 ),
               ),

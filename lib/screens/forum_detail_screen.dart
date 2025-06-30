@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/models/forum_section.dart';
-import 'package:operationsports/screens/new_topic.dart';
 import 'package:operationsports/services/forum_service.dart';
 import 'package:operationsports/widgets/camera.dart';
 import 'package:operationsports/widgets/forum_card.dart';
@@ -21,7 +20,6 @@ class ForumDetail extends StatefulWidget {
   final String joinedDate;
   final String posts;
   final String useravatar;
-  final int userrank;
 
   const ForumDetail({
     super.key,
@@ -33,7 +31,6 @@ class ForumDetail extends StatefulWidget {
     required this.joinedDate,
     required this.posts,
     required this.useravatar,
-    required this.userrank,
   });
 
   @override
@@ -253,7 +250,6 @@ class _ForumDetailState extends State<ForumDetail> {
                   joinedDate: widget.joinedDate,
                   postCount: widget.posts,
                   useravatar: widget.useravatar,
-                  userrank: widget.userrank,
                   quoteReply: quoteReply,
                 ),
                 const SizedBox(height: 12),
