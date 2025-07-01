@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:operationsports/widgets/video_player.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BBCodeParser {
@@ -48,6 +49,20 @@ class BBCodeParser {
           RegExp(r'\[img](.+?)\[/img]', dotAll: true, caseSensitive: false),
           (m) => '<img src="${m[1]}" />',
         );
+
+    // YouTube videos
+    output = output.replaceAllMapped(
+      RegExp(
+        r'\[video=youtube_share;([^\]]+)\](.*?)\[/video\]',
+        caseSensitive: false,
+        dotAll: true,
+      ),
+      (m) {
+        final videoId = m[1]!;
+        final title = m[2]!;
+        return '<div class="youtube-video" data-video-id="$videoId" data-url="$title"></div>';
+      },
+    );
 
     // Quote blocks
     output = output
@@ -154,6 +169,25 @@ class BBCodeParser {
           border: Border.all(color: Colors.grey[700]!),
         ),
       },
+      extensions: [
+        TagExtension(
+          tagsToExtend: {"div"},
+          builder: (context) {
+            final className = context.attributes['class'];
+            final videoId = context.attributes['data-video-id'];
+
+            if (className == 'youtube-video') {
+              final src = 'https://www.youtube.com/watch?v=$videoId';
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: VideoWidget(url: src),
+              );
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
+      ],
       onLinkTap: (url, _, __) {
         if (url == null) return;
         final uri = Uri.parse(url);
