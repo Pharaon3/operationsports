@@ -3,6 +3,7 @@ import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/displayable_content.dart';
 import 'package:operationsports/screens/newsletter_detail_screen.dart';
 import 'package:operationsports/services/newsletter_service.dart';
+import 'package:operationsports/widgets/newslettersection.dart';
 import 'article_list.dart';
 import '../core/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,7 +92,21 @@ class _PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
                           ),
                     ),
                   )
-                  : {};
+                  : showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Subscribe Required'),
+                          content: const Text('You need to subscribe to the newsletter to view this content.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
             },
           );
         }),

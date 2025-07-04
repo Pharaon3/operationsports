@@ -66,7 +66,7 @@ class AppFooter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () => _openURL('https://facebook.com/'),
+                onTap: () => _openURL('https://www.facebook.com/OperationSports'),
                 child: Icon(
                   FontAwesomeIcons.facebook,
                   color: AppColors.secondaryColor,
@@ -76,7 +76,7 @@ class AppFooter extends StatelessWidget {
 
               SizedBox(width: 24),
               GestureDetector(
-                onTap: () => _openURL('https://youtube.com/'),
+                onTap: () => _openURL('https://www.youtube.com/channel/UCmMLC1WDWBz_T1ahZf0jOYw'),
                 child: Icon(
                   FontAwesomeIcons.youtube,
                   color: AppColors.secondaryColor,
@@ -85,7 +85,7 @@ class AppFooter extends StatelessWidget {
               ),
               SizedBox(width: 24),
               GestureDetector(
-                onTap: () => _openURL('https://x.com/'),
+                onTap: () => _openURL('https://x.com/operationsports'),
                 child: Icon(
                   FontAwesomeIcons.twitter,
                   color: AppColors.secondaryColor,

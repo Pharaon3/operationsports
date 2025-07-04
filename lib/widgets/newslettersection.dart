@@ -30,6 +30,7 @@ class NewsletterSection extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         height: 1.3,
+                        decoration: TextDecoration.none,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -38,7 +39,11 @@ class NewsletterSection extends StatelessWidget {
                       child: Text(
                         'Join 32,000+ fans for weekly news,\nguides, and insights on your favorite sports\ngames, delivered straight to your inbox\nevery Friday.',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 15, color: Colors.white70),
+                        style: TextStyle(
+                          fontSize: 15, 
+                          color: Colors.white70,
+                          decoration: TextDecoration.none,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -76,13 +81,16 @@ class NewsletterSection extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 16,
                                 ),
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Enter Your E-mail',
-                                    hintStyle: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 14,
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: const TextField(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Enter Your E-mail',
+                                      hintStyle: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -109,6 +117,7 @@ class NewsletterSection extends StatelessWidget {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
+                                  decoration: TextDecoration.none,
                                 ),
                               ),
                             ),

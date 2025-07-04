@@ -8,7 +8,7 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       {'icon': Icons.article, 'label': 'Articles', 'route': '/home'},
-      {'icon': Icons.person, 'label': 'Profile', 'route': '/profile'}, // optional
+      // {'icon': Icons.person, 'label': 'Profile', 'route': '/profile'}, // optional
       {'icon': Icons.settings, 'label': 'Settings', 'route': '/settings'}, // optional
     ];
 

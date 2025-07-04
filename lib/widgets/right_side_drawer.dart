@@ -29,7 +29,7 @@ class RightSideDrawer extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              context.go('/profile');
+              // context.go('/profile');
             },
             child: Row(
               children: [

@@ -10,7 +10,7 @@ import '../models/article_model.dart';
 // import '../services/article_service.dart';
 import '../widgets/app_footer.dart';
 import '../widgets/article_card.dart';
-import '../widgets/comment.dart';
+// import '../widgets/comment.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
 
@@ -39,7 +39,7 @@ class NewsDetailScreen extends StatefulWidget {
 class _NewsDetailScreenState extends State<NewsDetailScreen> {
   late Future<String> _articleFuture;
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey _commentKey = GlobalKey();
+  // final GlobalKey _commentKey = GlobalKey();
 
   @override
   void initState() {
@@ -100,22 +100,22 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                       ),
                     ),
                     // Comment Button
-                    Positioned(
-                      top: 268,
-                      left: 24,
-                      child: IconButton(
-                        icon: Image.asset('assets/comment.png', height: 57),
-                        onPressed: () {
-                          Scrollable.ensureVisible(
-                            _commentKey.currentContext!,
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut,
-                          );
-                        },
+                    // Positioned(
+                    //   top: 268,
+                    //   left: 24,
+                    //   child: IconButton(
+                    //     icon: Image.asset('assets/comment.png', height: 57),
+                    //     onPressed: () {
+                    //       Scrollable.ensureVisible(
+                    //         _commentKey.currentContext!,
+                    //         duration: const Duration(milliseconds: 500),
+                    //         curve: Curves.easeInOut,
+                    //       );
+                    //     },
 
-                        tooltip: 'Leave a comment',
-                      ),
-                    ),
+                    //     tooltip: 'Leave a comment',
+                    //   ),
+                    // ),
                   ],
                 ),
 
@@ -199,7 +199,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                   ),
                 ),
 
-                CommentsPage(key: _commentKey),
+                // CommentsPage(key: _commentKey),
 
                 Padding(
                   padding: const EdgeInsets.only(
