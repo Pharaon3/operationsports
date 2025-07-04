@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OperationSports API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #666;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+        .error {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <h1>OperationSports API Test</h1>
+    
+    <div class="container">
+        <h2>Login Test</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username" value="testuser">
+            <input type="password" id="loginPassword" placeholder="Password" value="test123">
+            <button type="submit">Login</button>
+        </form>
+        <div id="loginResponse" class="response" style="display: none;"></div>
+    </div>
+
+    <div class="container">
+        <h2>Register Test</h2>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Username">
+            <input type="password" id="registerPassword" placeholder="Password">
+            <button type="submit">Register</button>
+        </form>
+        <div id="registerResponse" class="response" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const responseDiv = document.getElementById('loginResponse');
+            
+            try {
+                const response = await fetch('api/login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = JSON.stringify(data, null, 2);
+                responseDiv.className = 'response ' + (data.status === 'success' ? 'success' : 'error');
+                
+            } catch (error) {
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = 'Error: ' + error.message;
+                responseDiv.className = 'response error';
+            }
+        });
+
+        // Register form handler
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const responseDiv = document.getElementById('registerResponse');
+            
+            try {
+                const response = await fetch('api/register.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = JSON.stringify(data, null, 2);
+                responseDiv.className = 'response ' + (data.status === 'success' ? 'success' : 'error');
+                
+                // Clear form on successful registration
+                if (data.status === 'success') {
+                    document.getElementById('registerForm').reset();
+                }
+                
+            } catch (error) {
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = 'Error: ' + error.message;
+                responseDiv.className = 'response error';
+            }
+        });
+    </script>
+</body>
+</html> 
