@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
+// import 'package:go_router/go_router.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:operationsports/screens/game_list.dart';
 
 class RightSideDrawer extends StatelessWidget {
   const RightSideDrawer({super.key});
 
-  static const List<String> games = [
-    "EA Sports College Football 26",
-    "NBA 2K25",
-    "Madden NFL 26",
-    "EA Sports FC 25",
-    "MLB The Show 25",
-    "EA Sports F1 25",
-    "NHL 25",
-    "EA Sports PGA Tour",
-    "PGA Tour 2K25",
+  static const List<Map<String, dynamic>> games = [
+    {"title": "EA Sports College Football 26", "id": 53577},
+    {"title": "NBA 2K25", "id": 53804},
+    {"title": "Madden NFL 26", "id": 4875},
+    {"title": "EA Sports FC 25", "id": 53807},
+    {"title": "MLB The Show 25", "id": 53915},
+    {"title": "EA Sports F1 24", "id": 53584},
+    {"title": "NHL 25", "id": 53841},
+    {"title": "EA Sports PGA Tour", "id": 50709},
+    {"title": "PGA Tour 2K25", "id": 53964},
   ];
 
   @override
@@ -78,11 +79,21 @@ class RightSideDrawer extends StatelessWidget {
 
           // List of games
           ...games.map(
-            (title) => Padding(
+            (game) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-              child: Text(
-                title,
-                style: const TextStyle(color: Colors.grey, fontSize: 13),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GameList(categoryId: game["id"]),
+                    ),
+                  );
+                },
+                child: Text(
+                  game["title"],
+                  style: const TextStyle(color: Colors.grey, fontSize: 13),
+                ),
               ),
             ),
           ),
