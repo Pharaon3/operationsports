@@ -22,6 +22,8 @@ class ArticleMenuTemplate extends StatefulWidget {
   final List<ArticleModel> latestArticles;
   final List<ArticleModel> popularArticles;
   final int selectedMenu;
+  final void Function(String)? onSearch;
+  final bool isSearchMode;
 
   const ArticleMenuTemplate({
     super.key,
@@ -34,7 +36,9 @@ class ArticleMenuTemplate extends StatefulWidget {
     required this.featuredArticles,
     required this.trendArticles,
     required this.latestArticles,
-    required this.popularArticles
+    required this.popularArticles,
+    this.onSearch,
+    this.isSearchMode = false,
   });
 
   @override
@@ -106,6 +110,7 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+      onSearch: widget.onSearch,
       child: Stack(
         children: [
           Container(
@@ -134,117 +139,124 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
 
                         return ListView(
                           children: [
-                            // Featured
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 34,
-                                right: 34,
-                                top: 20,
-                              ),
-                              child: Text(
-                                'Featured Story',
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                            // Featured - only show if not in search mode or if we have filtered featured articles
+                            if (!widget.isSearchMode || widget.featuredArticles.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 34,
+                                  right: 34,
+                                  top: 20,
                                 ),
-                              ),
-                            ),
-                            MainArticleCard(
-                              article: widget.featuredArticles.firstWhere(
-                                (article) => article.imageUrl.isNotEmpty,
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) => ArticleDetailScreen(
-                                          articleId:
-                                              widget.featuredArticles.first.id
-                                                  .toString(),
-                                          articles:widget.articles,
-                                        ),
+                                child: Text(
+                                  widget.isSearchMode ? 'Search Results' : 'Featured Story',
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 18),
-
-                            // Trending
-                            Padding(
-                              padding: const EdgeInsets.only(left: 34),
-                              child: Text(
-                                'Trending',
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 18),
+                            if (!widget.isSearchMode || widget.featuredArticles.isNotEmpty)
+                              MainArticleCard(
+                                article: widget.featuredArticles.firstWhere(
+                                  (article) => article.imageUrl.isNotEmpty,
+                                  orElse: () => widget.articles.first,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => ArticleDetailScreen(
+                                            articleId:
+                                                widget.featuredArticles.first.id
+                                                    .toString(),
+                                            articles:widget.articles,
+                                          ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            if (!widget.isSearchMode || widget.featuredArticles.isNotEmpty)
+                              const SizedBox(height: 18),
 
-                            Container(
-                              color: const Color(0xFF232323),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children:
-                                      widget.trendArticles
-                                          .where(
-                                            (article) =>
-                                                article.imageUrl.isNotEmpty,
-                                          )
-                                          .map((article) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(0),
-                                              child: SizedBox(
-                                                width: 298,
-                                                child: ArticleCard(
-                                                  article: article,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder:
-                                                            (
-                                                              _,
-                                                            ) => ArticleDetailScreen(
-                                                              articleId:
-                                                                  article.id
-                                                                      .toString(),
-                                                              articles: widget.articles,
-                                                            ),
-                                                      ),
-                                                    );
-                                                  },
+                            // Trending - only show if not in search mode
+                            if (!widget.isSearchMode) ...[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 34),
+                                child: Text(
+                                  'Trending',
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 18),
+
+                              Container(
+                                color: const Color(0xFF232323),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children:
+                                        widget.trendArticles
+                                            .where(
+                                              (article) =>
+                                                  article.imageUrl.isNotEmpty,
+                                            )
+                                            .map((article) {
+                                              return Padding(
+                                                padding: const EdgeInsets.all(0),
+                                                child: SizedBox(
+                                                  width: 298,
+                                                  child: ArticleCard(
+                                                    article: article,
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder:
+                                                              (
+                                                                _,
+                                                              ) => ArticleDetailScreen(
+                                                                articleId:
+                                                                    article.id
+                                                                        .toString(),
+                                                                articles: widget.articles,
+                                                              ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          })
-                                          .toList(),
+                                              );
+                                            })
+                                            .toList(),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
 
-                            // Category Buttons
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 28.0,
+                            // Category Buttons - only show if not in search mode
+                            if (!widget.isSearchMode)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                  vertical: 28.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    _buildCategoryButton('Latest Posts'),
+                                    const SizedBox(width: 24),
+                                    _buildCategoryButton('Most Popular'),
+                                    const SizedBox(width: 24),
+                                    _buildCategoryButton('All'),
+                                  ],
+                                ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  _buildCategoryButton('Latest Posts'),
-                                  const SizedBox(width: 24),
-                                  _buildCategoryButton('Most Popular'),
-                                  const SizedBox(width: 24),
-                                  _buildCategoryButton('All'),
-                                ],
-                              ),
-                            ),
 
                             // Paginated List
                             Padding(

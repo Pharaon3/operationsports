@@ -21,6 +21,8 @@ class HomeScreen extends StatelessWidget {
       selectedMenu: 0,
       latestArticles: articleProvider.articles,
       popularArticles: articleProvider.articles,
+      onSearch: articleProvider.searchArticles,
+      isSearchMode: articleProvider.isSearchMode,
     );
   }
 }

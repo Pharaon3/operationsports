@@ -73,8 +73,13 @@ class _ScrollControlWrapperState extends State<ScrollControlWrapper> {
 
 class MainScaffold extends StatefulWidget {
   final Widget child;
+  final void Function(String)? onSearch;
 
-  const MainScaffold({super.key, required this.child});
+  const MainScaffold({
+    super.key, 
+    required this.child,
+    this.onSearch,
+  });
 
   @override
   State<MainScaffold> createState() => _MainScaffoldState();
@@ -132,7 +137,7 @@ class _MainScaffoldState extends State<MainScaffold>
           backgroundColor: AppColors.primaryColor,
           title: DefaultAppbar(
             onMenuPressed: _toggleDrawer,
-            searchQuery: (String query) => {},
+            searchQuery: widget.onSearch ?? (String query) => {},
           ),
         ),
         body: Stack(

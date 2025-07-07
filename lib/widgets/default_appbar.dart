@@ -27,11 +27,8 @@ class _DefaultAppbarState extends State<DefaultAppbar> {
 
   void onSearchSubmit() {
     final query = _searchController.text.trim();
-    if (query.isNotEmpty) {
-      // Perform your search logic here
-      widget.searchQuery(query);
-      print("Searching for: $query");
-    }
+    widget.searchQuery(query);
+    print("Searching for: $query");
   }
 
   void onSearchCancel() {
@@ -39,6 +36,8 @@ class _DefaultAppbarState extends State<DefaultAppbar> {
       isSearching = false;
       _searchController.clear();
     });
+    // Clear the search by calling with empty string
+    widget.searchQuery('');
   }
 
   @override
