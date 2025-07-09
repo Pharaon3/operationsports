@@ -15,7 +15,7 @@ class RightSideDrawer extends StatefulWidget {
 class _RightSideDrawerState extends State<RightSideDrawer> {
   String userName = '';
   String userEmail = '';
-  String userAvatar = '';
+  String userAvatar = '/images/default/default_avatar_large.png';
   String userPosts = '';
   String userJoindate = '';
 

@@ -7,7 +7,14 @@ import 'package:operationsports/utils/shared_prefs.dart';
 import '../models/forum_section.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> saveUserInfo(String email, String username, String userid, String joindate, String posts, String avatarid) async {
+Future<void> saveUserInfo(
+  String email,
+  String username,
+  String userid,
+  String joindate,
+  String posts,
+  String avatarid,
+) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('email', email);
   await prefs.setString('username', username);
@@ -73,7 +80,8 @@ class ForumService {
   }
 
   static Future<List<ForumSectionMenu>> fetchForumSectionMenu(
-    String parentId, int page
+    String parentId,
+    int page,
   ) async {
     await _ensureInitialized();
 
@@ -184,27 +192,28 @@ class ForumService {
       throw Exception('No security token found. Please login first.');
     }
 
-    final url = Uri.parse('https://forums.operationsports.com/forums/create-content/text/');
-    
+    final url = Uri.parse(
+      'https://forums.operationsports.com/forums/create-content/text/',
+    );
+
     final body = {
       'securitytoken': securityToken,
       'parentid': forumId,
       'title': title,
-      'text': content, // Note: using 'text' not 'rawtext' as per your specification
+      'text':
+          content, // Note: using 'text' not 'rawtext' as per your specification
     };
 
     final response = await http.post(
       url,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: body,
     );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       print("data: $data");
-      
+
       // Check if the response indicates success
       if (data['success'] == true || data['nodeid'] != null) {
         return {
@@ -230,7 +239,9 @@ class ForumService {
       throw Exception('No security token found. Please login first.');
     }
 
-    final url = Uri.parse('https://forums.operationsports.com/forums/create-content/text/');
+    final url = Uri.parse(
+      'https://forums.operationsports.com/forums/create-content/text/',
+    );
     final body = {
       'securitytoken': securityToken,
       'parentid': topicId,
@@ -239,9 +250,7 @@ class ForumService {
 
     final response = await http.post(
       url,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: body,
     );
 
@@ -275,29 +284,34 @@ class ForumService {
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      final signature1 = _generateSignature(
-        base: 'api_m=user.fetchUserInfo',
-      );
+      final signature1 = _generateSignature(base: 'api_m=user.fetchUserInfo');
       final uri1 = Uri.parse(
         '$_baseUrl?api_m=user.fetchUserInfo&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature1',
       );
       print("uri1: $uri1");
+      await Future.delayed(const Duration(seconds: 2));
       final response1 = await http.get(uri1);
-      final data1 = json.decode(response1.body);
-      String email = data1['email'];
-      String username = data1['username'];
-      String userid = data1['userid'];
-      String joindate = data1['joindate'];
-      String posts = data1['posts'];
-      String avatarid = data1['avatarid'];
-      print("email: $email");
-      print("username: $username");
-      print("userid: $userid");
-      print("joindate: $joindate");
-      print("avatarid: $avatarid");
-      print("posts: $posts");
-      saveUserInfo(email, username, userid, joindate, posts, avatarid);
-      return data1;
+      if (response1.statusCode == 200) {
+        final data1 = json.decode(response1.body);
+        String email = data1['email'] ?? '';
+        String username = data1['username'] ?? '';
+        String userid = data1['userid'] ?? '';
+        String joindate = data1['joindate'] ?? '';
+        String posts = data1['posts'] ?? '';
+        String avatarid = data1['avatarid'] ?? '';
+        print("email: $email");
+        print("username: $username");
+        print("userid: $userid");
+        print("joindate: $joindate");
+        print("avatarid: $avatarid");
+        print("posts: $posts");
+        saveUserInfo(email, username, userid, joindate, posts, avatarid);
+        return data1;
+      } else {
+        throw Exception(
+          'HTTP ${response1.statusCode}: Failed to fetch user info',
+        );
+      }
     } else {
       throw Exception('HTTP ${response.statusCode}: Failed to fetch user info');
     }
