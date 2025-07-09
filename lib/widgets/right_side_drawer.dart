@@ -3,9 +3,41 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:go_router/go_router.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/screens/game_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class RightSideDrawer extends StatelessWidget {
+class RightSideDrawer extends StatefulWidget {
   const RightSideDrawer({super.key});
+
+  @override
+  State<RightSideDrawer> createState() => _RightSideDrawerState();
+}
+
+class _RightSideDrawerState extends State<RightSideDrawer> {
+  String userName = '';
+  String userEmail = '';
+  String userAvatar = '';
+  String userPosts = '';
+  String userJoindate = '';
+
+  Future<void> getUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('username') ?? '';
+      userEmail = prefs.getString('email') ?? '';
+      userAvatar =
+          (prefs.getString('avatarid') == '0'
+              ? '/images/default/default_avatar_large.png'
+              : prefs.getString('avatarid'))!;
+      userPosts = prefs.getString('posts') ?? '';
+      userJoindate = prefs.getString('joindate') ?? '';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
 
   static const List<Map<String, dynamic>> games = [
     {"title": "EA Sports College Football 26", "id": 53577},
@@ -22,7 +54,7 @@ class RightSideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280,
+      width: 320,
       color: const Color(0xFF1F1F1F),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
       child: Column(
@@ -36,27 +68,30 @@ class RightSideDrawer extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(4),
-                  child: const Icon(
-                    Icons.account_circle_outlined,
-                    size: 70,
-                    color: Colors.grey,
+                  child: Image.network(
+                    'https://forums.operationsports.com/forums/core/$userAvatar',
+                    height: 70,
+                    width: 70,
                   ),
                 ),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      "Sports games",
-                      style: TextStyle(
+                      userName,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "Profile",
-                      style: TextStyle(color: AppColors.accentColor, fontSize: 13),
+                      userEmail,
+                      style: TextStyle(
+                        color: AppColors.accentColor,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),

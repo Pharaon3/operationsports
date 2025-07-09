@@ -3,7 +3,7 @@ import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/displayable_content.dart';
 import 'package:operationsports/screens/newsletter_detail_screen.dart';
 import 'package:operationsports/services/newsletter_service.dart';
-import 'package:operationsports/widgets/newslettersection.dart';
+// import 'package:operationsports/widgets/newslettersection.dart';
 import 'article_list.dart';
 import '../core/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';

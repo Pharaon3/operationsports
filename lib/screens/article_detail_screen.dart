@@ -30,7 +30,7 @@ class ArticleDetailScreen extends StatefulWidget {
 class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
   late Future<ArticleModel> _articleFuture;
   final ScrollController _scrollController = ScrollController();
-  final GlobalKey _commentKey = GlobalKey();
+  // final GlobalKey _commentKey = GlobalKey();
 
   @override
   void initState() {

@@ -5,6 +5,17 @@ import 'package:crypto/crypto.dart';
 import 'package:operationsports/models/forum_activity_item.dart';
 import 'package:operationsports/utils/shared_prefs.dart';
 import '../models/forum_section.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<void> saveUserInfo(String email, String username, String userid, String joindate, String posts, String avatarid) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('email', email);
+  await prefs.setString('username', username);
+  await prefs.setString('userid', userid);
+  await prefs.setString('joindate', joindate);
+  await prefs.setString('posts', posts);
+  await prefs.setString('avatarid', avatarid);
+}
 
 class ForumService {
   static final String _baseUrl =
@@ -252,30 +263,41 @@ class ForumService {
   }
 
   /// Fetch current user info after login
-  static Future<Map<String, dynamic>> fetchUserInfo() async {
-    final securityToken = await SharedPrefs.getToken();
-    if (securityToken == null) {
-      throw Exception('No security token found. Please login first.');
-    }
-
-    final url = Uri.parse('https://forums.operationsports.com/forums/ajax/render/user_namecard');
-    final body = {
-      'securitytoken': securityToken,
-      'isAjaxTemplateRender': 'true',
-    };
-
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: body,
+  static Future<Map<String, dynamic>> fetchUserInfo(username, password) async {
+    await _ensureInitialized();
+    final signature = _generateSignature(
+      base: 'api_m=user.login&password=$password&username=$username',
     );
 
+    final uri = Uri.parse(
+      '$_baseUrl?api_m=user.login&username=$username&password=$password&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature',
+    );
+    final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      // You may need to parse the HTML or JSON structure depending on the API response
-      return data;
+      final signature1 = _generateSignature(
+        base: 'api_m=user.fetchUserInfo',
+      );
+      final uri1 = Uri.parse(
+        '$_baseUrl?api_m=user.fetchUserInfo&api_c=$_apiClientId&api_s=$_apiAccessToken&api_sig=$signature1',
+      );
+      print("uri1: $uri1");
+      final response1 = await http.get(uri1);
+      final data1 = json.decode(response1.body);
+      String email = data1['email'];
+      String username = data1['username'];
+      String userid = data1['userid'];
+      String joindate = data1['joindate'];
+      String posts = data1['posts'];
+      String avatarid = data1['avatarid'];
+      print("email: $email");
+      print("username: $username");
+      print("userid: $userid");
+      print("joindate: $joindate");
+      print("avatarid: $avatarid");
+      print("posts: $posts");
+      saveUserInfo(email, username, userid, joindate, posts, avatarid);
+      return data1;
     } else {
       throw Exception('HTTP ${response.statusCode}: Failed to fetch user info');
     }

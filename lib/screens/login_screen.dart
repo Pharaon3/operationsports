@@ -47,8 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ).login(_usernameController.text, _passwordController.text);
       saveUserName(_usernameController.text);
       // Fetch user info after login
-      final userInfo = await ForumService.fetchUserInfo();
-      print('User info: $userInfo');
+      await ForumService.fetchUserInfo(_usernameController.text, _passwordController.text);
       // Optionally, store user info in SharedPrefs or Provider here
       context.go('/');
     } catch (e) {
