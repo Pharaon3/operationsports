@@ -4,6 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:operationsports/core/constants.dart';
 import 'package:operationsports/screens/game_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:operationsports/providers/auth_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class RightSideDrawer extends StatefulWidget {
   const RightSideDrawer({super.key});
@@ -53,6 +56,8 @@ class _RightSideDrawerState extends State<RightSideDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final isLoggedIn = authProvider.isAuthenticated;
     return Container(
       width: 320,
       color: const Color(0xFF1F1F1F),
@@ -156,10 +161,27 @@ class _RightSideDrawerState extends State<RightSideDrawer> {
           ),
 
           const Spacer(),
-          const SizedBox(height: 20),
+          if (isLoggedIn)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: Center(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                  icon: const Icon(Icons.logout),
+                  label: const Text('Logout'),
+                  onPressed: () async {
+                    await authProvider.logout();
+                    if (context.mounted) context.go('/login');
+                  },
+                ),
+              ),
+            ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(
                 FontAwesomeIcons.facebook,
                 color: AppColors.secondaryColor,

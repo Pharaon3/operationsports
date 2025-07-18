@@ -299,12 +299,6 @@ class ForumService {
         String joindate = data1['joindate'] ?? '';
         String posts = data1['posts'] ?? '';
         String avatarid = data1['avatarid'] ?? '';
-        print("email: $email");
-        print("username: $username");
-        print("userid: $userid");
-        print("joindate: $joindate");
-        print("avatarid: $avatarid");
-        print("posts: $posts");
         saveUserInfo(email, username, userid, joindate, posts, avatarid);
         return data1;
       } else {

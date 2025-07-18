@@ -6,10 +6,21 @@ import '../screens/login_screen.dart';
 import '../screens/signup_screen.dart';
 import '../screens/article_detail_screen.dart';
 import '../screens/menu_screen.dart';
+import 'package:operationsports/providers/auth_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppRoutes {
   static final GoRouter router = GoRouter(
     initialLocation: '/login',
+    redirect: (context, state) {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final isAuth = authProvider.isAuthenticated;
+      final loggingIn = state.uri.toString() == '/login';
+      if (!isAuth && !loggingIn) return '/login';
+      if (isAuth && loggingIn) return '/';
+      return null;
+    },
     routes: [
       GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),

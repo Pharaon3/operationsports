@@ -49,7 +49,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> login(String username, String password) async {
-    vpsLogin(username, password);
+    // vpsLogin(username, password);
     final response = await http.post(
       Uri.parse('https://forums.operationsports.com/forums/auth/ajax-login'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},

@@ -1,8 +1,1 @@
-1. Add endpoint to send credential to my server.
-2. Hide comment part in main page, and newsletter page.
-3. Add a new page to show subscribe newsletter.
-4. Hide search on newsletter.
-5. If API document received, integrate.
-6. Hardcode for categories on right side bar.
-7. Hide User profile page.
-8. Update Youtube, Facebook, Twitter links.
+Store API responses
