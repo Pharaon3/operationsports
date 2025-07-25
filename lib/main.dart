@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:operationsports/providers/category_provider.dart';
 import 'package:operationsports/providers/news_provider.dart';
+import 'package:operationsports/providers/forum_provider.dart';
+import 'package:operationsports/providers/newsletter_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,9 +12,12 @@ import 'providers/auth_provider.dart';
 import 'providers/article_provider.dart';
 import 'providers/navigation_provider.dart';
 import 'package:flutter/scheduler.dart';
+import 'services/cache_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await CacheService.initialize();
   runApp(const OperationSportsApp());
 }
 
@@ -28,6 +33,8 @@ class OperationSportsApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NewsProvider()),
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => ForumProvider()),
+        ChangeNotifierProvider(create: (_) => NewsletterProvider()),
       ],
       child: AppLifecycleManager(
         child: _AuthLoader(),

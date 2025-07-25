@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/category_model.dart';
+import 'cache_service.dart';
 
 class CategoryService {
   static const String baseUrl = 'https://www.operationsports.com/wp-json/wp/v2';
@@ -51,12 +52,27 @@ class CategoryService {
   }
 
   static Future<List<ArticleModel>> fetchCategoriesPost(int categoryId) async {
+    // For reviews (category 4849), check cache first
+    if (categoryId == 4849) {
+      final cachedData = await CacheService.getCachedReviews();
+      if (cachedData != null) {
+        return cachedData.map((json) => ArticleModel.fromJson(json)).toList();
+      }
+    }
+
     final url = Uri.parse('$baseUrl/posts?categories=$categoryId');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final List jsonList = json.decode(response.body);
-      return jsonList.map((json) => ArticleModel.fromJson(json)).toList();
+      final articles = jsonList.map((json) => ArticleModel.fromJson(json)).toList();
+      
+      // Cache reviews if this is the reviews category
+      if (categoryId == 4849) {
+        await CacheService.cacheReviews(jsonList);
+      }
+      
+      return articles;
     } else {
       throw Exception('Failed to load articles');
     }

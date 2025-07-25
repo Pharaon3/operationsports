@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/article_model.dart';
 import '../services/article_service.dart';
+import '../services/cache_service.dart';
 
 class ArticleProvider with ChangeNotifier {
   List<ArticleModel> _articles = [];
@@ -40,6 +41,12 @@ class ArticleProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> refreshArticles() async {
+    // Clear cache and fetch fresh data
+    await CacheService.clearArticlesCache();
+    await fetchArticles();
   }
 
   void searchArticles(String query) {

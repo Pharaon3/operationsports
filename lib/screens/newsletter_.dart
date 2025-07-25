@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:operationsports/providers/news_provider.dart';
+import 'package:operationsports/providers/newsletter_provider.dart';
 import 'package:operationsports/screens/article_menu_template.dart';
 import 'package:provider/provider.dart';
 
@@ -8,19 +8,19 @@ class NewsLetter_ extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsProvider = Provider.of<NewsProvider>(context);
+    final newsletterProvider = Provider.of<NewsletterProvider>(context);
 
     return ArticleMenuTemplate(
-      fetchArticles: newsProvider.fetchNewsLetter,
-      isLoading: newsProvider.isLoading,
-      hasError: newsProvider.hasError,
-      errorMessage: newsProvider.errorMessage,
-      articles: newsProvider.newsletters,
-      featuredArticles: newsProvider.newsletters,
-      trendArticles: newsProvider.newsletters,
+      fetchArticles: newsletterProvider.refreshNewsletters,
+      isLoading: newsletterProvider.isLoading,
+      hasError: newsletterProvider.hasError,
+      errorMessage: newsletterProvider.errorMessage,
+      articles: newsletterProvider.newsletters,
+      featuredArticles: newsletterProvider.newsletters,
+      trendArticles: newsletterProvider.newsletters,
       selectedMenu: 1,
-      latestArticles: newsProvider.newsletters,
-      popularArticles: newsProvider.newsletters,
+      latestArticles: newsletterProvider.newsletters,
+      popularArticles: newsletterProvider.newsletters,
     );
   }
 }

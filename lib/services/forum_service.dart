@@ -6,6 +6,7 @@ import 'package:operationsports/models/forum_activity_item.dart';
 import 'package:operationsports/utils/shared_prefs.dart';
 import '../models/forum_section.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'cache_service.dart';
 
 Future<void> saveUserInfo(
   String email,
@@ -50,6 +51,20 @@ class ForumService {
   }
 
   static Future<List<ForumSection>> fetchForumSections() async {
+    // Check cache first
+    final cachedData = await CacheService.getCachedForumSections();
+    if (cachedData != null) {
+      try {
+        print('ForumService: Using cached forum sections: ${cachedData.length}'); // Debug log
+        return cachedData.map((json) => ForumSection.fromJson(json)).toList();
+      } catch (e) {
+        print('ForumService: Error parsing cached forum sections: $e'); // Debug log
+        // If cached data is corrupted, clear it and fetch fresh data
+        await CacheService.clearForumCache();
+      }
+    }
+
+    print('ForumService: Fetching fresh forum sections...'); // Debug log
     await _ensureInitialized();
 
     final signature = _generateSignature(
@@ -63,6 +78,8 @@ class ForumService {
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      print('ForumService: Response data keys: ${data.keys.toList()}'); // Debug log
+      
       if (data['channels'] is Map<String, dynamic>) {
         final channels = data['channels'] as Map<String, dynamic>;
         final sections =
@@ -70,11 +87,20 @@ class ForumService {
                 .map((entry) => ForumSection.fromMapEntry(entry))
                 .where((section) => section.subItems.isNotEmpty)
                 .toList();
+        
+        print('ForumService: Successfully parsed ${sections.length} forum sections'); // Debug log
+        
+        // Cache the response
+        final sectionsJson = sections.map((section) => section.toJson()).toList();
+        await CacheService.cacheForumSections(sectionsJson);
+        
         return sections;
       } else {
+        print('ForumService: channels is not Map<String, dynamic>, type: ${data['channels'].runtimeType}'); // Debug log
         return [];
       }
     } else {
+      print('ForumService: HTTP error ${response.statusCode}'); // Debug log
       return [];
     }
   }
@@ -111,6 +137,19 @@ class ForumService {
   }
 
   static Future<List<ForumActivityItem>> fetchLatestActivity() async {
+    // Check cache first
+    final cachedData = await CacheService.getCachedForumActivity();
+    if (cachedData != null) {
+      try {
+        print('ForumService: Using cached forum activity: ${cachedData.length}'); // Debug log
+        return cachedData.map((item) => ForumActivityItem.fromJson(item)).toList();
+      } catch (e) {
+        print('ForumService: Error parsing cached forum activity: $e'); // Debug log
+        // If cached data is corrupted, clear it and fetch fresh data
+        await CacheService.clearForumCache();
+      }
+    }
+
     await _ensureInitialized();
 
     const baseCall = 'api_m=stream.get&perpage=10';
@@ -127,7 +166,7 @@ class ForumService {
       final data = json.decode(response.body);
 
       final rawItems = data['activity'] as List<dynamic>;
-      return rawItems.map((item) {
+      final activityItems = rawItems.map((item) {
         return ForumActivityItem(
           username: item['authorname'] ?? '',
           threadTitle: item['title'] ?? '',
@@ -140,12 +179,31 @@ class ForumService {
           postUrl: item['url'] ?? '',
         );
       }).toList();
+
+      // Cache the response
+      final activityJson = activityItems.map((item) => item.toJson()).toList();
+      await CacheService.cacheForumActivity(activityJson);
+
+      return activityItems;
     } else {
       throw Exception('Failed to fetch latest activity.');
     }
   }
 
   static Future<List<ForumActivityItem>> fetchMySubscriptions() async {
+    // Check cache first
+    final cachedData = await CacheService.getCachedForumSubscriptions();
+    if (cachedData != null) {
+      try {
+        print('ForumService: Using cached forum subscriptions: ${cachedData.length}'); // Debug log
+        return cachedData.map((item) => ForumActivityItem.fromJson(item)).toList();
+      } catch (e) {
+        print('ForumService: Error parsing cached forum subscriptions: $e'); // Debug log
+        // If cached data is corrupted, clear it and fetch fresh data
+        await CacheService.clearForumCache();
+      }
+    }
+
     await _ensureInitialized();
 
     const baseCall = 'api_m=subscription.listSubscriptions';
@@ -162,7 +220,7 @@ class ForumService {
       final data = json.decode(response.body);
 
       final subscriptions = data['subscriptions'] as List<dynamic>;
-      return subscriptions.map((item) {
+      final subscriptionItems = subscriptions.map((item) {
         return ForumActivityItem(
           username: item['lastposter'] ?? '',
           threadTitle: item['title'] ?? '',
@@ -175,6 +233,12 @@ class ForumService {
           postUrl: item['url'] ?? '',
         );
       }).toList();
+
+      // Cache the response
+      final subscriptionJson = subscriptionItems.map((item) => item.toJson()).toList();
+      await CacheService.cacheForumSubscriptions(subscriptionJson);
+
+      return subscriptionItems;
     } else {
       throw Exception('Failed to fetch subscriptions');
     }

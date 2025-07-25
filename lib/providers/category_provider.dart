@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:operationsports/models/article_model.dart';
 import 'package:operationsports/models/category_model.dart';
 import 'package:operationsports/services/category_service.dart';
+import 'package:operationsports/services/cache_service.dart';
 
 class CategoryProvider with ChangeNotifier {
   List<CategoryModel> _categories = [];
@@ -44,6 +45,14 @@ class CategoryProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> refreshCategoryPost(int categoryId) async {
+    // Clear cache for reviews if this is the reviews category
+    if (categoryId == 4849) {
+      await CacheService.clearReviewsCache();
+    }
+    await fetchCategoryPost(categoryId);
   }
 
   Future<void> fetchCategories() async {

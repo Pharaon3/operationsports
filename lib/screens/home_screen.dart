@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     final articleProvider = Provider.of<ArticleProvider>(context);
 
     return ArticleMenuTemplate(
-      fetchArticles: articleProvider.fetchArticles,
+      fetchArticles: articleProvider.refreshArticles, // Use refresh to clear cache
       isLoading: articleProvider.isLoading,
       hasError: articleProvider.hasError,
       errorMessage: articleProvider.errorMessage,

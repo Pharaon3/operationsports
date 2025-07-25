@@ -7,6 +7,20 @@ class ForumSubItem {
   final String parentId;
 
   ForumSubItem({required this.title, required this.parentId});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'parentId': parentId,
+    };
+  }
+
+  factory ForumSubItem.fromJson(Map<String, dynamic> json) {
+    return ForumSubItem(
+      title: json['title'] ?? '',
+      parentId: json['parentId'] ?? '',
+    );
+  }
 }
 
 class ForumSection {
@@ -29,6 +43,22 @@ class ForumSection {
               parentId: subEntry.key,
             );
           }).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'subItems': subItems.map((item) => item.toJson()).toList(),
+    };
+  }
+
+  factory ForumSection.fromJson(Map<String, dynamic> json) {
+    return ForumSection(
+      title: json['title'] ?? '',
+      subItems: (json['subItems'] as List<dynamic>?)
+          ?.map((item) => ForumSubItem.fromJson(item))
+          .toList() ?? [],
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:operationsports/models/article_model.dart';
+import 'cache_service.dart';
 
 http.Client createProxiedHttpClient() {
   final proxyIp = dotenv.env['PROXYIP'] ?? '';
@@ -37,39 +38,162 @@ class NewsletterService {
 
   /// Fetch list of recent posts
   static Future<List<ArticleModel>> fetchNewsletters() async {
-    final client = createProxiedHttpClient();
-    final url = Uri.parse('$baseUrl/archive?page=4&_data=routes%2Farchive');
-    final response = await client.get(url);
+    print('Fetching newsletters...'); // Debug log
+    
+    // Check cache first
+    final cachedData = await CacheService.getCachedNewsletters();
+    if (cachedData != null) {
+      print('Using cached newsletters: ${cachedData.length}'); // Debug log
+      return cachedData.map((json) => ArticleModel.fromNewsletter(json)).toList();
+    }
 
-    if (response.statusCode == 200) {
-      final List jsonList =
-          json.decode(response.body)['paginatedPosts']['posts'];
-      return jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList();
-    } else {
-      return [];
+    print('No cached data, fetching from API...'); // Debug log
+    
+    // Fetch from API if not cached - try without proxy first
+    final url = Uri.parse('$baseUrl/archive?page=4&_data=routes%2Farchive');
+    print('Fetching from URL: $url'); // Debug log
+    
+    try {
+      // Try with regular HTTP client first
+      final response = await http.get(url);
+      print('Response status: ${response.statusCode}'); // Debug log
+
+      if (response.statusCode == 200) {
+        final List jsonList =
+            json.decode(response.body)['paginatedPosts']['posts'];
+        final newsletters = jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList();
+        
+        print('Successfully fetched ${newsletters.length} newsletters'); // Debug log
+        
+        // Cache the response
+        await CacheService.cacheNewsletters(jsonList);
+        
+        return newsletters;
+      } else {
+        print('Failed to fetch newsletters, status: ${response.statusCode}'); // Debug log
+        return [];
+      }
+    } catch (e) {
+      print('Error with regular HTTP client: $e'); // Debug log
+      
+      // Try with proxy client as fallback
+      try {
+        final client = createProxiedHttpClient();
+        final response = await client.get(url);
+        print('Proxy response status: ${response.statusCode}'); // Debug log
+
+        if (response.statusCode == 200) {
+          final List jsonList =
+              json.decode(response.body)['paginatedPosts']['posts'];
+          final newsletters = jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList();
+          
+          print('Successfully fetched ${newsletters.length} newsletters via proxy'); // Debug log
+          
+          // Cache the response
+          await CacheService.cacheNewsletters(jsonList);
+          
+          return newsletters;
+        } else {
+          print('Failed to fetch newsletters via proxy, status: ${response.statusCode}'); // Debug log
+          return [];
+        }
+      } catch (proxyError) {
+        print('Error with proxy client: $proxyError'); // Debug log
+        return [];
+      }
     }
   }
 
   /// Fetch single newsletter by PAGE
   static dynamic fetchNewsletterByPage(String page) async {
-    final client = createProxiedHttpClient();
-    final url = Uri.parse('$baseUrl/archive?page=$page&_data=routes%2Farchive');
-    final response = await client.get(url);
-
-    if (response.statusCode == 200) {
-      final List jsonList =
-          json.decode(response.body)['paginatedPosts']['posts'];
-      final totalPages =
-          json.decode(
-            response.body,
-          )['paginatedPosts']['pagination']['total_pages'];
+    print('Fetching newsletter page $page...'); // Debug log
+    
+    // Check cache first
+    final cachedData = await CacheService.getCachedNewsletterByPage(page);
+    if (cachedData != null) {
+      print('Using cached newsletter page $page'); // Debug log
       return {
-        "posts":
-            jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList(),
-        "totalpages": totalPages,
+        "posts": cachedData['posts'].map((json) => ArticleModel.fromNewsletter(json)).toList(),
+        "totalpages": cachedData['totalpages'],
       };
-    } else {
-      throw Exception('Failed to load newsletter with page $page');
+    }
+
+    print('No cached data for page $page, fetching from API...'); // Debug log
+    
+    // Fetch from API if not cached - try without proxy first
+    final url = Uri.parse('$baseUrl/archive?page=$page&_data=routes%2Farchive');
+    print('Fetching from URL: $url'); // Debug log
+    
+    try {
+      // Try with regular HTTP client first
+      final response = await http.get(url);
+      print('Response status: ${response.statusCode}'); // Debug log
+
+      if (response.statusCode == 200) {
+        final List jsonList =
+            json.decode(response.body)['paginatedPosts']['posts'];
+        final totalPages =
+            json.decode(
+              response.body,
+            )['paginatedPosts']['pagination']['total_pages'];
+        
+        final result = {
+          "posts": jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList(),
+          "totalpages": totalPages,
+        };
+
+        print('Successfully fetched newsletter page $page with ${result['posts'].length} posts'); // Debug log
+
+        // Cache the response
+        await CacheService.cacheNewsletterByPage(page, {
+          "posts": jsonList,
+          "totalpages": totalPages,
+        });
+
+        return result;
+      } else {
+        print('Failed to fetch newsletter page $page, status: ${response.statusCode}'); // Debug log
+        throw Exception('Failed to load newsletter with page $page');
+      }
+    } catch (e) {
+      print('Error with regular HTTP client for page $page: $e'); // Debug log
+      
+      // Try with proxy client as fallback
+      try {
+        final client = createProxiedHttpClient();
+        final response = await client.get(url);
+        print('Proxy response status: ${response.statusCode}'); // Debug log
+
+        if (response.statusCode == 200) {
+          final List jsonList =
+              json.decode(response.body)['paginatedPosts']['posts'];
+          final totalPages =
+              json.decode(
+                response.body,
+              )['paginatedPosts']['pagination']['total_pages'];
+          
+          final result = {
+            "posts": jsonList.map((json) => ArticleModel.fromNewsletter(json)).toList(),
+            "totalpages": totalPages,
+          };
+
+          print('Successfully fetched newsletter page $page via proxy with ${result['posts'].length} posts'); // Debug log
+
+          // Cache the response
+          await CacheService.cacheNewsletterByPage(page, {
+            "posts": jsonList,
+            "totalpages": totalPages,
+          });
+
+          return result;
+        } else {
+          print('Failed to fetch newsletter page $page via proxy, status: ${response.statusCode}'); // Debug log
+          throw Exception('Failed to load newsletter with page $page');
+        }
+      } catch (proxyError) {
+        print('Error with proxy client for page $page: $proxyError'); // Debug log
+        throw Exception('Failed to load newsletter with page $page');
+      }
     }
   }
 
