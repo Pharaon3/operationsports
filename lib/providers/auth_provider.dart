@@ -30,26 +30,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<void> vpsLogin(String username, String password) async {
-    var headers1 = {'Content-Type': 'application/json'};
-    var request1 = http.Request(
-      'POST',
-      Uri.parse('http://3.237.240.137/api/register.php'),
-    );
-    request1.body = json.encode({"username": username, "password": password});
-    request1.headers.addAll(headers1);
-
-    http.StreamedResponse response1 = await request1.send();
-
-    if (response1.statusCode == 200) {
-      print(await response1.stream.bytesToString());
-    } else {
-      print(response1.reasonPhrase);
-    }
-  }
-
   Future<void> login(String username, String password) async {
-    // vpsLogin(username, password);
     final response = await http.post(
       Uri.parse('https://forums.operationsports.com/forums/auth/ajax-login'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
