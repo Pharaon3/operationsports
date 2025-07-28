@@ -91,7 +91,7 @@ class PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
         // Properly cast the posts to the correct type
         final posts = result['posts'] as List<dynamic>;
         // Convert each item to DisplayableContent
-        currentArticles = posts.map((post) => post as DisplayableContent).toList();
+        currentArticles = posts.map((post) => post as ArticleModel).toList();
         totalPages = result['totalpages'];
       });
       print('Successfully fetched ${currentArticles.length} articles for page $page');
@@ -165,8 +165,37 @@ class PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
           return ArticleList(
             article: article,
             onTap: () {
-              isSubscribed
-                  ? Navigator.push(
+              // isSubscribed
+              //     ? Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder:
+              //             (context) => NewsDetailScreen(
+              //               author: article.author,
+              //               formattedDate: article.formattedDate,
+              //               imageUrl: article.imageUrl,
+              //               title: article.title,
+              //               articleSlug: article.excerpt,
+              //               articles: currentArticles as List<ArticleModel>,
+              //             ),
+              //       ),
+              //     )
+              //     : showDialog(
+              //         context: context,
+              //         builder: (BuildContext context) {
+              //           return AlertDialog(
+              //             title: const Text('Subscribe Required'),
+              //             content: const Text('You need to subscribe to the newsletter to view this content.'),
+              //             actions: [
+              //               TextButton(
+              //                 onPressed: () => Navigator.of(context).pop(),
+              //                 child: const Text('OK'),
+              //               ),
+              //             ],
+              //           );
+              //         },
+              //       );
+              Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder:
@@ -179,22 +208,7 @@ class PaginatedNewsletterListState extends State<PaginatedNewsletterList> {
                             articles: currentArticles as List<ArticleModel>,
                           ),
                     ),
-                  )
-                  : showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Subscribe Required'),
-                          content: const Text('You need to subscribe to the newsletter to view this content.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                  );
             },
           );
         }),

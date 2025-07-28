@@ -4,11 +4,15 @@ import 'package:operationsports/screens/home_screen.dart';
 class DefaultAppbar extends StatefulWidget {
   final VoidCallback onMenuPressed;
   final void Function(String) searchQuery;
+  final bool showBackButton;
+  final VoidCallback? onBackPressed;
 
   const DefaultAppbar({
     super.key,
     required this.onMenuPressed,
     required this.searchQuery,
+    this.showBackButton = false,
+    this.onBackPressed,
   });
 
   @override
@@ -101,6 +105,11 @@ class _DefaultAppbarState extends State<DefaultAppbar> {
         children: [
           Row(
             children: [
+              if (widget.showBackButton)
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: widget.onBackPressed ?? () => Navigator.of(context).maybePop(),
+                ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 child: Image.asset('assets/logo.png', height: 22),

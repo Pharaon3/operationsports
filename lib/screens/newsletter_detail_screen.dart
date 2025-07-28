@@ -13,6 +13,7 @@ import '../widgets/article_card.dart';
 // import '../widgets/comment.dart';
 import '../widgets/loading_indicator.dart';
 import '../widgets/error_widget.dart';
+import '../widgets/default_appbar.dart';
 
 class NewsDetailScreen extends StatefulWidget {
   final String articleSlug;
@@ -57,6 +58,15 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: DefaultAppbar(
+          onMenuPressed: () {},
+          searchQuery: (query) {},
+          showBackButton: true,
+          onBackPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: FutureBuilder<String>(
         future: _articleFuture,
         builder: (context, snapshot) {
@@ -75,108 +85,32 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl: widget.imageUrl,
-                      height: 344,
-                      fit: BoxFit.cover,
-                      placeholder:
-                          (context, url) => const Center(
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          ),
-                      errorWidget:
-                          (context, url, error) =>
-                              const Icon(Icons.broken_image),
-                    ),
-                    // Back Button
-                    Positioned(
-                      top: 38,
-                      left: 26,
-                      child: IconButton(
-                        icon: Image.asset('assets/red back.png', height: 38),
-                        onPressed: () => Navigator.of(context).pop(),
-                        tooltip: 'Back',
-                      ),
-                    ),
-                    // Comment Button
-                    // Positioned(
-                    //   top: 268,
-                    //   left: 24,
-                    //   child: IconButton(
-                    //     icon: Image.asset('assets/comment.png', height: 57),
-                    //     onPressed: () {
-                    //       Scrollable.ensureVisible(
-                    //         _commentKey.currentContext!,
-                    //         duration: const Duration(milliseconds: 500),
-                    //         curve: Curves.easeInOut,
-                    //       );
-                    //     },
-
-                    //     tooltip: 'Leave a comment',
-                    //   ),
-                    // ),
-                  ],
+                CachedNetworkImage(
+                  imageUrl: widget.imageUrl,
+                  height: 344,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.broken_image),
                 ),
+                // Comment Button (if needed)
+                // Positioned(
+                //   top: 268,
+                //   left: 24,
+                //   child: IconButton(
+                //     icon: Image.asset('assets/comment.png', height: 57),
+                //     onPressed: () {
+                //       Scrollable.ensureVisible(
+                //         _commentKey.currentContext!,
+                //         duration: const Duration(milliseconds: 500),
+                //         curve: Curves.easeInOut,
+                //       );
+                //     },
 
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 16, left: 34, right: 34),
-                //   child: Column(
-                //     children: [
-                //       // Align(
-                //       //   alignment: Alignment.centerLeft,
-                //       //   child: Text(
-                //       //     article.articleSection,
-                //       //     style: const TextStyle(
-                //       //       color: AppColors.accentColor,
-                //       //       fontSize: 16,
-                //       //     ),
-                //       //   ),
-                //       // ),
-                //       // const SizedBox(height: 5),
-                //       // Title
-                //       // Text(
-                //       //   widget.title,
-                //       //   style: Theme.of(
-                //       //     context,
-                //       //   ).textTheme.titleMedium?.copyWith(
-                //       //     fontWeight: FontWeight.bold,
-                //       //     color: Colors.white,
-                //       //     fontSize: 22,
-                //       //   ),
-                //       // ),
-                //       // const SizedBox(height: 8),
-                //       // Row(
-                //       //   children: [
-                //       //     // Author
-                //       //     Text(
-                //       //       widget.author,
-                //       //       maxLines: 2,
-                //       //       overflow: TextOverflow.ellipsis,
-                //       //       style: Theme.of(context).textTheme.bodyMedium
-                //       //           ?.copyWith(color: Colors.white, fontSize: 12),
-                //       //     ),
-                //       //     const SizedBox(width: 8),
-                //       //     // Date
-                //       //     Text(
-                //       //       widget.formattedDate,
-                //       //       maxLines: 2,
-                //       //       overflow: TextOverflow.ellipsis,
-                //       //       style: Theme.of(
-                //       //         context,
-                //       //       ).textTheme.bodyMedium?.copyWith(
-                //       //         color: const Color(0xFF707070),
-                //       //         fontWeight: FontWeight.bold,
-                //       //         fontSize: 12,
-                //       //       ),
-                //       //     ),
-                //       //   ],
-                //       // ),
-                //       // const SizedBox(height: 16),
-                //     ],
+                //     tooltip: 'Leave a comment',
                 //   ),
                 // ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 0,
@@ -198,9 +132,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     },
                   ),
                 ),
-
                 // CommentsPage(key: _commentKey),
-
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 48.0,
@@ -216,7 +148,6 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 230,
                   child: SingleChildScrollView(
@@ -238,14 +169,14 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                                           MaterialPageRoute(
                                             builder:
                                                 (context) => NewsDetailScreen(
-                                                  author: article.author,
-                                                  formattedDate:
-                                                      article.formattedDate,
-                                                  imageUrl: article.imageUrl,
-                                                  title: article.title,
-                                                  articleSlug: article.excerpt,
-                                                  articles: widget.articles,
-                                                ),
+                                              author: article.author,
+                                              formattedDate:
+                                                  article.formattedDate,
+                                              imageUrl: article.imageUrl,
+                                              title: article.title,
+                                              articleSlug: article.excerpt,
+                                              articles: widget.articles,
+                                            ),
                                           ),
                                         );
                                       },
@@ -257,9 +188,7 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 100),
-
                 const AppFooter(),
               ],
             ),
