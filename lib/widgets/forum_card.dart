@@ -63,61 +63,44 @@ class ForumCard extends StatelessWidget {
           // Header row
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
+            child: Row(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Image.network(
-                          'https://forums.operationsports.com/forums/core/$useravatar',
-                          height: 30,
-                          width: 35,
-                        ),
-                        const SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              forumName.length > 23
-                                  ? '${forumName.substring(0, 23)}...'
-                                  : forumName,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                // Fixed avatar on the left
+                Image.network(
+                  'https://forums.operationsports.com/forums/core/$useravatar',
+                  height: 30,
+                  width: 35,
+                ),
+                const SizedBox(width: 8),
+                // Dynamic forum name that takes available space
+                Expanded(
+                  child: Text(
+                    forumName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "By: $authorname",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 9,
-                          ),
-                        ),
-                        Text(
-                          "Join Date: $joinedDateformattedDate",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 9,
-                          ),
-                        ),
-                        Text(
-                          "Posts: $postCount",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 9,
-                          ),
-                        ),
-                      ],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                // Fixed author info on the right
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "By: $authorname",
+                      style: const TextStyle(color: Colors.white, fontSize: 9),
+                    ),
+                    Text(
+                      "Join Date: $joinedDateformattedDate",
+                      style: const TextStyle(color: Colors.white, fontSize: 9),
+                    ),
+                    Text(
+                      "Posts: $postCount",
+                      style: const TextStyle(color: Colors.white, fontSize: 9),
                     ),
                   ],
                 ),

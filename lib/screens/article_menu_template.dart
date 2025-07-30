@@ -259,14 +259,9 @@ class _ArticleMenuTemplateState extends State<ArticleMenuTemplate> {
                               ),
 
                             // Paginated List
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
-                              child: PaginatedArticleList(
+                            PaginatedArticleList(
                                 articles: selectedArticles,
                               ),
-                            ),
 
                             const AppFooter(),
                           ],
