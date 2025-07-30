@@ -6,17 +6,17 @@ import '../screens/forum_screen.dart';
 import '../screens/newsletter.dart';
 
 class MenuButton extends StatelessWidget {
-  final int selectedMenu; // 0 = NEWSLETTER, 1 = FORUMS, etc.
+  final int selectedMenu; // 0 = FORUMS, 1 = NEWSLETTER, etc.
 
   const MenuButton({super.key, this.selectedMenu = 0});
 
   @override
   Widget build(BuildContext context) {
-    final List<String> menuItems = ["NEWSLETTER", "FORUMS", "REVIEWS"];
+    final List<String> menuItems = ["FORUMS", "NEWSLETTER", "REVIEWS"];
 
     final List<Widget Function(BuildContext)> menuBuilder = [
-      (context) => const NewsLetter(),
       (context) => const ForumScreen(),
+      (context) => const NewsLetter(),
       (context) => const ReviewScreen(),
       // (context) => const GameScreen(),
     ];
@@ -78,7 +78,7 @@ class MenuButton extends StatelessWidget {
                 color:
                     isActive
                         ? AppColors.accentColor
-                        : AppColors.secondaryColor,
+                        : Colors.white,
                 fontSize: 12,
               ),
             ),

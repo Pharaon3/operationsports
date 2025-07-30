@@ -18,7 +18,7 @@ class NewsLetter_ extends StatelessWidget {
       articles: newsletterProvider.newsletters,
       featuredArticles: newsletterProvider.newsletters,
       trendArticles: newsletterProvider.newsletters,
-      selectedMenu: 1,
+      selectedMenu: 2,
       latestArticles: newsletterProvider.newsletters,
       popularArticles: newsletterProvider.newsletters,
     );

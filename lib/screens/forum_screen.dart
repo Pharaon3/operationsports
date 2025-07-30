@@ -37,7 +37,7 @@ class _ForumScreenState extends State<ForumScreen> {
         },
         child: ListView(
           children: [
-            const Header(selectedMenu: 2),
+            const Header(selectedMenu: 1),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

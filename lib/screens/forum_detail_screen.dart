@@ -220,7 +220,7 @@ class _ForumDetailState extends State<ForumDetail> {
             ListView(
               controller: _scrollController,
               children: [
-                const Header(selectedMenu: 2),
+                const Header(selectedMenu: 1),
 
                 // Column(
                 //   children: [

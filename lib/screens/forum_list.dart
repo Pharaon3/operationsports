@@ -88,7 +88,7 @@ class _ForumListState extends State<ForumList> {
         onRefresh: _handleRefresh,
         child: ListView(
           children: [
-            const Header(selectedMenu: 2),
+            const Header(selectedMenu: 1),
 
             // Column(
             //   children: [

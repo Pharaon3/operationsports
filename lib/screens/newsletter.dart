@@ -52,7 +52,7 @@ class _NewsLetterState extends State<NewsLetter> {
             ),
             child: Column(
               children: [
-                const Header(selectedMenu: 1,),
+                const Header(selectedMenu: 2,),
 
                 const NewsletterSection(),
 
