@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:operationsports/core/constants.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AppFooter extends StatelessWidget {
   const AppFooter({super.key});
@@ -16,7 +17,7 @@ class AppFooter extends StatelessWidget {
       await Process.start('explorer.exe', [url]);
     } else {
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.inAppWebView);
+        await launchUrlString(url, mode: LaunchMode.inAppWebView);
       } else {
         print("❌ Could not open: $url");
       }

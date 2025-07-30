@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:operationsports/widgets/video_player.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class BBCodeParser {
   /// Converts BBCode to HTML string.
@@ -193,7 +194,7 @@ class BBCodeParser {
         final uri = Uri.parse(url);
         canLaunchUrl(uri).then((canLaunch) {
           if (canLaunch) {
-            launchUrl(uri, mode: LaunchMode.externalApplication);
+            launchUrlString(url, mode: LaunchMode.externalApplication);
           }
         });
       },
