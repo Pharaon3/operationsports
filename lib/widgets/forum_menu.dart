@@ -69,69 +69,83 @@ class _ForumMenuState extends State<ForumMenu> {
                         ),
                       ],
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: Container(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => ForumList(parentId: item.parentId),
+                          ),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              height: 60,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              decoration: const BoxDecoration(
+                                color: AppColors.secondaryColor,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                ),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  item.title,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 73,
                             height: 60,
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             decoration: const BoxDecoration(
-                              color: AppColors.secondaryColor,
+                              color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
                               ),
-                            ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                item.title,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0x40000000),
+                                  blurRadius: 4,
+                                  spreadRadius: 6,
+                                  offset: Offset(0, 0),
                                 ),
+                              ],
+                            ),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.arrow_forward_ios,
+                                color: AppColors.accentColor,
+                                size: 20,
                               ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) =>
+                                            ForumList(parentId: item.parentId),
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                        ),
-
-                        Container(
-                          width: 73,
-                          height: 60,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0x40000000),
-                                blurRadius: 4,
-                                spreadRadius: 6,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.arrow_forward_ios,
-                              color: AppColors.accentColor,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ForumList(parentId: item.parentId),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),
