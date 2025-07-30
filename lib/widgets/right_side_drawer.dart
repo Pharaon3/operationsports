@@ -28,7 +28,8 @@ class _RightSideDrawerState extends State<RightSideDrawer> {
       userName = prefs.getString('username') ?? '';
       userEmail = prefs.getString('email') ?? '';
       userAvatar =
-          (prefs.getString('avatarid') == '0'
+          (prefs.getString('avatarid') == '0' 
+          || prefs.getString('avatarid') == ''
               ? '/images/default/default_avatar_large.png'
               : prefs.getString('avatarid'))!;
       userPosts = prefs.getString('posts') ?? '';
@@ -68,6 +69,7 @@ class _RightSideDrawerState extends State<RightSideDrawer> {
           GestureDetector(
             onTap: () {
               // context.go('/profile');
+              print("userAvatar: $userAvatar");
             },
             child: Row(
               children: [

@@ -75,11 +75,7 @@ class MainScaffold extends StatefulWidget {
   final Widget child;
   final void Function(String)? onSearch;
 
-  const MainScaffold({
-    super.key, 
-    required this.child,
-    this.onSearch,
-  });
+  const MainScaffold({super.key, required this.child, this.onSearch});
 
   @override
   State<MainScaffold> createState() => _MainScaffoldState();
@@ -143,6 +139,18 @@ class _MainScaffoldState extends State<MainScaffold>
         body: Stack(
           children: [
             ScrollControlWrapper(child: widget.child),
+
+            // Overlay when drawer is open
+            if (_isDrawerOpen)
+              GestureDetector(
+                onTap: _closeDrawer,
+                child: Container(
+                  color: Colors.black.withOpacity(
+                    0.3,
+                  ), // semi-transparent overlay
+                ),
+              ),
+
             if (_isDrawerOpen)
               SlideTransition(
                 position: _slideAnimation,

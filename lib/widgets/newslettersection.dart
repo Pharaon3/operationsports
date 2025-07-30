@@ -1,7 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:operationsports/services/newsletter_service.dart';
 
-class NewsletterSection extends StatelessWidget {
+class NewsletterSection extends StatefulWidget {
   const NewsletterSection({super.key});
+
+  @override
+  State<NewsletterSection> createState() => _NewsletterSectionState();
+}
+
+class _NewsletterSectionState extends State<NewsletterSection> {
+  final TextEditingController _emailController = TextEditingController();
+
+  Future<void> _handleSubscribe() async {
+    final email = _emailController.text.trim();
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter an email address')),
+      );
+      return;
+    }
+
+    try {
+      final newsletterService = NewsletterService();
+      await newsletterService.subscribe(email);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Subscribed successfully!')));
+      _emailController.clear();
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Subscription failed: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +44,7 @@ class NewsletterSection extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Image.asset(
-                'assets/newsletter background.png', // Replace with your image asset
+                'assets/newsletter background.png',
                 width: double.infinity,
                 fit: BoxFit.cover,
                 height: 442,
@@ -40,17 +71,14 @@ class NewsletterSection extends StatelessWidget {
                         'Join 32,000+ fans for weekly news,\nguides, and insights on your favorite sports\ngames, delivered straight to your inbox\nevery Friday.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 15, 
+                          fontSize: 15,
                           color: Colors.white70,
                           decoration: TextDecoration.none,
                         ),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Image.asset(
-                      'assets/newsletter logo.png', // Replace with your logo asset
-                      height: 100,
-                    ),
+                    Image.asset('assets/newsletter logo.png', height: 100),
                     const SizedBox(height: 28),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -83,8 +111,9 @@ class NewsletterSection extends StatelessWidget {
                                 ),
                                 child: Material(
                                   color: Colors.transparent,
-                                  child: const TextField(
-                                    decoration: InputDecoration(
+                                  child: TextField(
+                                    controller: _emailController,
+                                    decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'Enter Your E-mail',
                                       hintStyle: TextStyle(
@@ -96,28 +125,29 @@ class NewsletterSection extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                color: Color(
-                                  0xFF1A1D23,
-                                ), // Dark navy/black shade
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(8),
+                            GestureDetector(
+                              onTap: _handleSubscribe,
+                              child: Container(
+                                height: 50,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF1A1D23),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
                                 ),
-                              ),
-                              margin: const EdgeInsets.all(2),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'Subscribe',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  decoration: TextDecoration.none,
+                                margin: const EdgeInsets.all(2),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Subscribe',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    decoration: TextDecoration.none,
+                                  ),
                                 ),
                               ),
                             ),
