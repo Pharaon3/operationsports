@@ -235,21 +235,21 @@ class _CreateTopicPageState extends State<CreateTopicPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      RoundButton(
-                        icon: Icons.link, 
-                        onPressed: _isAuthenticated && !_isLoading ? () {} : null
-                      ),
-                      const SizedBox(width: 8),
-                      RoundButton(
-                        icon: Icons.camera_alt, 
-                        onPressed: _isAuthenticated && !_isLoading ? () {} : null
-                      ),
-                    ],
-                  ),
+                  // const SizedBox(height: 12),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     RoundButton(
+                  //       icon: Icons.link, 
+                  //       onPressed: _isAuthenticated && !_isLoading ? () {} : null
+                  //     ),
+                  //     const SizedBox(width: 8),
+                  //     RoundButton(
+                  //       icon: Icons.camera_alt, 
+                  //       onPressed: _isAuthenticated && !_isLoading ? () {} : null
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

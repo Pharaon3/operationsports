@@ -134,6 +134,7 @@ class _MainScaffoldState extends State<MainScaffold>
           title: DefaultAppbar(
             onMenuPressed: _toggleDrawer,
             searchQuery: widget.onSearch ?? (String query) => {},
+            showBackButton: true,
           ),
         ),
         body: Stack(

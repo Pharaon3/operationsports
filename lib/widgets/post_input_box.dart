@@ -42,10 +42,10 @@ class PostInputBox extends StatelessWidget {
             right: 0,
             child: Row(
               children: [
-                RoundButton(icon: Icons.link, onPressed: onLinkPressed),
-                const SizedBox(width: 8),
-                RoundButton(icon: Icons.camera_alt, onPressed: onImagePressed),
-                const SizedBox(width: 8),
+                // RoundButton(icon: Icons.link, onPressed: onLinkPressed),
+                // const SizedBox(width: 8),
+                // RoundButton(icon: Icons.camera_alt, onPressed: onImagePressed),
+                // const SizedBox(width: 8),
                 RoundButton(icon: Icons.edit_document, onPressed: onPostPressed),
               ],
             ),

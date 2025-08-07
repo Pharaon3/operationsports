@@ -105,7 +105,7 @@ class _DefaultAppbarState extends State<DefaultAppbar> {
         children: [
           Row(
             children: [
-              if (widget.showBackButton)
+              // if (widget.showBackButton)
                 IconButton(
                   icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: widget.onBackPressed ?? () => Navigator.of(context).maybePop(),
